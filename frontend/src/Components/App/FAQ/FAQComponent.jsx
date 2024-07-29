@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import "./faq.css";
 
 const FAQComponent = () => {
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
   const [activeFAQ, setActiveFAQ] = useState(null);
 
   const faqs = [
