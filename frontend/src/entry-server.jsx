@@ -18,17 +18,13 @@ const queryClient = new QueryClient();
 export function render(url, ssrManifest, options) {
   const helmetContext = {};
 
-  const baseUrl = "http://localhost:7755"; // or whatever your base URL is
-
-  const location = new URL(url, baseUrl);
-
   return renderToPipeableStream(
     <React.StrictMode>
       <ResponsiveContext.Provider value={{ width: 500 }}>
         <HelmetProvider context={helmetContext}>
           <QueryClientProvider client={queryClient}>
             <AuthContextProvider>
-              <StaticRouter location={location}>
+              <StaticRouter location={url}>
                 <App />
               </StaticRouter>
             </AuthContextProvider>

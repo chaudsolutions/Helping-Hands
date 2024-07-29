@@ -7,19 +7,16 @@ import {
   FaXTwitter,
 } from "react-icons/fa6";
 import "./footer.css";
+import { useActiveCampaignData } from "../../Hooks/useQueryFetch/useQueryData";
+import ButtonLoad from "../../Animations/ButtonLoad";
 
 const Footer = () => {
-  const campaigns = [
-    {
-      name: "School Fees",
-    },
-    {
-      name: "Global Warming",
-    },
-  ];
-  const campaignsOutput = campaigns.slice(0, 3).map((item, i) => (
-    <li key={i}>
-      <Link>{item.name}</Link>
+  const { activeCampaignData, isActiveCampaignDataLoading } =
+    useActiveCampaignData();
+
+  const campaignsOutput = activeCampaignData?.slice(0, 3).map((item) => (
+    <li key={item._id}>
+      <Link to={`/campaign/${item._id}`}>{item.campaignName}</Link>
     </li>
   ));
 
@@ -68,7 +65,11 @@ const Footer = () => {
         <div>
           <ul>
             <li>Donate</li>
-            {campaignsOutput}
+            {isActiveCampaignDataLoading ? (
+              <ButtonLoad />
+            ) : (
+              <>{campaignsOutput}</>
+            )}
           </ul>
           <ul>
             <li>Help</li>
