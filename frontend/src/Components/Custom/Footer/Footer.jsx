@@ -11,14 +11,16 @@ import { useActiveCampaignData } from "../../Hooks/useQueryFetch/useQueryData";
 import ButtonLoad from "../../Animations/ButtonLoad";
 
 const Footer = () => {
-  const { activeCampaignData, isActiveCampaignDataLoading } =
+  const { activeCampaignData = [], isActiveCampaignDataLoading } =
     useActiveCampaignData();
 
-  const campaignsOutput = activeCampaignData?.slice(0, 3).map((item) => (
-    <li key={item._id}>
-      <Link to={`/campaign/${item._id}`}>{item.campaignName}</Link>
-    </li>
-  ));
+  const campaignsOutput = Array.isArray(activeCampaignData)
+    ? activeCampaignData?.slice(0, 3).map((item) => (
+        <li key={item._id}>
+          <Link to={`/campaign/${item._id}`}>{item.campaignName}</Link>
+        </li>
+      ))
+    : [];
 
   // socials
   const socials = [
