@@ -1,15 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
 import CampaignList from "../../../Custom/ItemList/CampaignList";
-import { fetchActiveCampaigns } from "../../../Hooks/useFetch";
 import PageLoader from "../../../Animations/PageLoader";
+import { useActiveCampaignData } from "../../../Hooks/useQueryFetch/useQueryData";
 
 const SectionTwo = () => {
-  const { data: campaignData, isLoading: isCampaignDataLoading } = useQuery({
-    queryKey: ["campaigns"], // Use the new object-based syntax
-    queryFn: fetchActiveCampaigns,
-  });
+  const { activeCampaignData, isActiveCampaignDataLoading } =
+    useActiveCampaignData();
 
-  const fundRaiseOutput = campaignData?.map((item) => {
+  const fundRaiseOutput = activeCampaignData?.map((item) => {
     return <CampaignList item={item} key={item._id} />;
   });
 
@@ -23,7 +20,11 @@ const SectionTwo = () => {
         </p>
       </div>
 
-      {isCampaignDataLoading ? <PageLoader /> : <ul>{fundRaiseOutput}</ul>}
+      {isActiveCampaignDataLoading ? (
+        <PageLoader />
+      ) : (
+        <ul>{fundRaiseOutput}</ul>
+      )}
     </section>
   );
 };
