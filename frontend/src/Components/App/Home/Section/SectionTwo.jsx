@@ -3,12 +3,14 @@ import PageLoader from "../../../Animations/PageLoader";
 import { useActiveCampaignData } from "../../../Hooks/useQueryFetch/useQueryData";
 
 const SectionTwo = () => {
-  const { activeCampaignData, isActiveCampaignDataLoading } =
+  const { activeCampaignData = [], isActiveCampaignDataLoading } =
     useActiveCampaignData();
 
-  const fundRaiseOutput = activeCampaignData?.map((item) => {
-    return <CampaignList item={item} key={item._id} />;
-  });
+  const fundRaiseOutput = Array.isArray(activeCampaignData)
+    ? activeCampaignData.map((item) => (
+        <CampaignList item={item} key={item._id} />
+      ))
+    : [];
 
   return (
     <section className="section-one">
@@ -23,7 +25,7 @@ const SectionTwo = () => {
       {isActiveCampaignDataLoading ? (
         <PageLoader />
       ) : (
-        <ul>{fundRaiseOutput}</ul>
+        <>{fundRaiseOutput && <ul>{fundRaiseOutput}</ul>}</>
       )}
     </section>
   );
