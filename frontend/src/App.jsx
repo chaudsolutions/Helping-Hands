@@ -43,30 +43,30 @@ function App() {
   }, [user, location, navigate]);
 
   // check if css is already loaded
-  useEffect(() => {
-    const cssLink = document.querySelector('link[rel="stylesheet"]');
+  // useEffect(() => {
+  //   const cssLink = document.querySelector('link[rel="stylesheet"]');
 
-    const handleCssLoad = () => {
-      setIsLoading(false);
-    };
+  //   const handleCssLoad = () => {
+  //     setIsLoading(false);
+  //   };
 
-    // Check if CSS is loaded
-    if (cssLink) {
-      cssLink.addEventListener("load", handleCssLoad);
+  //   // Check if CSS is loaded
+  //   if (cssLink) {
+  //     cssLink.addEventListener("load", handleCssLoad);
 
-      // Clean up the event listener on component unmount
-      return () => {
-        cssLink.removeEventListener("load", handleCssLoad);
-      };
-    } else {
-      // If CSS link is not found, stop loading
-      setIsLoading(false);
-    }
-  }, []);
+  //     // Clean up the event listener on component unmount
+  //     return () => {
+  //       cssLink.removeEventListener("load", handleCssLoad);
+  //     };
+  //   } else {
+  //     // If CSS link is not found, stop loading
+  //     setIsLoading(false);
+  //   }
+  // }, []);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <div className="App">
