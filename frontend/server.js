@@ -119,13 +119,11 @@ app.use("*", async (req, res) => {
         const [htmlStart, htmlEnd] = template.split(`<!--app-html-->`);
         const helmet = helmetContext.helmet;
         const helmetHtml = `
-          <head>
             ${helmet?.title?.toString()}
             ${helmet?.meta?.toString()}
             ${helmet?.link?.toString()}
-          </head>
         `;
-        const newHtmlStart = htmlStart.replace("<head>", helmetHtml);
+        const newHtmlStart = htmlStart.replace("<!--app-head-->", helmetHtml);
         res.write(newHtmlStart);
         transformStream.on("finish", () => {
           res.end(htmlEnd);
