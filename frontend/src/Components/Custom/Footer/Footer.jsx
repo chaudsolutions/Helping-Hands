@@ -11,7 +11,7 @@ import { useActiveCampaignData } from "../../Hooks/useQueryFetch/useQueryData";
 import ButtonLoad from "../../Animations/ButtonLoad";
 
 const Footer = () => {
-  const { activeCampaignData = [], isActiveCampaignDataLoading } =
+  const { activeCampaignData, isActiveCampaignDataLoading } =
     useActiveCampaignData();
 
   const campaignsOutput = Array.isArray(activeCampaignData)
@@ -70,7 +70,7 @@ const Footer = () => {
             {isActiveCampaignDataLoading ? (
               <ButtonLoad />
             ) : (
-              <>{campaignsOutput}</>
+              <>{activeCampaignData && campaignsOutput}</>
             )}
           </ul>
           <ul>
