@@ -10,7 +10,7 @@ const mongoUrl = process.env.mongodbLocal;
 // Server Constants
 const isProduction = process.env.NODE_ENV === "production";
 const port = process.env.PORT || 5275;
-const base = process.env.BASE || "/";
+const base = "/";
 const ABORT_DELAY = 10000;
 
 // Cached production assets
@@ -18,7 +18,9 @@ const templateHtml = isProduction
   ? await fs.readFile("./dist/client/index.html", "utf-8")
   : "";
 const ssrManifest = isProduction
-  ? await fs.readFile("./dist/client/.vite/ssr-manifest.json", "utf-8")
+  ? JSON.parse(
+      await fs.readFile("./dist/client/.vite/ssr-manifest.json", "utf-8")
+    )
   : undefined;
 
 // Create http server
@@ -43,34 +45,34 @@ if (!isProduction) {
   app.use(base, sirv("./dist/client", { extensions: [] }));
 }
 
-// connect to Database
+// Connect to Database
 mongoose.connect(mongoUrl);
 
-// fetch models
+// Fetch models
 import requireAuth from "./Server/Models/requireAuth.js";
-// fetch routes
+// Fetch routes
 import Authentication from "./Server/Routes/Authentication.js";
 import userDocs from "./Server/Routes/UserDocs.js";
 import getItems from "./Server/Routes/GetItems.js";
 import verifyPayments from "./Server/Routes/VerifyPayments.js";
 
-// use Authentication route
+// Use Authentication route
 app.use("/auth", Authentication);
 
-// route protection
+// Route protection
 app.use("/user", requireAuth);
-// user route
+// User route
 app.use("/user", userDocs);
 
-// use get items route
+// Use get items route
 app.use("/get", getItems);
 
-// use payments verification route
+// Use payments verification route
 app.use("/verify-payment", verifyPayments);
 
-// fav icon
+// Favicon
 app.get("/favicon.ico", (req, res) => {
-  res.status(204).end();
+  res.status(204);
 });
 
 // Serve HTML
@@ -92,7 +94,10 @@ app.use("*", async (req, res) => {
 
     let didError = false;
 
-    const helmetContext = {}; // Define helmetContext here
+    const helmetContext = {}; // Initialize helmetContext here
+
+    // Construct the full URL from the request
+    const fullUrl = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
 
     const { pipe, abort } = render(url, ssrManifest, {
       onShellError() {
@@ -132,6 +137,7 @@ app.use("*", async (req, res) => {
         console.error(error);
       },
       helmetContext,
+      fullUrl,
     });
 
     setTimeout(() => {
@@ -139,7 +145,7 @@ app.use("*", async (req, res) => {
     }, ABORT_DELAY);
   } catch (e) {
     vite?.ssrFixStacktrace(e);
-    console.log(e.stack);
+    console.error(e.stack);
     res.status(500).end(e.stack);
   }
 });

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import "./faq.css";
+import SEOComponent from "../../SEO/SEO";
 
 const FAQComponent = () => {
   useEffect(() => {
@@ -87,6 +88,8 @@ const FAQComponent = () => {
 
   return (
     <section className="faq">
+      <SEOComponent />
+
       <h3>Frequently Asked Questions</h3>
       <ul>{faqOutput}</ul>
     </section>

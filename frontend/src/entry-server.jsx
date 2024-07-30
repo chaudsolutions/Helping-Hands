@@ -6,6 +6,7 @@ import { Context as ResponsiveContext } from "react-responsive";
 import { HelmetProvider } from "react-helmet-async";
 import { AuthContextProvider } from "./Components/Context/AuthContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { URLProvider } from "./Components/Context/URLContext";
 
 const queryClient = new QueryClient();
 
@@ -18,15 +19,19 @@ const queryClient = new QueryClient();
 export function render(url, ssrManifest, options) {
   const helmetContext = {};
 
+  const fullUrl = options.fullUrl;
+
   return renderToPipeableStream(
     <React.StrictMode>
       <ResponsiveContext.Provider value={{ width: 500 }}>
         <HelmetProvider context={helmetContext}>
           <QueryClientProvider client={queryClient}>
             <AuthContextProvider>
-              <StaticRouter location={url}>
-                <App />
-              </StaticRouter>
+              <URLProvider url={fullUrl}>
+                <StaticRouter location={url}>
+                  <App />
+                </StaticRouter>
+              </URLProvider>
             </AuthContextProvider>
           </QueryClientProvider>
         </HelmetProvider>
@@ -34,8 +39,8 @@ export function render(url, ssrManifest, options) {
     </React.StrictMode>,
     {
       ...options,
-      onShellReady: (shell) => {
-        options.onShellReady(helmetContext, shell);
+      onShellReady: () => {
+        options.onShellReady(helmetContext);
       },
     }
   );
