@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAuthContext } from "./Components/Context/AuthContext";
@@ -17,14 +17,11 @@ import Campaigns from "./Components/App/Campaigns/Campaigns";
 import NotFound from "./Components/App/404/NotFound";
 
 function App() {
-  const [client, setClient] = useState(false);
   const { user } = useAuthContext();
 
   // scroll up
   useEffect(() => {
     window.scroll(0, 0);
-
-    setClient(true);
   }, []);
 
   return (
@@ -76,7 +73,7 @@ function App() {
       <Footer />
 
       {/* custom components */}
-      {client && <Toaster />}
+      <Toaster />
     </div>
   );
 }

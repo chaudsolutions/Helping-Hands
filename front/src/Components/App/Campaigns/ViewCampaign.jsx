@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./viewCampaigns.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { fetchSingleCampaign, fetchUser } from "../../Hooks/useFetch";
+import { fetchSingleCampaign } from "../../Hooks/useFetch";
 import SEOComponent from "../../SEO/SEO";
 import { useAuthContext } from "../../Context/AuthContext";
 import ProgressBar from "@ramonak/react-progress-bar";
@@ -51,9 +51,9 @@ const paymentOptionsArray = [
 const ViewCampaign = () => {
   useEffect(() => {
     window.scroll(0, 0);
-    setClient(true);
-    setLink(window.location.href);
   }, []);
+
+  const link = window.location.href;
 
   const [emblaRef] = useEmblaCarousel({ loop: false }, [Autoplay()]);
 
@@ -61,8 +61,6 @@ const ViewCampaign = () => {
   const [currency, setCurrency] = useState("");
   const [amountToDonate, setAmountToDonate] = useState(0);
   const [paymentOptions, setPaymentOptions] = useState(false);
-  const [client, setClient] = useState(false);
-  const [link, setLink] = useState("");
   const [deleteBtn, setDeleteBtn] = useState(
     <>
       Delete <MdDeleteForever />
@@ -244,9 +242,8 @@ const ViewCampaign = () => {
             {ifAdmin && <HiBadgeCheck size={25} className="icon" />}{" "}
             {campaignName}
           </h1>
-          {client && (
-            <ProgressBar completed={progress} className="progressBar" />
-          )}
+
+          <ProgressBar completed={progress} className="progressBar" />
 
           <div className="campaign-details-b1">
             <p>
@@ -371,7 +368,7 @@ const ViewCampaign = () => {
         <ul></ul>
       </div>
 
-      {ifAdmin && (
+      {creatorOfCampaign && (
         <div className="delete">
           <h3>Delete this Fundraiser Campaign ?</h3>
           <p>

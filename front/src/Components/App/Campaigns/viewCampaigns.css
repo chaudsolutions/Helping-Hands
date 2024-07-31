@@ -95,11 +95,6 @@
           padding: 0.5rem 0;
           font-size: 0.6rem;
           font-weight: bold;
-
-          option {
-            font-weight: 400;
-            font-size: 0.8rem;
-          }
         }
 
         > button {
