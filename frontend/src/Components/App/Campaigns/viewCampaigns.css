@@ -159,10 +159,16 @@
   .admin-vet,
   .creator-div,
   .donors-div,
-  .feedback {
+  .feedback,
+  .others,
+  .delete {
     border-top: 1px solid var(--accent-color-dark);
     border-bottom: 1px solid var(--accent-color-dark);
     padding: 1rem 0;
+
+    > h3 {
+      font-weight: 500;
+    }
   }
   .safe-checkout {
     width: 100%;
@@ -204,10 +210,6 @@
     display: flex;
     flex-flow: column;
     gap: 1rem;
-
-    > h3 {
-      font-weight: 500;
-    }
 
     > ul {
       display: flex;
@@ -267,6 +269,45 @@
     }
     > :nth-child(2) {
       background-color: red;
+    }
+  }
+
+  .others {
+    display: flex;
+    flex-flow: column;
+    gap: 2rem;
+
+    .embla {
+      overflow: hidden;
+      padding: 0.5rem 1rem;
+    }
+    .embla__container {
+      display: flex;
+      gap: 2rem;
+    }
+    .fundRaise-li {
+      flex: 0 0 100%;
+      min-width: 0;
+    }
+  }
+
+  .delete {
+    display: flex;
+    flex-flow: column;
+    gap: 1rem;
+
+    > button {
+      min-width: 10rem;
+      padding: 0.5rem;
+      background-color: red;
+      color: var(--white);
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      border-radius: 1rem;
+      font-size: 1.2rem;
     }
   }
 }

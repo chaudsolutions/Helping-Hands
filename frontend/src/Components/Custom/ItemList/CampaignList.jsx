@@ -51,12 +51,15 @@ const CampaignList = ({ item }) => {
 
         {user && (
           <p>
-            Created {createdAgoDays > 0 && createdAgoDays} {createdAgoHours}{" "}
+            Created {createdAgoDays > 0 && createdAgoDays + " days"}{" "}
+            {createdAgoHours} {createdAgoDays < 24 && "hrs"}
           </p>
         )}
 
         <div>
-          <div>${item.amountRaised?.toLocaleString()}</div>
+          <div>
+            ${item.amountRaised?.toLocaleString()} of ${item.amount}
+          </div>
 
           <div>{expired}</div>
         </div>

@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 import NavMenu from "./NavMenu";
 import Logout from "../Buttons/Logout";
-import { fetchUser } from "../../Hooks/useFetch";
-import { useQuery } from "@tanstack/react-query";
 import PageLoader from "../../Animations/PageLoader";
 import { CiCamera } from "react-icons/ci";
 import { IoIosArrowForward } from "react-icons/io";
@@ -13,6 +11,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import ButtonLoad from "../../Animations/ButtonLoad";
 import { useAuthContext } from "../../Context/AuthContext";
+import { useUserData } from "../../Hooks/useQueryFetch/useQueryData";
 
 const NavSlide = ({ navFunc }) => {
   const { isNavActive } = navFunc[0];
@@ -27,7 +26,7 @@ const NavSlide = ({ navFunc }) => {
         {user && (
           <Suspense fallback={<PageLoader />}>
             <div className="profile-link">
-              <UserProfile userProp={[user]} />
+              <UserProfile />
             </div>
           </Suspense>
         )}
@@ -58,20 +57,10 @@ export const AuthContainer = ({ userProp }) => {
   );
 };
 
-export const UserProfile = ({ userProp }) => {
-  const user = userProp[0];
-
+export const UserProfile = () => {
   const [loading, setLoading] = useState(false);
 
-  const {
-    data: userData,
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["user"], // Use the new object-based syntax
-    queryFn: fetchUser,
-    enabled: !!user,
-  });
+  const { userData, isUserDataLoading, refetchUserData } = useUserData();
 
   const { name, profilePicture } = userData || {};
 
@@ -97,7 +86,7 @@ export const UserProfile = ({ userProp }) => {
       const { data } = response;
 
       toast.success(data);
-      refetch(); // refetch user data after successful profile picture update
+      refetchUserData(); // refetch user data after successful profile picture update
     } catch (error) {
       console.error(error); // Log the error to see what went wrong
       toast.error(error.response?.data || "An error occurred");
@@ -108,7 +97,7 @@ export const UserProfile = ({ userProp }) => {
 
   return (
     <div className="profile-DP">
-      {isLoading ? (
+      {isUserDataLoading ? (
         <PageLoader />
       ) : (
         <>

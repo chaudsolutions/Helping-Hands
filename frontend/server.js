@@ -7,9 +7,6 @@ import mongoose from "mongoose";
 // app constants
 const mongoUrl = process.env.mongodbLive;
 
-// Connect to Database
-mongoose.connect(mongoUrl);
-
 // Server Constants
 const isProduction = process.env.NODE_ENV === "production";
 const port = process.env.PORT || 5275;
@@ -47,6 +44,9 @@ if (!isProduction) {
   app.use(compression());
   app.use(base, sirv("./dist/client", { extensions: [] }));
 }
+
+// Connect to Database
+mongoose.connect(mongoUrl);
 
 // Fetch models
 import requireAuth from "./Server/Models/requireAuth.js";

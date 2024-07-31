@@ -64,7 +64,7 @@ const Nav = () => {
             <AuthContainer userProp={[user]} />
             {client && user && (
               <Suspense fallback={<PageLoader />}>
-                <UserProfile userProp={[user]} />
+                <UserProfile />
               </Suspense>
             )}
           </>

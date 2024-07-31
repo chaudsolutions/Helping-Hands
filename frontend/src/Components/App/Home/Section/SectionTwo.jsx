@@ -7,9 +7,9 @@ const SectionTwo = () => {
     useActiveCampaignData();
 
   const fundRaiseOutput = Array.isArray(activeCampaignData)
-    ? activeCampaignData?.map((item) => (
-        <CampaignList item={item} key={item._id} />
-      ))
+    ? activeCampaignData
+        ?.slice(0, 2)
+        ?.map((item) => <CampaignList item={item} key={item._id} />)
     : [];
 
   return (

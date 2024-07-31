@@ -221,4 +221,50 @@ router.put(
   }
 );
 
+router.delete("/delete-campaign/:campaignId", async (req, res) => {
+  const userId = req.userId;
+  const { campaignId } = req.params;
+
+  try {
+    // find user
+    const user = await UsersModel.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found.");
+    }
+
+    // check if user is admin
+    const isAdmin = user.role === "admin";
+
+    if (!isAdmin) {
+      throw new Error("Only admins can delete campaigns.");
+    }
+
+    // Fetch all user documents with campaigns
+    const usersCampaignDoc = await CampaignModel.find();
+
+    // Iterate over each user document
+    for (const userDoc of usersCampaignDoc) {
+      // Find the campaign within the user's campaigns array
+      const campaign = userDoc.campaigns.find(
+        (campaign) => campaign._id.toString() === campaignId
+      );
+
+      if (campaign) {
+        //  delete the campaign within the user's campaigns array
+        userDoc.campaigns = userDoc.campaigns.filter(
+          (c) => c._id.toString() !== campaignId
+        );
+        await userDoc.save();
+        break; // Stop iterating once the campaign is found
+      }
+    }
+
+    res.status(200).json("Campaign deleted successfully");
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.error(error);
+  }
+});
+
 export default router;

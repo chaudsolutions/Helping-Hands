@@ -22,7 +22,15 @@ import ButtonLoad from "../../Animations/ButtonLoad";
 import ReadMoreArea from "@foxeian/react-read-more";
 import { FaUser } from "react-icons/fa6";
 import { BsFlagFill } from "react-icons/bs";
-import { MdFeedback } from "react-icons/md";
+import { MdDeleteForever, MdFeedback } from "react-icons/md";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
+import {
+  useActiveCampaignData,
+  useUserData,
+} from "../../Hooks/useQueryFetch/useQueryData";
+import CampaignList from "../../Custom/ItemList/CampaignList";
+import axios from "axios";
 
 const paymentOptionsArray = [
   {
@@ -40,18 +48,25 @@ const paymentOptionsArray = [
 ];
 
 const ViewCampaign = () => {
+  useEffect(() => {
+    window.scroll(0, 0);
+    setClient(true);
+    setLink(window.location.href);
+  }, []);
+
+  const [emblaRef] = useEmblaCarousel({ loop: false }, [Autoplay()]);
+
   const [donorEmail, setDonorEmail] = useState("");
   const [currency, setCurrency] = useState("");
   const [amountToDonate, setAmountToDonate] = useState(0);
   const [paymentOptions, setPaymentOptions] = useState(false);
   const [client, setClient] = useState(false);
   const [link, setLink] = useState("");
-
-  useEffect(() => {
-    window.scroll(0, 0);
-    setClient(true);
-    setLink(window.location.href);
-  }, []);
+  const [deleteBtn, setDeleteBtn] = useState(
+    <>
+      Delete <MdDeleteForever />
+    </>
+  );
 
   // fetch item from DB with params
   const params = useParams();
@@ -73,15 +88,7 @@ const ViewCampaign = () => {
   });
 
   // fetch logged in user
-  const {
-    data,
-    isLoading: isUserDataLoading,
-    isError: isUserDataError,
-  } = useQuery({
-    queryKey: ["user"],
-    queryFn: fetchUser,
-    enabled: !!user,
-  });
+  const { userData, isUserDataLoading, isUserDataError } = useUserData();
 
   const {
     data: campaignData,
@@ -93,8 +100,12 @@ const ViewCampaign = () => {
     enabled: !!campaignId,
   });
 
+  // fetch active campaigns
+  const { activeCampaignData, isActiveCampaignDataLoading } =
+    useActiveCampaignData();
+
   // extract data from fetched results
-  const { _id } = data || {};
+  const { _id } = userData || {};
   const {
     amount,
     amountRaised,
@@ -116,10 +127,8 @@ const ViewCampaign = () => {
   // navigate home if error
   if (isUserDataError) return navigate("/");
 
-  let creatorOfCampaign;
-  if (user) {
-    creatorOfCampaign = creatorId === _id;
-  }
+  // check if creator of campaign when logged in
+  const creatorOfCampaign = user && creatorId === _id;
 
   // Calculate progress, days left, and expired status
   const currentDate = new Date();
@@ -194,6 +203,28 @@ const ViewCampaign = () => {
         </div>
       </li>
     ));
+
+  // function to delete campaign
+  const deleteCampaign = async () => {
+    setDeleteBtn(<ButtonLoad/>)
+
+    const userConfirmed = confirm(
+      "Are you sure you want to delete this Campaign?"
+    );
+
+    if (userConfirmed) {
+      const url = '/'
+      try {
+        const res = await axios.delete()
+      } catch (error) {
+        toast.error(error.response.data)
+      }finally {{
+        setDeleteBtn(
+          <>Delete <MdDeleteForever /></>
+        );
+      }
+    }
+  };
 
   return (
     <div className="view-Campaign">
@@ -290,13 +321,20 @@ const ViewCampaign = () => {
 
         <div>
           <FaUser size={30} />
-          <h2>{creator}</h2>
+          <h2>{ifAdmin ? "The Admin" : creator}</h2>
         </div>
       </div>
 
       <div className="donors-div">
         <h3>Donors</h3>
-        <ul>{donorsList}</ul>
+        {donors && donors.length ? (
+          <ul>{donorsList}</ul>
+        ) : (
+          <p>
+            No donors yet! Share your campaign link to your family and friends
+            to help you achieve your goals
+          </p>
+        )}
       </div>
 
       <div className="feedback">
@@ -309,6 +347,36 @@ const ViewCampaign = () => {
           <span>Report Campaign</span>
         </button>
       </div>
+
+      <div className="others">
+        <h3>Discover Other Amazing Campaigns</h3>
+
+        <div className="embla" ref={emblaRef}>
+          {isActiveCampaignDataLoading ? (
+            <PageLoader />
+          ) : (
+            <ul className="embla__container">
+              {activeCampaignData.length > 0 &&
+                activeCampaignData?.map((item) => (
+                  <CampaignList item={item} key={item._id} />
+                ))}
+            </ul>
+          )}
+        </div>
+        <ul></ul>
+      </div>
+
+      {ifAdmin && (
+        <div className="delete">
+          <h3>Delete this Fundraiser Campaign ?</h3>
+          <p>
+            This action cannot be undone. Are you sure you want to delete this
+            campaign?
+          </p>
+
+          <button onClick={() => deleteCampaign()}>{deleteBtn}</button>
+        </div>
+      )}
     </div>
   );
 };

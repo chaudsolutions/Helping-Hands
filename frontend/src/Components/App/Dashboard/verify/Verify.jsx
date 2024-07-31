@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 const Verify = ({ verifyProps }) => {
   const token = localStorage.getItem("helpingHandsUser");
 
-  const { refetch } = verifyProps[0];
+  const { refetchUserData } = verifyProps[0];
 
   const [otp, setOtp] = useState("");
 
@@ -30,7 +30,7 @@ const Verify = ({ verifyProps }) => {
       );
 
       // refetch user data
-      refetch();
+      refetchUserData();
 
       toast.success(response.data);
     } catch (error) {
