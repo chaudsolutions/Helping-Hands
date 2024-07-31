@@ -1,10 +1,11 @@
 import axios from "axios";
+import { serVer } from "./useVariable";
 
 // fetch user data from DB
 export const fetchUser = async () => {
   const token = localStorage.getItem("helpingHandsUser");
 
-  const response = await axios.get(`/user/userObj`, {
+  const response = await axios.get(`${serVer}/user/userObj`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -21,7 +22,7 @@ export const fetchUser = async () => {
 export const fetchUserCampaignDoc = async () => {
   const token = localStorage.getItem("helpingHandsUser");
 
-  const response = await axios.get(`/user/campaigns`, {
+  const response = await axios.get(`${serVer}/user/campaigns`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -36,7 +37,7 @@ export const fetchUserCampaignDoc = async () => {
 
 // fetch all active campaigns from DB
 export const fetchActiveCampaigns = async () => {
-  const response = await axios.get("/get/active-campaigns");
+  const response = await axios.get(`${serVer}/get/active-campaigns`);
 
   if (response.status !== 200) {
     throw new Error("Network response was not ok");
@@ -47,7 +48,7 @@ export const fetchActiveCampaigns = async () => {
 
 //  fetch single campaign by category
 export const fetchSingleCampaign = async (campaign) => {
-  const response = await axios.get(`/get/campaign/${campaign}`);
+  const response = await axios.get(`${serVer}/get/campaign/${campaign}`);
 
   if (response.status !== 200) {
     throw new Error("Network response was not ok");
