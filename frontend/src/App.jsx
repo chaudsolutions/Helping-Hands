@@ -13,6 +13,7 @@ import Dashboard from "./Components/App/Dashboard/Dashboard";
 import CreateCampaign from "./Components/App/Dashboard/CreateCampaign";
 import ViewCampaign from "./Components/App/Campaigns/ViewCampaign";
 import FAQComponent from "./Components/App/FAQ/FAQComponent";
+import Campaigns from "./Components/App/Campaigns/Campaigns";
 
 function App() {
   const [client, setClient] = useState(false);
@@ -87,6 +88,7 @@ function App() {
           <Route path="/new/campaign" element={<CreateCampaign />} />
 
           {/* campaigns */}
+          <Route path="/campaigns" element={<Campaigns />} />
           <Route path="/campaign/:campaignId" element={<ViewCampaign />} />
 
           {/* FAQ */}

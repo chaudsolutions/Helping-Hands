@@ -49,6 +49,7 @@ textarea {
 }
 select {
   outline: none;
+  color: var(--black);
 }
 button {
   border: none;

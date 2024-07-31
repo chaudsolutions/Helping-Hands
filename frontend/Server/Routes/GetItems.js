@@ -32,6 +32,11 @@ router.get("/active-campaigns", async (req, res) => {
       });
     });
 
+    // Sort active campaigns by createdAt, most recent first
+    activeCampaigns.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
     res.status(200).json(activeCampaigns);
   } catch (error) {
     res.status(500).send("Internal Server Error");

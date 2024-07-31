@@ -13,7 +13,7 @@ const NavMenu = () => {
     {
       name: "Lend A Hand",
       content: "Discover Hands to support",
-      link: "/donate",
+      link: "/campaigns",
     },
     {
       name: "Ask For Hand(s)",
