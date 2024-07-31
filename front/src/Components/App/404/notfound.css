@@ -1,0 +1,25 @@
+.not-found {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+
+  .users-anim {
+    width: 75vw;
+  }
+
+  > button {
+    background-color: var(--yb-accent-color);
+    color: black;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      transform: scale(0.9);
+    }
+  }
+}

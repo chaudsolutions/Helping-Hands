@@ -1,0 +1,67 @@
+.home {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+
+  .hero {
+    background-image: url("../../../assets/images/hero.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: var(--trans-black);
+    background-blend-mode: overlay;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-flow: column;
+    justify-content: end;
+    align-items: end;
+    gap: 1rem;
+    padding: 1rem;
+    padding-bottom: 30vh;
+    color: var(--white);
+
+    > :nth-child(1) {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      > h1 {
+        font-size: clamp(2rem, 5vw, 6rem);
+      }
+      > p {
+        color: var(--trans-white);
+        font-style: italic;
+      }
+    }
+
+    .auth-btn {
+      width: 100%;
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+
+      > * {
+        width: 70%;
+        max-width: 15rem;
+        padding: 1rem;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .article {
+    width: 100%;
+    margin-top: 80vh;
+    position: absolute;
+    background-color: var(--background-color);
+    border-radius: 1.5rem 1.5rem 0 0;
+    padding: 1rem var(--padding-clamp);
+    display: flex;
+    flex-flow: column;
+    gap: 5rem;
+  }
+}
