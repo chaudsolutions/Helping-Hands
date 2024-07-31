@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import express from "express";
+import cors from "cors";
 import { Transform } from "node:stream";
 import "dotenv/config";
 import mongoose from "mongoose";
@@ -27,6 +28,11 @@ const ssrManifest = isProduction
 const app = express();
 // Middleware to parse JSON bodies
 app.use(express.json());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 // Add Vite or respective production middlewares
 let vite;
