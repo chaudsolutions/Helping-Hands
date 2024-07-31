@@ -206,22 +206,26 @@ const ViewCampaign = () => {
 
   // function to delete campaign
   const deleteCampaign = async () => {
-    setDeleteBtn(<ButtonLoad/>)
+    setDeleteBtn(<ButtonLoad />);
 
     const userConfirmed = confirm(
       "Are you sure you want to delete this Campaign?"
     );
 
     if (userConfirmed) {
-      const url = '/'
+      const url = "/";
       try {
-        const res = await axios.delete()
+        const res = await axios.delete();
       } catch (error) {
-        toast.error(error.response.data)
-      }finally {{
-        setDeleteBtn(
-          <>Delete <MdDeleteForever /></>
-        );
+        toast.error(error.response.data);
+      } finally {
+        {
+          setDeleteBtn(
+            <>
+              Delete <MdDeleteForever />
+            </>
+          );
+        }
       }
     }
   };
