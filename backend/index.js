@@ -29,6 +29,11 @@ const userDocs = require("./Routes/UserDocs.js");
 const getItems = require("./Routes/GetItems.js");
 const verifyPayments = require("./Routes/VerifyPayments.js");
 
+// Define a default route handler for the root URL ("/")
+app.get("/", (req, res) => {
+  res.send("Hello, World! This is the root route for HELPING HANDS SERVERS.");
+});
+
 // Use Authentication route
 app.use("/auth", Authentication);
 
