@@ -12,9 +12,10 @@ import Login from "./Components/Auth/Login";
 import Dashboard from "./Components/App/Dashboard/Dashboard";
 import CreateCampaign from "./Components/App/Dashboard/CreateCampaign";
 import ViewCampaign from "./Components/App/Campaigns/ViewCampaign";
-import FAQComponent from "./Components/App/FAQ/FAQComponent";
 import Campaigns from "./Components/App/Campaigns/Campaigns";
 import NotFound from "./Components/App/404/NotFound";
+import FAQComponent from "./Components/App/Others/FAQ/FAQComponent";
+import About from "./Components/App/Others/About/About";
 
 function App() {
   const { user } = useAuthContext();
@@ -58,11 +59,12 @@ function App() {
           <Route path="/campaigns" element={<Campaigns />} />
           <Route path="/campaign/:campaignId" element={<ViewCampaign />} />
 
-          {/* FAQ */}
+          {/* OTHERS */}
           <Route
             path="/frequently-asked-questions"
             element={<FAQComponent />}
           />
+          <Route path="/about" element={<About />} />
 
           {/* Catch-all Route */}
           <Route path="*" element={<NotFound />} />

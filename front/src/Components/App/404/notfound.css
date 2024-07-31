@@ -1,25 +1,27 @@
 .not-found {
-  width: 100%;
   display: flex;
   flex-flow: column;
   align-items: center;
-  gap: 2rem;
-  margin-bottom: 2rem;
+  padding: 7rem var(--padding-clamp) 2rem;
 
-  .users-anim {
-    width: 75vw;
-  }
+  > :last-child {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    gap: 0.5rem;
 
-  > button {
-    background-color: var(--yb-accent-color);
-    color: black;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    font-weight: bold;
-    transition: 0.2s ease-in-out;
+    > button {
+      background-color: var(--accent-color);
+      color: black;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      font-weight: bold;
 
-    &:hover {
-      transform: scale(0.9);
+      &:hover {
+        transform: scale(0.9);
+        background-color: var(--accent-color-dark);
+        color: var(--white);
+      }
     }
   }
 }

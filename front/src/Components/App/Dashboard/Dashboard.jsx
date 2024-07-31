@@ -12,8 +12,13 @@ import {
   useUserCampaignData,
   useUserData,
 } from "../../Hooks/useQueryFetch/useQueryData";
+import { useEffect } from "react";
 
 const Dashboard = () => {
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
+
   const isMobile = useResponsive();
 
   // fetch user data and campaign data

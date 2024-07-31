@@ -49,10 +49,6 @@ const paymentOptionsArray = [
 ];
 
 const ViewCampaign = () => {
-  useEffect(() => {
-    window.scroll(0, 0);
-  }, []);
-
   const link = window.location.href;
 
   const [emblaRef] = useEmblaCarousel({ loop: false }, [Autoplay()]);
@@ -75,6 +71,10 @@ const ViewCampaign = () => {
   const { user } = useAuthContext();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, [campaignId]);
 
   // paystack hook
   const { handlePayment, loading } = usePaystackPayment();
@@ -104,7 +104,7 @@ const ViewCampaign = () => {
     useActiveCampaignData();
 
   // extract data from fetched results
-  const { _id } = userData || {};
+  const { _id, role } = userData || {};
   const {
     amount,
     amountRaised,
@@ -353,32 +353,33 @@ const ViewCampaign = () => {
       <div className="others">
         <h3>Discover Other Amazing Campaigns</h3>
 
-        <div className="embla" ref={emblaRef}>
-          {isActiveCampaignDataLoading ? (
-            <PageLoader />
-          ) : (
+        {isActiveCampaignDataLoading ? (
+          <PageLoader />
+        ) : (
+          <div className="embla" ref={emblaRef}>
             <ul className="embla__container">
               {activeCampaignData.length > 0 &&
                 activeCampaignData?.map((item) => (
                   <CampaignList item={item} key={item._id} />
                 ))}
             </ul>
-          )}
-        </div>
+          </div>
+        )}
         <ul></ul>
       </div>
 
-      {creatorOfCampaign && (
-        <div className="delete">
-          <h3>Delete this Fundraiser Campaign ?</h3>
-          <p>
-            This action cannot be undone. Are you sure you want to delete this
-            campaign?
-          </p>
+      {creatorOfCampaign ||
+        (role === "admin" && (
+          <div className="delete">
+            <h3>Delete this Fundraiser Campaign ?</h3>
+            <p>
+              This action cannot be undone. Are you sure you want to delete this
+              campaign?
+            </p>
 
-          <button onClick={() => deleteCampaign()}>{deleteBtn}</button>
-        </div>
-      )}
+            <button onClick={() => deleteCampaign()}>{deleteBtn}</button>
+          </div>
+        ))}
     </div>
   );
 };

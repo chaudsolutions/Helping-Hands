@@ -63,6 +63,10 @@ button {
   justify-content: center;
   margin-top: 1rem;
 }
+/* style animation */
+.animation {
+  width: 15rem;
+}
 
 /* progress bar */
 .progressBar {

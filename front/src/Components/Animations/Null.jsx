@@ -23,7 +23,7 @@ const Null = () => {
     };
   }, []);
 
-  return <div className="users-anim" ref={containerRef}></div>;
+  return <div className="animation" ref={containerRef}></div>;
 };
 
 export default Null;

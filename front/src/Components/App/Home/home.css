@@ -38,6 +38,27 @@
       }
     }
 
+    .dash-a {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+
+      > a {
+        width: fit-content;
+        background-color: var(--accent-color-dark);
+        color: var(--white);
+        font-weight: bold;
+        font-size: 1.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+        box-shadow: 0 0.3rem 0.5rem var(--trans-black);
+
+        &:hover {
+          transform: scale(0.9);
+        }
+      }
+    }
+
     .auth-btn {
       width: 100%;
       display: flex;
