@@ -1,6 +1,6 @@
-import { GiOpenChest } from "react-icons/gi";
-import { IoMdFlash } from "react-icons/io";
-import { FaEarthAmericas } from "react-icons/fa6";
+import { LuShieldCheck } from "react-icons/lu";
+import { RiTeamLine } from "react-icons/ri";
+import { PiFediverseLogo } from "react-icons/pi";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -12,28 +12,27 @@ import "swiper/css/navigation";
 
 // import required modules
 import { Autoplay } from "swiper/modules";
-
 import useResponsive from "../../../Hooks/useResponsive";
 
-const SectionOne = () => {
+const AboutTextSlide = () => {
   const isMobile = useResponsive();
 
   const points = [
     {
-      name: "Ignite Impact",
-      icon: <GiOpenChest size={40} />,
+      name: "Trusted by 217,000+ people",
+      icon: <LuShieldCheck size={40} />,
       content:
         "Spark joy by sharing your cause and the positive impact it brings. Clearly express how contributions will make a meaningful difference",
     },
     {
-      name: "Spread The Word",
-      icon: <IoMdFlash size={40} />,
+      name: "Crowdfunding, helping people achieve their goals",
+      icon: <RiTeamLine size={40} />,
       content:
         "Leverage the speed of social media and online networks. Share your fundraising campaign swiftly across various platforms",
     },
     {
-      name: "Ignite Impact",
-      icon: <FaEarthAmericas size={40} />,
+      name: "Built for individuals and businesses",
+      icon: <PiFediverseLogo size={40} />,
       content:
         "Build a strong social network around your cause. Encourage supporters to share the campaign within their local communities",
     },
@@ -49,13 +48,10 @@ const SectionOne = () => {
   ));
 
   return (
-    <section className="section-one">
+    <section className="about-one">
       <div>
-        <h2>Fund, Fast As flash</h2>
-        <p>
-          Fundraiser at the speed of thought! Elevate your cause in just a
-          minute with our lightning-fast fundraising platform
-        </p>
+        <h2>Why Helping Hands?</h2>
+        <p>These are key reasons why Helping Hands is a unique platform</p>
       </div>
 
       {/* desktop view */}
@@ -87,4 +83,4 @@ const SectionOne = () => {
   );
 };
 
-export default SectionOne;
+export default AboutTextSlide;
