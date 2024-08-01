@@ -16,6 +16,8 @@ import Campaigns from "./Components/App/Campaigns/Campaigns";
 import NotFound from "./Components/App/404/NotFound";
 import FAQComponent from "./Components/App/Others/FAQ/FAQComponent";
 import About from "./Components/App/Others/About/About";
+import Contact from "./Components/App/Others/Contact/Contact";
+import HelpCenter from "./Components/App/Others/HelpCenter/HelpCenter";
 
 function App() {
   const { user } = useAuthContext();
@@ -65,6 +67,8 @@ function App() {
             element={<FAQComponent />}
           />
           <Route path="/about" element={<About />} />
+          <Route path="/contact-us" element={<Contact />} />
+          <Route path="/help-center" element={<HelpCenter />} />
 
           {/* Catch-all Route */}
           <Route path="*" element={<NotFound />} />

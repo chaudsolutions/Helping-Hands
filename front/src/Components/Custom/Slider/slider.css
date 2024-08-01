@@ -8,6 +8,10 @@
     > li {
       flex: 0 0 100%;
       min-width: 0;
+
+      > img {
+        background-color: var(--trans-black);
+      }
     }
   }
 }

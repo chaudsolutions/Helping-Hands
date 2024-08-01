@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
-import { FaMinus, FaPlus } from "react-icons/fa6";
+import { useEffect } from "react";
 import "./faq.css";
 import SEOComponent from "../../../SEO/SEO";
+import QAComponent from "../../../Custom/Q&A/QAComponent";
 
 const FAQComponent = () => {
   useEffect(() => {
     window.scroll(0, 0);
   }, []);
-  const [activeFAQ, setActiveFAQ] = useState(null);
 
   const faqs = [
     {
@@ -72,26 +71,13 @@ const FAQComponent = () => {
     },
   ];
 
-  const faqOutput = faqs.map((item, i) => (
-    <li key={i} className="faq-item">
-      <div
-        className="faq-question"
-        onClick={() => setActiveFAQ(activeFAQ === i ? null : i)}>
-        <h4>{item.title}</h4>
-        {activeFAQ === i ? <FaMinus /> : <FaPlus />}
-      </div>
-      <p className={`faq-answer ${activeFAQ === i && "active-p"}`}>
-        {item.content}
-      </p>
-    </li>
-  ));
-
   return (
     <section className="faq">
       <SEOComponent />
 
       <h3>Frequently Asked Questions</h3>
-      <ul>{faqOutput}</ul>
+
+      <QAComponent itemArray={[faqs]} />
     </section>
   );
 };

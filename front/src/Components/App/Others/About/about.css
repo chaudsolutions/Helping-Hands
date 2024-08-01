@@ -9,9 +9,10 @@
   .embla-slider {
     img {
       width: 100%;
-      object-fit: contain;
-      max-height: 40rem;
+      object-fit: cover;
+      max-height: 25rem;
       border-radius: 1rem;
+      object-position: top;
     }
   }
 

@@ -1,0 +1,56 @@
+.socials {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+  gap: 0 1vw;
+
+  > li {
+    a {
+      background-color: var(--black);
+      border: 1px solid var(--trans-more-white);
+      border-radius: 0.5rem;
+      padding: 0.2rem 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      font-size: clamp(0.8rem, 2vw, 1rem);
+      color: var(--trans-white);
+
+      &:hover {
+        transform: scale(1.03);
+        font-weight: 600;
+      }
+    }
+
+    &:nth-child(1) {
+      a {
+        &:hover {
+          color: orangered;
+        }
+      }
+    }
+    &:nth-child(2) {
+      a {
+        &:hover {
+          color: rgb(74, 74, 255);
+        }
+      }
+    }
+    &:nth-child(3) {
+      a {
+        &:hover {
+          color: rgb(43, 43, 43);
+        }
+      }
+    }
+    &:nth-child(4) {
+      a {
+        &:hover {
+          color: rgb(141, 141, 255);
+        }
+      }
+    }
+  }
+}

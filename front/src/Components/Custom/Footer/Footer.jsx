@@ -1,14 +1,10 @@
 import { Link } from "react-router-dom";
 import { Logo } from "../Nav/Nav";
-import {
-  FaFacebook,
-  FaInstagram,
-  FaLinkedin,
-  FaXTwitter,
-} from "react-icons/fa6";
+
 import "./footer.css";
 import { useActiveCampaignData } from "../../Hooks/useQueryFetch/useQueryData";
 import ButtonLoad from "../../Animations/ButtonLoad";
+import Socials from "./Socials";
 
 const Footer = () => {
   const { activeCampaignData, isActiveCampaignDataLoading } =
@@ -21,38 +17,6 @@ const Footer = () => {
         </li>
       ))
     : [];
-
-  // socials
-  const socials = [
-    {
-      name: "Instagram",
-      icon: <FaInstagram />,
-      link: "",
-    },
-    {
-      name: "Facebook",
-      icon: <FaFacebook />,
-      link: "",
-    },
-    {
-      name: "Twitter",
-      icon: <FaXTwitter />,
-      link: "",
-    },
-    {
-      name: "Linkedin",
-      icon: <FaLinkedin />,
-      link: "",
-    },
-  ];
-  const socialsOutput = socials.map((item, i) => (
-    <li key={i}>
-      <a href={item.link}>
-        {item.icon}
-        <span>{item.name}</span>
-      </a>
-    </li>
-  ));
 
   return (
     <footer className="footer">
@@ -82,7 +46,7 @@ const Footer = () => {
               <Link>Privacy-Policy</Link>
             </li>
             <li>
-              <Link>Contact Us</Link>
+              <Link to="/contact-us">Contact Us</Link>
             </li>
           </ul>
           <ul>
@@ -91,7 +55,7 @@ const Footer = () => {
               <Link to="/about">About Us</Link>
             </li>
             <li>
-              <Link>Services</Link>
+              <Link to="/help-center">Help Center</Link>
             </li>
           </ul>
         </div>
@@ -106,7 +70,7 @@ const Footer = () => {
           All rights reserved
         </h6>
 
-        <ul>{socialsOutput}</ul>
+        <Socials />
       </div>
     </footer>
   );

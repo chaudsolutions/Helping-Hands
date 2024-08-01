@@ -7,42 +7,4 @@
   > h3 {
     font-size: clamp(2rem, 4vw, 3rem);
   }
-
-  > ul {
-    display: flex;
-    flex-flow: column;
-    gap: 1rem;
-
-    > li {
-      display: flex;
-      flex-flow: column;
-      align-items: center;
-      gap: 0.5rem;
-      border-bottom: 0.1rem solid var(--trans-more-black);
-      padding-bottom: 0.5rem;
-      color: var(--trans-black);
-      overflow: hidden;
-
-      > :nth-child(1) {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: clamp(1.2rem, 2vw, 1.5rem);
-      }
-
-      .faq-answer {
-        color: var(--trans-black);
-        font-weight: bold;
-        font-size: clamp(0.9rem, 2vw, 1.2rem);
-        transform: translateX(-100vw);
-        height: 0;
-        transition: 0.5s ease-in-out;
-      }
-      .active-p {
-        transform: translateX(0);
-        height: 100%;
-      }
-    }
-  }
 }
