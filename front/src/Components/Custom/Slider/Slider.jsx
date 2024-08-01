@@ -13,7 +13,7 @@ const Slider = ({ itemData }) => {
       <ul className="embla__container">
         {itemArray.map((item) => (
           <li key={item}>
-            <img src={item} />
+            <img src={item} loading="lazy" />
           </li>
         ))}
       </ul>

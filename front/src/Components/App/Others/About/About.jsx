@@ -11,8 +11,13 @@ import AboutTextSlide from "./AboutTextSlide";
 import { MdOutlineCampaign } from "react-icons/md";
 import { GiCoins } from "react-icons/gi";
 import { FaDonate } from "react-icons/fa";
+import { useEffect } from "react";
 
 const About = () => {
+  // scroll up
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
   const { user } = useAuthContext();
 
   const imagesObj = [imageOne, imageTwo, imageThree, imageFour];
