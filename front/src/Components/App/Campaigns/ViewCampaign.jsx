@@ -12,7 +12,6 @@ import { HiBadgeCheck } from "react-icons/hi";
 import PageLoader from "../../Animations/PageLoader";
 import paystackLogo from "../../../assets/images/payments/paystack-logo.png";
 import flutterWaveLogo from "../../../assets/images/payments/FlutterwaveLogo.png";
-import stripeLogo from "../../../assets/images/payments/stripe.png";
 import safeCheckoutLogo from "../../../assets/images/payments/guaranteed-safe-checkout.png";
 import toast from "react-hot-toast";
 import usePaystackPayment from "../../Hooks/usePaystack";
@@ -31,7 +30,7 @@ import {
 } from "../../Hooks/useQueryFetch/useQueryData";
 import CampaignList from "../../Custom/ItemList/CampaignList";
 import axios from "axios";
-import { serVer } from "../../Hooks/useVariable";
+import { serVer, token } from "../../Hooks/useVariable";
 
 const paymentOptionsArray = [
   {
@@ -41,10 +40,6 @@ const paymentOptionsArray = [
   {
     name: "Flutterwave",
     image: flutterWaveLogo,
-  },
-  {
-    name: "Stripe",
-    image: stripeLogo,
   },
 ];
 
@@ -212,9 +207,15 @@ const ViewCampaign = () => {
     );
 
     if (userConfirmed) {
-      const url = `${serVer}/`;
+      const url = `${serVer}/user/delete-campaign/${campaignId}`;
       try {
-        const res = await axios.delete();
+        const res = await axios.delete(url, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        // navigate back to campaign
+        navigate(-1 || "/dashboard");
+        toast.success(res.data);
       } catch (error) {
         toast.error(error.response.data);
       } finally {
@@ -233,7 +234,11 @@ const ViewCampaign = () => {
     <div className="view-Campaign">
       <SEOComponent title={campaignName} description={story} image={image} />
 
-      {isCampaignDataLoading && <PageLoader />}
+      {isCampaignDataLoading && (
+        <div className="loader-container">
+          <PageLoader />
+        </div>
+      )}
 
       <div className="campaign-details">
         <img src={image} />
@@ -354,7 +359,9 @@ const ViewCampaign = () => {
         <h3>Discover Other Amazing Campaigns</h3>
 
         {isActiveCampaignDataLoading ? (
-          <PageLoader />
+          <div className="loader-container">
+            <PageLoader />
+          </div>
         ) : (
           <div className="embla" ref={emblaRef}>
             <ul className="embla__container">

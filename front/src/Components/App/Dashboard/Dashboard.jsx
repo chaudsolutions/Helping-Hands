@@ -54,9 +54,11 @@ const Dashboard = () => {
 
       {/* display if account is not active */}
       {isUserDataLoading ? (
-        <PageLoader />
+        <div className="loader-container">
+          <PageLoader />
+        </div>
       ) : (
-        !active && <Verify verifyProps={[{ refetchUserData }]} />
+        userData && !active && <Verify verifyProps={[{ refetchUserData }]} />
       )}
 
       {/* main dashboard */}
@@ -77,7 +79,9 @@ const Dashboard = () => {
             <h3>Your Campaigns</h3>
 
             {isCampaignDataLoading ? (
-              <PageLoader />
+              <div className="loader-container">
+                <PageLoader />
+              </div>
             ) : (
               <>
                 {campaigns && campaigns.length > 0 ? (

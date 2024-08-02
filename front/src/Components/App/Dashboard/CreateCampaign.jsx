@@ -4,10 +4,15 @@ import toast from "react-hot-toast";
 import SEOComponent from "../../SEO/SEO";
 import ButtonLoad from "../../Animations/ButtonLoad";
 import { FaDollarSign, FaImage } from "react-icons/fa6";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { categories, serVer } from "../../Hooks/useVariable";
 
 const CreateCampaign = () => {
+  // scroll up
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
+
   const [imagePreviews, setImagePreviews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [imageFiles, setImageFiles] = useState([]);

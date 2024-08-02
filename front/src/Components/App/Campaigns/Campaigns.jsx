@@ -67,7 +67,9 @@ const Campaigns = () => {
 
       {/* campaigns output */}
       {isActiveCampaignDataLoading ? (
-        <PageLoader />
+        <div className="loader-container">
+          <PageLoader />
+        </div>
       ) : (
         <>
           {filteredCampaignData && filteredCampaignData.length > 0 ? (

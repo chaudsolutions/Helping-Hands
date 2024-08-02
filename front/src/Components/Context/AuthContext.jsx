@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import PropTypes from "prop-types";
 
 // Create an AuthContext with default value
@@ -9,12 +9,7 @@ export const AuthContextProvider = ({ children }) => {
     children: PropTypes.node.isRequired,
   };
 
-  const [user, setUser] = useState(
-    typeof window !== "undefined"
-      ? localStorage.getItem("helpingHandsUser")
-      : null
-  );
-  // const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState(localStorage.getItem("helpingHandsUser"));
 
   // Function to log in a user
   const login = (userData) => {
@@ -29,9 +24,8 @@ export const AuthContextProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     // Clear user data from local storage
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("helpingHandsUser");
-    }
+
+    localStorage.removeItem("helpingHandsUser");
   };
 
   return (

@@ -23,7 +23,9 @@ const SectionTwo = () => {
       </div>
 
       {isActiveCampaignDataLoading ? (
-        <PageLoader />
+        <div className="loader-container">
+          <PageLoader />
+        </div>
       ) : (
         <>{activeCampaignData && <ul>{fundRaiseOutput}</ul>}</>
       )}

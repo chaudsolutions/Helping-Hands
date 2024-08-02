@@ -7,3 +7,5 @@ export const supportedCountries = [
   "United States",
 ];
 export const categories = ["Animals", "Business", "Family", "Wishes"];
+
+export const token = localStorage.getItem("helpingHandsUser");

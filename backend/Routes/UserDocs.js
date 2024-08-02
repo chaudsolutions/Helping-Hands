@@ -221,6 +221,7 @@ router.put(
   }
 );
 
+// route to delete campaign
 router.delete("/delete-campaign/:campaignId", async (req, res) => {
   const userId = req.userId;
   const { campaignId } = req.params;
@@ -233,13 +234,6 @@ router.delete("/delete-campaign/:campaignId", async (req, res) => {
       throw new Error("User not found.");
     }
 
-    // check if user is admin
-    const isAdmin = user.role === "admin";
-
-    if (!isAdmin) {
-      throw new Error("Only admins can delete campaigns.");
-    }
-
     // Fetch all user documents with campaigns
     const usersCampaignDoc = await CampaignModel.find();
 
@@ -250,11 +244,21 @@ router.delete("/delete-campaign/:campaignId", async (req, res) => {
         (campaign) => campaign._id.toString() === campaignId
       );
 
+      // check if admin or creator of campaign
+      const ifAdmin =
+        user.role === "admin" ||
+        user._id.toString() === campaign.creatorId.toString();
+
+      if (!ifAdmin) {
+        throw new Error("Only admins or creator can delete campaigns.");
+      }
+
       if (campaign) {
         //  delete the campaign within the user's campaigns array
         userDoc.campaigns = userDoc.campaigns.filter(
           (c) => c._id.toString() !== campaignId
         );
+
         await userDoc.save();
         break; // Stop iterating once the campaign is found
       }

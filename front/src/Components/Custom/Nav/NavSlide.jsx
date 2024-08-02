@@ -6,7 +6,7 @@ import Logout from "../Buttons/Logout";
 import PageLoader from "../../Animations/PageLoader";
 import { CiCamera } from "react-icons/ci";
 import { IoIosArrowForward } from "react-icons/io";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import ButtonLoad from "../../Animations/ButtonLoad";
@@ -25,11 +25,9 @@ const NavSlide = ({ navFunc }) => {
 
       <>
         {user && (
-          <Suspense fallback={<PageLoader />}>
-            <div className="profile-link">
-              <UserProfile />
-            </div>
-          </Suspense>
+          <div className="profile-link">
+            <UserProfile />
+          </div>
         )}
         <NavMenu />
       </>

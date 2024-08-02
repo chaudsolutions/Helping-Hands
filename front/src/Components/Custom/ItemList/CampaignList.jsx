@@ -19,10 +19,7 @@ const CampaignList = ({ item }) => {
 
   // Calculate progress, days left, and expired status
   const progress = (item.amountRaised / item.amount) * 100;
-  const daysLeft = differenceInDays(
-    new Date(item.endDate),
-    new Date(item.createdAt)
-  );
+  const daysLeft = differenceInDays(new Date(item.endDate), new Date());
   const active = daysLeft > 0;
   const expired = active ? <>{daysLeft} days left</> : <>expired</>;
 
@@ -35,6 +32,8 @@ const CampaignList = ({ item }) => {
     currentDate,
     new Date(item.createdAt)
   );
+
+  // TODO: write a function that updates the campaign when its expired
 
   return (
     <li className="fundRaise-li">
@@ -52,7 +51,7 @@ const CampaignList = ({ item }) => {
         {user && (
           <p>
             Created {createdAgoDays > 0 && createdAgoDays + " days"}{" "}
-            {createdAgoHours} {createdAgoDays < 24 && "hrs"}
+            {createdAgoHours < 24 && createdAgoHours + "hrs"} Ago
           </p>
         )}
 
