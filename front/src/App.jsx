@@ -18,6 +18,7 @@ import FAQComponent from "./Components/App/Others/FAQ/FAQComponent";
 import About from "./Components/App/Others/About/About";
 import Contact from "./Components/App/Others/Contact/Contact";
 import HelpCenter from "./Components/App/Others/HelpCenter/HelpCenter";
+import Privacy from "./Components/App/Others/Privacy/Privacy";
 
 function App() {
   const { user } = useAuthContext();
@@ -69,6 +70,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact-us" element={<Contact />} />
           <Route path="/help-center" element={<HelpCenter />} />
+          <Route path="/privacy-policy" element={<Privacy />} />
 
           {/* Catch-all Route */}
           <Route path="*" element={<NotFound />} />

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import "./faq.css";
 import SEOComponent from "../../../SEO/SEO";
 import QAComponent from "../../../Custom/Q&A/QAComponent";
+import FAQAnim from "../../../Animations/FAQAnim";
 
 const FAQComponent = () => {
   useEffect(() => {
@@ -74,6 +75,8 @@ const FAQComponent = () => {
   return (
     <section className="faq">
       <SEOComponent />
+
+      <FAQAnim />
 
       <h3>Frequently Asked Questions</h3>
 

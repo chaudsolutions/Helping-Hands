@@ -1,8 +1,6 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet-async";
 import logo from "/logo.png";
-import { useURL } from "../Context/URLContext";
 
 const SEOComponent = ({
   title = "Helping Hands | The number one platform for lending a financial hand and getting financial help",
@@ -10,7 +8,7 @@ const SEOComponent = ({
   keywords = "",
   image = logo,
 }) => {
-  const url = useURL(); // Access the URL from context
+  const url = window.location.href; // Access the URL from context
   const fullImageUrl = `${url}${image}`; // Construct the full URL for the image
 
   return (

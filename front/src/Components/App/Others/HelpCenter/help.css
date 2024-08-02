@@ -22,59 +22,59 @@
     align-items: center;
     gap: 1.5rem;
   }
+}
 
-  .help-contact {
-    border-radius: 1rem;
-    padding: 1rem;
-    background-color: rgba(0, 0, 0, 0.1);
-    box-shadow: 0.1rem 0.2rem 0.5rem var(--trans-more-black);
+.help-contact {
+  border-radius: 1rem;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0.1rem 0.2rem 0.5rem var(--trans-more-black);
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+
+  > :nth-child(1) {
     display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
+    flex-flow: column;
+    gap: 0.5rem;
+    max-width: 60%;
 
-    > :nth-child(1) {
-      display: flex;
-      flex-flow: column;
-      gap: 0.5rem;
-      max-width: 60%;
-
-      > h2 {
-        font-size: clamp(1.2rem, 2vw, 2rem);
-        color: var(--accent-color-dark);
-      }
-
-      > p {
-        color: var(--trans-black);
-        font-size: clamp(0.8rem, 1.5vw, 1.1rem);
-        font-weight: 500;
-      }
-
-      > a {
-        background-color: var(--accent-color);
-        color: var(--black);
-        width: fit-content;
-        padding: 0.5rem 1rem;
-        font-weight: bold;
-        border-radius: 0.5rem;
-        font-size: clamp(1rem, 2vw, 2rem);
-
-        &:hover {
-          background-color: var(--accent-color-dark);
-          color: var(--white);
-          box-shadow: 0.2rem 0.2rem 0.5rem var(--trans-black);
-        }
-      }
+    > h2 {
+      font-size: clamp(1.2rem, 2vw, 2rem);
+      color: var(--accent-color-dark);
     }
 
-    .c-bg {
-      background-image: url("../../../../assets/images/phone-contact.png");
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      height: 10rem;
-      width: 10rem;
-      border-radius: 1rem;
+    > p {
+      color: var(--trans-black);
+      font-size: clamp(0.8rem, 1.5vw, 1.1rem);
+      font-weight: 500;
     }
+
+    > a {
+      background-color: var(--accent-color);
+      color: var(--black);
+      width: fit-content;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      border-radius: 0.5rem;
+      font-size: clamp(1rem, 2vw, 2rem);
+
+      &:hover {
+        background-color: var(--accent-color-dark);
+        color: var(--white);
+        box-shadow: 0.2rem 0.2rem 0.5rem var(--trans-black);
+      }
+    }
+  }
+
+  .c-bg {
+    background-image: url("../../../../assets/images/phone-contact.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 10rem;
+    width: 10rem;
+    border-radius: 1rem;
   }
 }

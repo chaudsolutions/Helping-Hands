@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Logo } from "../Nav/Nav";
-
 import "./footer.css";
 import { useActiveCampaignData } from "../../Hooks/useQueryFetch/useQueryData";
 import ButtonLoad from "../../Animations/ButtonLoad";
@@ -43,7 +42,7 @@ const Footer = () => {
               <Link to="/frequently-asked-questions">FAQ</Link>
             </li>
             <li>
-              <Link>Privacy-Policy</Link>
+              <Link to="/privacy-policy">Privacy-Policy</Link>
             </li>
             <li>
               <Link to="/contact-us">Contact Us</Link>

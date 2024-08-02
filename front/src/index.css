@@ -65,7 +65,8 @@ button {
 }
 /* style animation */
 .animation {
-  width: 15rem;
+  width: 50vw;
+  max-width: 30rem;
 }
 
 /* progress bar */

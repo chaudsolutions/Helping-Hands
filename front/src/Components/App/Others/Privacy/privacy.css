@@ -1,0 +1,7 @@
+.privacy-policy {
+  padding: 7rem var(--padding-clamp) 2rem;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 3rem;
+}
