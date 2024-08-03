@@ -16,14 +16,13 @@ const PopupComponent = ({ open, onClose, context }) => {
     register: withdrawalRegister,
     handleSubmit: withdrawalHandleSubmit,
     formState: withdrawalFormState,
-    reset,
   } = withdrawalForm;
   const { errors, isSubmitting } = withdrawalFormState;
 
   //  function to request withdrawals
-  const onSubmit = async (data) => {};
+  const handleWithdraw = async (data) => {};
 
-  const onError = () => {
+  const onWithdrawError = () => {
     toast.error("Failed to submit, check inputs and try again");
   };
 
@@ -45,7 +44,9 @@ const PopupComponent = ({ open, onClose, context }) => {
         </p>
 
         {withdraw && (
-          <form onSubmit={withdrawalHandleSubmit(onSubmit, onError)} noValidate>
+          <form
+            onSubmit={withdrawalHandleSubmit(handleWithdraw, onWithdrawError)}
+            noValidate>
             <div>
               <div className="inputBox">
                 <input
