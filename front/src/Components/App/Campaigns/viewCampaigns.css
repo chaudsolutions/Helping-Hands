@@ -96,8 +96,8 @@
           padding: 0.5rem 0;
           font-size: 0.6rem;
           font-weight: bold;
-          height: 2rem;
-          width: 2rem;
+          height: 2.5rem;
+          min-width: 2rem;
         }
 
         > button {
@@ -136,6 +136,7 @@
           display: flex;
           align-items: center;
           flex-flow: row wrap;
+          justify-content: space-around;
           gap: 1rem;
 
           > li {
@@ -215,12 +216,14 @@
       gap: 0.5rem 1rem;
 
       > li {
+        background-color: rgba(0, 0, 0, 0.1);
         flex-grow: 1;
         max-width: 10rem;
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 0.5rem;
-        box-shadow: 0 0.3rem 0.5rem var(--trans-more-black);
+        box-shadow: 0 0.3rem 0.5rem var(--trans-black);
         padding: 0.3rem;
         border-radius: 1rem;
 

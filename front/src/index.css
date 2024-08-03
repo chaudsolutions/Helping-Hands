@@ -64,6 +64,11 @@ button {
   justify-content: center;
   margin-top: 1rem;
 }
+.null {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
 /* style animation */
 .animation {
   width: 50vw;

@@ -34,6 +34,7 @@
     "react-router-dom": "^6.25.1",
     "react-share": "^5.1.0",
     "reactjs-otp-input": "^2.0.8",
+    "reactjs-popup": "^2.0.6",
     "swiper": "^11.1.5"
   },
   "devDependencies": {

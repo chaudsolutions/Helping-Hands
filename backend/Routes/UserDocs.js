@@ -254,6 +254,16 @@ router.delete("/delete-campaign/:campaignId", async (req, res) => {
       }
 
       if (campaign) {
+        // check if campaign has donors
+        if (campaign.donors && campaign.donors.length > 0) {
+          throw new Error("Campaign has donors, cannot delete.");
+        }
+
+        // delete image from cloudinary
+        const imageUrl = campaign.image;
+        const publicId = imageUrl.split("/").slice(-2).join("/").split(".")[0];
+        await cloudinary.uploader.destroy(publicId);
+
         //  delete the campaign within the user's campaigns array
         userDoc.campaigns = userDoc.campaigns.filter(
           (c) => c._id.toString() !== campaignId
@@ -267,7 +277,6 @@ router.delete("/delete-campaign/:campaignId", async (req, res) => {
     res.status(200).json("Campaign deleted successfully");
   } catch (error) {
     res.status(500).send(error.message);
-    console.error(error);
   }
 });
 

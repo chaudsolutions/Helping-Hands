@@ -128,7 +128,7 @@ const ViewCampaign = () => {
   const currentDate = new Date();
 
   const progress = (amountRaised / amount) * 100;
-  const daysLeft = differenceInDays(new Date(endDate), new Date(createdAt));
+  const daysLeft = differenceInDays(new Date(endDate), currentDate);
   const active = daysLeft > 0;
   const expired = active ? <>{daysLeft} days left</> : <>expired</>;
 
@@ -166,15 +166,13 @@ const ViewCampaign = () => {
       }
       if (paymentOption === "Flutterwave") {
         initiatePayment({
+          amountToDonate,
           convertedBalance,
           currency,
           donorEmail,
           refetch,
           campaignId,
         });
-      }
-      if (paymentOption === "Stripe") {
-        console.log("Stripe");
       }
     };
 
@@ -200,13 +198,13 @@ const ViewCampaign = () => {
 
   // function to delete campaign
   const deleteCampaign = async () => {
-    setDeleteBtn(<ButtonLoad />);
-
     const userConfirmed = confirm(
-      "Are you sure you want to delete this Campaign?"
+      "Are you sure you want to delete this Campaign?. This action is irreversible"
     );
 
     if (userConfirmed) {
+      setDeleteBtn(<ButtonLoad />);
+
       const url = `${serVer}/user/delete-campaign/${campaignId}`;
       try {
         const res = await axios.delete(url, {
@@ -248,7 +246,7 @@ const ViewCampaign = () => {
             {campaignName}
           </h1>
 
-          <ProgressBar completed={progress} className="progressBar" />
+          <ProgressBar completed={progress.toFixed()} className="progressBar" />
 
           <div className="campaign-details-b1">
             <p>
@@ -258,7 +256,7 @@ const ViewCampaign = () => {
           </div>
 
           <p>
-            Created {createdAgoDays > 0 && createdAgoDays + ` day(s),`}{" "}
+            Created {createdAgoDays > 0 && createdAgoDays + ` day(s)`}{" "}
             {createdAgoHours < 24 && createdAgoHours + `hrs`} ago by{" "}
             {user && !isUserDataLoading && creatorOfCampaign ? (
               <>You</>
@@ -268,6 +266,11 @@ const ViewCampaign = () => {
           </p>
 
           <strong>{category}</strong>
+
+          {/* condition */}
+          <p>
+            This Campaign is: <strong>{condition}</strong>
+          </p>
 
           <Share domain={[link, campaignName, image]} />
 
@@ -375,18 +378,17 @@ const ViewCampaign = () => {
         <ul></ul>
       </div>
 
-      {creatorOfCampaign ||
-        (role === "admin" && (
-          <div className="delete">
-            <h3>Delete this Fundraiser Campaign ?</h3>
-            <p>
-              This action cannot be undone. Are you sure you want to delete this
-              campaign?
-            </p>
+      {((campaignData && creatorOfCampaign) || role === "admin") && (
+        <div className="delete">
+          <h3>Delete this Fundraiser Campaign ?</h3>
+          <p>
+            This action cannot be undone. Are you sure you want to delete this
+            campaign?
+          </p>
 
-            <button onClick={() => deleteCampaign()}>{deleteBtn}</button>
-          </div>
-        ))}
+          <button onClick={() => deleteCampaign()}>{deleteBtn}</button>
+        </div>
+      )}
     </div>
   );
 };

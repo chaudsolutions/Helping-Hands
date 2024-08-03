@@ -1,0 +1,85 @@
+.profile {
+  padding: 7rem var(--padding-clamp) 2rem;
+  display: flex;
+  flex-flow: column;
+  gap: 3rem;
+
+  .profile-dash {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-around;
+
+    .profile-DP {
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      gap: 0.3rem;
+
+      > label {
+        border: 1px solid var(--trans-more-black);
+        border-radius: 50%;
+        height: 10rem;
+        width: 10rem;
+        background-color: rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+
+        img {
+          height: 100%;
+          width: 100%;
+        }
+      }
+
+      > a {
+        display: flex;
+        align-items: center;
+        color: var(--black);
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+    }
+
+    .profile-bal {
+      display: flex;
+      flex-flow: column;
+      gap: 0.3rem;
+
+      > h1 {
+        font-size: clamp(2rem, 4vw, 3rem);
+      }
+
+      .btn {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        > button {
+          padding: 0.5rem 1rem;
+          border-radius: 1rem;
+          box-shadow: 0 0.3rem 0.5rem var(--trans-more-black);
+          display: flex;
+          align-items: center;
+          gap: 0.3rem;
+          font-weight: bold;
+
+          &:hover {
+            transform: scale(1.05);
+          }
+        }
+
+        > :nth-child(1) {
+          background-color: var(--accent-color);
+        }
+        > :nth-child(2) {
+          background-color: var(--trans-black);
+          color: var(--white);
+        }
+      }
+    }
+  }
+}

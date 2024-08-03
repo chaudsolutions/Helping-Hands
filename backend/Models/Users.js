@@ -11,6 +11,7 @@ const UsersSchema = new Schema(
     password: { type: String, required: true },
     role: { type: String, enum: ["admin", "user"], default: "user" },
     active: { type: Boolean, default: false },
+    balance: { type: Number, default: 0 },
     profilePicture: { type: String },
     address: {
       streetName: { type: String },
@@ -32,7 +33,8 @@ UsersSchema.statics.signup = async function (
   verificationCode,
   country,
   role,
-  active
+  active,
+  balance
 ) {
   // validation
   if (!name || !email || !password) {
@@ -59,6 +61,7 @@ UsersSchema.statics.signup = async function (
     role,
     active,
     verificationCode,
+    balance,
     address: {
       country,
     },

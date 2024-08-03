@@ -19,6 +19,7 @@ import About from "./Components/App/Others/About/About";
 import Contact from "./Components/App/Others/Contact/Contact";
 import HelpCenter from "./Components/App/Others/HelpCenter/HelpCenter";
 import Privacy from "./Components/App/Others/Privacy/Privacy";
+import Profile from "./Components/App/Profile/Profile";
 
 function App() {
   const { user } = useAuthContext();
@@ -56,6 +57,10 @@ function App() {
           <Route
             path="/new/campaign"
             element={user ? <CreateCampaign /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/profile"
+            element={user ? <Profile /> : <Navigate to="/" />}
           />
 
           {/* campaigns */}
