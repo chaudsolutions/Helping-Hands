@@ -8,7 +8,16 @@ const RequestSchema = new Schema(
   {
     link: { type: String, unique: true },
     requestAmount: { type: Number },
-    clientMail: { type: String },
+    paymentDetails: {
+      email: { type: String },
+      name: { type: String },
+      customerPaymentId: { type: String },
+      paymentMethod: { type: String },
+      amountReceivedViaPaymentMethod: { type: String },
+      paymentId: { type: String },
+      currency: { type: String },
+      amountToDonate: { type: Number },
+    },
   },
   { timestamps: true }
 );

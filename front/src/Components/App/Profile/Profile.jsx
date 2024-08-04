@@ -34,8 +34,8 @@ const Profile = () => {
   const { active, balance, requests, _id } = userData || {};
 
   // sort requests
-  const unpaidRequests = requests?.filter((request) => !request.clientMail);
-  const paidRequests = requests?.filter((request) => request.clientMail);
+  const unpaidRequests = requests?.filter((request) => !request.paymentDetails);
+  const paidRequests = requests?.filter((request) => request.paymentDetails);
 
   // count requests
   const unpaidRequestsCount = unpaidRequests?.length || 0;

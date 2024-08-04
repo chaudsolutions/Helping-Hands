@@ -1,26 +1,22 @@
-import { useEffect, useState } from "react";
+import PaystackPop from "@paystack/inline-js";
+import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { serVer } from "./useVariable";
 
 const usePaystackPayment = () => {
   const [loading, setLoading] = useState(false);
-  const [PaystackPop, setPaystackPop] = useState(null);
-
-  useEffect(() => {
-    // Dynamically import the Paystack library
-    import("@paystack/inline-js").then((module) => {
-      setPaystackPop(() => module.default); // Store the PaystackPop in state
-    });
-  }, []);
 
   const handlePayment = ({
+    paymentType,
     amountToDonate,
     convertedBalance,
     currency,
     donorEmail,
     refetch,
     campaignId,
+    requestUserId,
+    requestFundsId,
   }) => {
     setLoading(true);
 
@@ -64,36 +60,71 @@ const usePaystackPayment = () => {
               const amountPaid = data?.data?.amount / 100;
               const customerId = data?.data?.customer.id;
 
-              // Save donate details to database
-              const donateData = {
-                email: donorEmail,
-                name: firstName,
-                customerPaymentId: customerId,
-                paymentMethod: "Paystack",
-                amountReceivedViaPaymentMethod: amountPaid,
-                paymentId: reference,
-                currency,
-                amountToDonate: parseInt(amountToDonate),
-              };
-
               // check if user paid exact amount for order
               if (amountPaid < convertedBalance) {
                 return toast.error("Incomplete payment");
               }
 
-              const donateUrl = `${serVer}/verify-payment/donate/${campaignId}`;
+              // NOTE: This is for donations
+              if (paymentType !== "OneToOnePayment") {
+                // Save donate details to database
+                const donateData = {
+                  email: donorEmail,
+                  name: firstName,
+                  customerPaymentId: customerId,
+                  paymentMethod: "Paystack",
+                  amountReceivedViaPaymentMethod: amountPaid,
+                  paymentId: reference,
+                  currency,
+                  amountToDonate: parseInt(amountToDonate),
+                };
 
-              try {
-                const response = await axios.put(donateUrl, { donateData });
+                const donateUrl = `${serVer}/verify-payment/donate/${campaignId}`;
 
-                toast.success(response.data);
+                try {
+                  const response = await axios.put(donateUrl, { donateData });
 
-                // refetch the campaign
-                refetch();
-              } catch (error) {
-                toast.error(error?.response?.data);
-              } finally {
-                setLoading(false);
+                  toast.success(response.data);
+
+                  // refetch the campaign
+                  refetch();
+                } catch (error) {
+                  toast.error(error?.response?.data);
+                } finally {
+                  setLoading(false);
+                }
+              }
+
+              // NOTE: This is for one-to-one payments
+              if (paymentType === "OneToOnePayment") {
+                // Save payment details to database
+                const paymentRequestData = {
+                  email: donorEmail,
+                  name: firstName,
+                  customerPaymentId: customerId,
+                  paymentMethod: "Paystack",
+                  amountReceivedViaPaymentMethod: amountPaid,
+                  paymentId: reference,
+                  currency,
+                  amountToDonate: parseInt(amountToDonate),
+                };
+
+                const paymentRequestUrl = `${serVer}/verify-payment/pay-request/${requestUserId}/${requestFundsId}`;
+
+                try {
+                  const response = await axios.put(paymentRequestUrl, {
+                    paymentRequestData,
+                  });
+
+                  toast.success(response.data);
+
+                  // refetch the campaign
+                  refetch();
+                } catch (error) {
+                  toast.error(error?.response?.data);
+                } finally {
+                  setLoading(false);
+                }
               }
             }
           } catch (error) {
