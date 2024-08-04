@@ -10,8 +10,6 @@ import { differenceInDays, differenceInHours } from "date-fns";
 import Share from "../../Custom/Buttons/Share";
 import { HiBadgeCheck } from "react-icons/hi";
 import PageLoader from "../../Animations/PageLoader";
-import paystackLogo from "../../../assets/images/payments/paystack-logo.png";
-import flutterWaveLogo from "../../../assets/images/payments/FlutterwaveLogo.png";
 import safeCheckoutLogo from "../../../assets/images/payments/guaranteed-safe-checkout.png";
 import toast from "react-hot-toast";
 import usePaystackPayment from "../../Hooks/usePaystack";
@@ -30,18 +28,12 @@ import {
 } from "../../Hooks/useQueryFetch/useQueryData";
 import CampaignList from "../../Custom/ItemList/CampaignList";
 import axios from "axios";
-import { serVer, token } from "../../Hooks/useVariable";
-
-const paymentOptionsArray = [
-  {
-    name: "Paystack",
-    image: paystackLogo,
-  },
-  {
-    name: "Flutterwave",
-    image: flutterWaveLogo,
-  },
-];
+import {
+  currencyArray,
+  paymentOptionsArray,
+  serVer,
+  token,
+} from "../../Hooks/useVariable";
 
 const ViewCampaign = () => {
   const link = window.location.href;
@@ -282,9 +274,11 @@ const ViewCampaign = () => {
               onChange={(e) => setAmountToDonate(e.target.value)}
             />
             <select onChange={(e) => setCurrency(e.target.value)}>
-              <option value="USD">USD (US Dollar)</option>
-              <option value="GBP">GBP (Pound)</option>
-              <option value="NGN">NGN (Naira)</option>
+              {currencyArray.map((currency) => (
+                <option key={currency} value={currency.currency}>
+                  {currency.name}
+                </option>
+              ))}
             </select>
             <button onClick={() => setPaymentOptions(!paymentOptions)}>
               Donate Now
