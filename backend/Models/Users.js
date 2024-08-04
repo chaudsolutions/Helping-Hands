@@ -4,6 +4,15 @@ const bcrypt = require("bcrypt");
 
 const Schema = mongoose.Schema;
 
+const RequestSchema = new Schema(
+  {
+    link: { type: String, unique: true },
+    requestAmount: { type: Number },
+    clientMail: { type: String },
+  },
+  { timestamps: true }
+);
+
 const UsersSchema = new Schema(
   {
     name: { type: String, required: true, unique: true },
@@ -21,6 +30,7 @@ const UsersSchema = new Schema(
       phoneNumber: { type: String },
     },
     verificationCode: { type: String, required: true },
+    requests: [RequestSchema],
   },
   { timestamps: true }
 );

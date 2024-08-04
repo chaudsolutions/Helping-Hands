@@ -10,17 +10,20 @@ const calculateEndDate = () => {
 };
 
 // Define the donor sub-schema
-const DonorSchema = new Schema({
-  email: { type: String },
-  name: { type: String, default: "Anonymous" },
-  customerPaymentId: { type: String },
-  amountReceivedViaPaymentMethod: { type: Number },
-  amountUSD: { type: Number },
-  currency: { type: String },
-  paymentId: { type: String },
-  paymentMethod: { type: String },
-  date: { type: Date, default: Date.now },
-});
+const DonorSchema = new Schema(
+  {
+    email: { type: String },
+    name: { type: String, default: "Anonymous" },
+    customerPaymentId: { type: String },
+    amountReceivedViaPaymentMethod: { type: Number },
+    amountUSD: { type: Number },
+    currency: { type: String },
+    paymentId: { type: String },
+    paymentMethod: { type: String },
+    date: { type: Date, default: Date.now },
+  },
+  { timestamps: true }
+);
 
 // Define the campaign sub-schema
 const CampaignSchema = new Schema(

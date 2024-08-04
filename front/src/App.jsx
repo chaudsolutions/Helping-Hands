@@ -20,6 +20,7 @@ import Contact from "./Components/App/Others/Contact/Contact";
 import HelpCenter from "./Components/App/Others/HelpCenter/HelpCenter";
 import Privacy from "./Components/App/Others/Privacy/Privacy";
 import Profile from "./Components/App/Profile/Profile";
+import FundsRequestPayment from "./Components/App/Funds/FundsRequestPayment";
 
 function App() {
   const { user } = useAuthContext();
@@ -66,6 +67,12 @@ function App() {
           {/* campaigns */}
           <Route path="/campaigns" element={<Campaigns />} />
           <Route path="/campaign/:campaignId" element={<ViewCampaign />} />
+
+          {/* funds */}
+          <Route
+            path="/request-funds/:requestUserId/:requestFundsId"
+            element={<FundsRequestPayment />}
+          />
 
           {/* OTHERS */}
           <Route

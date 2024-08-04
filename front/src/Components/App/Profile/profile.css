@@ -51,6 +51,9 @@
 
       > h1 {
         font-size: clamp(2rem, 4vw, 3rem);
+        display: flex;
+        align-items: center;
+        gap: 0.2rem;
       }
 
       .btn {

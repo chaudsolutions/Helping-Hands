@@ -28,6 +28,7 @@ const Authentication = require("./Routes/Authentication.js");
 const userDocs = require("./Routes/UserDocs.js");
 const getItems = require("./Routes/GetItems.js");
 const verifyPayments = require("./Routes/VerifyPayments.js");
+const FundsRoute = require("./Routes/Funds.js");
 
 // Define a default route handler for the root URL ("/")
 app.get("/", (req, res) => {
@@ -41,6 +42,11 @@ app.use("/auth", Authentication);
 app.use("/user", requireAuth);
 // User route
 app.use("/user", userDocs);
+
+// Route protection
+app.use("/funds", requireAuth);
+// User route
+app.use("/funds", FundsRoute);
 
 // Use get items route
 app.use("/get", getItems);

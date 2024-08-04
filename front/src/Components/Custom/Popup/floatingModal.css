@@ -43,6 +43,27 @@
     }
   }
 
+  .requestFunds-link {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+
+    > span {
+      font-size: 1rem;
+    }
+
+    > div {
+      display: flex;
+      align-items: center;
+
+      > :nth-child(1) {
+        * {
+          font-size: 0.7rem;
+        }
+      }
+    }
+  }
+
   > form {
     background-color: rgba(0, 0, 0, 0.1);
     box-shadow: 0 0.3rem 0.5rem var(--trans-black);
