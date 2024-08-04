@@ -14,10 +14,8 @@ export const AuthContextProvider = ({ children }) => {
   // Function to log in a user
   const login = (userData) => {
     setUser(userData);
-    // Optionally store the token in local storage
-    if (typeof window !== "undefined") {
-      localStorage.setItem("helpingHandsUser", JSON.stringify(userData));
-    }
+
+    localStorage.setItem("helpingHandsUser", JSON.stringify(userData));
   };
 
   // Function to log out a user

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAuthContext } from "./Components/Context/AuthContext";
+import ScrollToTop from "react-scroll-to-top";
 
 // components
 import Home from "./Components/App/Home/Home";
@@ -88,6 +89,15 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
+
+      {/* scroll to top BTN */}
+      <ScrollToTop
+        color="black"
+        smooth
+        width="20"
+        height="20"
+        className="scrollToTopBtn"
+      />
 
       {/* footer */}
       <Footer />
