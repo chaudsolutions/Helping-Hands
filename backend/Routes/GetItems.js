@@ -1,5 +1,6 @@
 const express = require("express");
 const CampaignModel = require("../Models/Campaign.js");
+const UsersModel = require("../Models/Users.js");
 
 const router = express.Router();
 
@@ -86,5 +87,33 @@ router.get("/campaign/:campaignId", async (req, res) => {
     console.error(error);
   }
 });
+
+// endpoint to fetch payment request information for the client
+router.get(
+  "/payment-request/:requestUserId/:requestFundsLink",
+  async (req, res) => {
+    const { requestUserId, requestFundsLink } = req.params;
+    try {
+      // find user
+      const user = await UsersModel.findById(requestUserId);
+      if (!user) {
+        throw Error("User not found");
+      }
+
+      // find the request
+      const request = user.requests.find(
+        (request) => request.link === requestFundsLink
+      );
+      if (!request) {
+        throw Error("Request not found");
+      }
+
+      res.status(200).send(request);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error");
+    }
+  }
+);
 
 module.exports = router;

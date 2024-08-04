@@ -85,4 +85,63 @@
       }
     }
   }
+
+  .profile-transactions {
+    display: flex;
+    flex-flow: column;
+    gap: 2rem;
+
+    .requests {
+      display: flex;
+      flex-flow: column;
+      gap: 2rem;
+
+      > ul {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        gap: 1rem;
+
+        > li {
+          display: flex;
+          flex-flow: row wrap;
+          align-items: center;
+          gap: 0.5rem;
+
+          > :nth-child(1) {
+            color: var(--accent-color-dark);
+            font-weight: bold;
+          }
+
+          > :nth-child(2) {
+            font-size: clamp(0.7rem, 1vw, 1rem);
+          }
+
+          .copyBtn {
+            padding: 0.5rem 1rem;
+            background-color: var(--accent-color);
+            font-weight: 500;
+            border-radius: 0.8rem;
+            box-shadow: 0 0.3rem 0.5rem var(--trans-more-black);
+
+            &:hover {
+              background-color: var(--accent-color-dark);
+            }
+          }
+
+          .deleteBtn {
+            background-color: rgba(255, 0, 0, 0.4);
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            border-radius: 0.8rem;
+            box-shadow: 0 0.3rem 0.5rem var(--trans-more-black);
+
+            &:hover {
+              background-color: red;
+            }
+          }
+        }
+      }
+    }
+  }
 }

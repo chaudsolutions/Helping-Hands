@@ -11,7 +11,7 @@ import { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import ReadMoreArea from "@foxeian/react-read-more";
 
-const PopupComponent = ({ open, onClose, context }) => {
+const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
   const withdraw = context === "Withdraw";
   const request = context === "Request";
 
@@ -62,6 +62,10 @@ const PopupComponent = ({ open, onClose, context }) => {
       setFundsLink(data.requestFundsLink);
 
       requestReset();
+
+      refetchUserData();
+
+      onClose;
 
       toast.success("Link generated successfully");
     } catch (error) {
@@ -161,7 +165,11 @@ const PopupComponent = ({ open, onClose, context }) => {
                   >
                     {window.location.origin + "/request-funds/" + fundsLink}
                   </ReadMoreArea>
-                  <CopyToClipboard text={`${fundsLink}`} onCopy={handleCopy}>
+                  <CopyToClipboard
+                    text={`${
+                      window.location.origin + "/request-funds/" + fundsLink
+                    }`}
+                    onCopy={handleCopy}>
                     <button>Copy</button>
                   </CopyToClipboard>
                 </div>
@@ -202,6 +210,7 @@ PopupComponent.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   context: PropTypes.any.isRequired,
+  refetchUserData: PropTypes.func,
 };
 
 export default PopupComponent;

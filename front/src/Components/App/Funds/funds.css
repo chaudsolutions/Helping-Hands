@@ -1,0 +1,12 @@
+.fundsRequestPayment {
+  padding: 7rem var(--padding-clamp) 2rem;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 2rem;
+
+  > h1 {
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    text-align: center;
+  }
+}

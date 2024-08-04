@@ -34,7 +34,7 @@ const CampaignSchema = new Schema(
     amountRaised: { type: Number, required: true, default: 0 },
     condition: {
       type: String,
-      enum: ["incomplete", "in-progress", "completed"],
+      enum: ["incomplete", "in-progress", "completed", "cashed"],
       required: true,
       default: "incomplete",
     },

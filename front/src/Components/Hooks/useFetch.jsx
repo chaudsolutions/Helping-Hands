@@ -42,9 +42,22 @@ export const fetchActiveCampaigns = async () => {
   return response.data;
 };
 
-//  fetch single campaign by category
+//  fetch single campaign
 export const fetchSingleCampaign = async (campaign) => {
   const response = await axios.get(`${serVer}/get/campaign/${campaign}`);
+
+  if (response.status !== 200) {
+    throw new Error("Network response was not ok");
+  }
+
+  return response.data;
+};
+
+// fetch payment request from DB with requestFundsId and requestUserId
+export const fetchPaymentRequest = async (requestUserId, requestFundsId) => {
+  const response = await axios.get(
+    `${serVer}/get/payment-request/${requestUserId}/${requestFundsId}`
+  );
 
   if (response.status !== 200) {
     throw new Error("Network response was not ok");

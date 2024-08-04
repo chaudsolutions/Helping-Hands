@@ -45,13 +45,17 @@ const Dashboard = () => {
   const completedCampaigns = campaigns?.filter(
     (campaign) => campaign.condition === "completed"
   );
+  const cashedCampaigns = campaigns?.filter(
+    (campaign) => campaign.condition === "cashed"
+  );
 
   // count campaigns
   const totalNotFullySetCampaigns = notFullySetCampaigns?.length || 0;
   const totalActiveCampaigns = activeCampaigns?.length || 0;
   const totalCompletedCampaigns = completedCampaigns?.length || 0;
+  const totalCashedCampaigns = cashedCampaigns?.length || 0;
 
-  // Get filtered coupons based on selected sub-view using if-else
+  // Get filtered campaigns based on selected sub-view using if-else
   let filteredCampaigns = [];
   if (view === "notFullySetCampaigns") {
     filteredCampaigns = notFullySetCampaigns;
@@ -114,7 +118,7 @@ const Dashboard = () => {
         </Link>
       </div>
 
-      <div className="campaigns">
+      <div className="campaigns-ul">
         <div className="switch-buttons">
           <button
             onClick={() => setView("notFullySetCampaigns")}
@@ -131,6 +135,11 @@ const Dashboard = () => {
             className={view === "completedCampaigns" ? "activeBtn" : ""}>
             Completed Campaigns ({totalCompletedCampaigns})
           </button>
+          <button
+            onClick={() => setView("cashedCampaigns")}
+            className={view === "cashedCampaigns" ? "activeBtn" : ""}>
+            Cashed in Campaigns ({totalCashedCampaigns})
+          </button>
         </div>
 
         <h3>Your Campaigns</h3>
@@ -143,26 +152,20 @@ const Dashboard = () => {
           <>
             {campaigns && campaignList.length > 0 ? (
               <>
-                {view === "notFullySetCampaigns" && (
-                  <p>
-                    Update the image of your campaign to make it active and
-                    allow it be seen by donors
-                  </p>
-                )}
-                {view === "activeCampaigns" && (
-                  <p>
-                    Your active campaigns can be seen by visitors and can
-                    accepts donations...
-                  </p>
-                )}
-                {view === "completedCampaigns" && (
-                  <p>
-                    Completed Campaigns are campaigns that have met their goals
-                    or the creator ended it or they have elapsed their 30days
-                    duration... You can cash-out this campaigns and the balance
-                    will be added to your account balance
-                  </p>
-                )}
+                <p>
+                  {view === "notFullySetCampaigns" &&
+                    "Update the image of your campaign to make it active and allow it be seen by donors"}
+
+                  {view === "activeCampaigns" &&
+                    "Your active campaigns can be seen by visitors and can accepts donations..."}
+
+                  {view === "completedCampaigns" &&
+                    "Completed Campaigns are campaigns that have met their goals or the creator ended it or they have elapsed their 30days duration... You can cash-out this campaigns and the balance will be added to your account balance"}
+
+                  {view === "cashedCampaigns" &&
+                    "Cashed Campaigns are campaigns that the earnings has been withdrawn to your balance"}
+                </p>
+
                 <ul>{campaignList}</ul>
               </>
             ) : (
