@@ -121,7 +121,7 @@ const Profile = () => {
       <div className="profile-dash">
         <UserProfile />
         <div className="profile-bal">
-          <h1>Balance: {isUserDataLoading ? <ButtonLoad /> : balance}</h1>
+          <h1>Balance: {isUserDataLoading ? <ButtonLoad /> : `$${balance}`}</h1>
           <div className="btn">
             <button
               onClick={() =>
