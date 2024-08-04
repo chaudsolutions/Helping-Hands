@@ -91,7 +91,7 @@ const Profile = () => {
         <li key={request._id}>
           <span>${request.requestAmount}:</span>
           <ReadMoreArea
-            lettersLimit={35} // limit of letters (100 letters)
+            lettersLimit={30} // limit of letters (100 letters)
           >
             {requestPaymentFullLink}
           </ReadMoreArea>

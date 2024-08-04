@@ -145,6 +145,7 @@
   > button {
     padding: 0.5rem;
     background-color: var(--accent-color);
+    color: var(--black);
     border-radius: 0.5rem;
     font-size: 0.9rem;
     transition: 0.5s ease-in-out;

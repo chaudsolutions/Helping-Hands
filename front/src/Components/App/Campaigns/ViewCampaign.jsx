@@ -305,7 +305,7 @@ const ViewCampaign = () => {
       />
       {ifAdmin && (
         <div className="admin-vet">
-          <HiBadgeCheck size={25} className="icon" /> This Campaign is created
+          <HiBadgeCheck size={25} className="icon" /> This Campaign was created
           by the admin and is safe and trusted to donate
         </div>
       )}
