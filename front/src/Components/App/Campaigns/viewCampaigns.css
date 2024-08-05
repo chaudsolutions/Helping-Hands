@@ -170,8 +170,8 @@
     }
   }
   .safe-checkout {
-    width: 100%;
     object-fit: contain;
+    height: 6rem;
   }
 
   .admin-vet {

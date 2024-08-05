@@ -96,14 +96,14 @@ const Dashboard = () => {
       {/* SEO */}
       <SEOComponent />
 
-      {isUserDataLoading && (
-        <div className="loader-container">
-          <PageLoader />
-        </div>
-      )}
+      {isUserDataLoading ||
+        (isCampaignDataLoading && (
+          <div className="loader-container">
+            <PageLoader />
+          </div>
+        ))}
 
       {/* main dashboard */}
-
       <div className="dashboard-greet">
         <div>
           <div>
@@ -144,37 +144,29 @@ const Dashboard = () => {
 
         <h3>Your Campaigns</h3>
 
-        {isCampaignDataLoading ? (
-          <div className="loader-container">
-            <PageLoader />
-          </div>
-        ) : (
+        {campaigns && campaignList.length > 0 ? (
           <>
-            {campaigns && campaignList.length > 0 ? (
-              <>
-                <p>
-                  {view === "notFullySetCampaigns" &&
-                    "Update the image of your campaign to make it active and allow it be seen by donors"}
+            <p>
+              {view === "notFullySetCampaigns" &&
+                "Update the image of your campaign to make it active and allow it be seen by donors"}
 
-                  {view === "activeCampaigns" &&
-                    "Your active campaigns can be seen by visitors and can accepts donations..."}
+              {view === "activeCampaigns" &&
+                "Your active campaigns can be seen by visitors and can accepts donations..."}
 
-                  {view === "completedCampaigns" &&
-                    "Completed Campaigns are campaigns that have met their goals or the creator ended it or they have elapsed their 30days duration... You can cash-out this campaigns and the balance will be added to your account balance"}
+              {view === "completedCampaigns" &&
+                "Completed Campaigns are campaigns that have met their goals or the creator ended it or they have elapsed their 30days duration... You can cash-out this campaigns and the balance will be added to your account balance"}
 
-                  {view === "cashedCampaigns" &&
-                    "Cashed Campaigns are campaigns that the earnings has been withdrawn to your balance"}
-                </p>
+              {view === "cashedCampaigns" &&
+                "Cashed Campaigns are campaigns that the earnings has been withdrawn to your balance"}
+            </p>
 
-                <ul>{campaignList}</ul>
-              </>
-            ) : (
-              <div className="null">
-                No Campaign Created Yet
-                <Null />
-              </div>
-            )}
+            <ul>{campaignList}</ul>
           </>
+        ) : (
+          <div className="null">
+            No Campaign Created Yet
+            <Null />
+          </div>
         )}
       </div>
     </div>

@@ -22,6 +22,18 @@ const RequestSchema = new Schema(
   { timestamps: true }
 );
 
+const WithdrawalSchema = new Schema(
+  {
+    amountToWithdraw: { type: Number },
+    state: {
+      type: String,
+      enum: ["Pending", "Success", "Cancelled"],
+      default: "Pending",
+    },
+  },
+  { timestamps: true }
+);
+
 const UsersSchema = new Schema(
   {
     name: { type: String, required: true, unique: true },
@@ -38,8 +50,14 @@ const UsersSchema = new Schema(
       country: { type: String },
       phoneNumber: { type: String },
     },
+    bank: {
+      bankName: { type: String },
+      accountNumber: { type: Number },
+      message: { type: String },
+    },
     verificationCode: { type: String, required: true },
     requests: [RequestSchema],
+    withdrawals: [WithdrawalSchema],
   },
   { timestamps: true }
 );

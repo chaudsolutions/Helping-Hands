@@ -274,8 +274,8 @@ const ViewCampaign = () => {
               onChange={(e) => setAmountToDonate(e.target.value)}
             />
             <select onChange={(e) => setCurrency(e.target.value)}>
-              {currencyArray.map((currency) => (
-                <option key={currency} value={currency.currency}>
+              {currencyArray.map((currency, i) => (
+                <option key={i} value={currency.currency}>
                   {currency.name}
                 </option>
               ))}
@@ -369,7 +369,6 @@ const ViewCampaign = () => {
             </ul>
           </div>
         )}
-        <ul></ul>
       </div>
 
       {((campaignData && creatorOfCampaign) || role === "admin") && (

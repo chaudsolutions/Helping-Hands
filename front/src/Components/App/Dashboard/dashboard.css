@@ -3,12 +3,15 @@
   min-height: 100vh;
   display: flex;
   flex-flow: column;
-  gap: 2rem;
+  gap: 8rem;
 
   .dashboard-greet {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    box-shadow: 0 0.3rem 1rem var(--trans-black);
+    padding: 0.5rem;
+    border-radius: 1rem;
 
     > :nth-child(1) {
       display: flex;
@@ -18,9 +21,26 @@
       > :nth-child(1) {
         font-size: clamp(0.9rem, 2vw, 1.1rem);
         text-transform: uppercase;
+
+        > strong {
+          color: var(--accent-color-dark);
+        }
       }
       > :nth-child(2) {
-        font-size: clamp(1rem, 3vw, 2rem);
+        font-size: clamp(1rem, 3vw, 1.7rem);
+        color: transparent;
+        background: linear-gradient(
+          to right,
+          var(--accent-color-dark),
+          var(--trans-black)
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        max-width: 400px;
+      }
+
+      > :nth-child(3) {
+        font-size: clamp(1.2rem, 3vw, 2.5rem);
       }
     }
 

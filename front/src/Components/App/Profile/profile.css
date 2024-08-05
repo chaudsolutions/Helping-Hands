@@ -1,8 +1,8 @@
 .profile {
-  padding: 7rem var(--padding-clamp) 2rem;
+  padding: 7rem var(--padding-clamp) 1rem;
   display: flex;
   flex-flow: column;
-  gap: 3rem;
+  gap: 8rem;
 
   .profile-dash {
     display: flex;
@@ -10,6 +10,9 @@
     align-items: center;
     gap: 1rem;
     justify-content: space-around;
+    box-shadow: 0 0.3rem 1rem var(--trans-black);
+    padding: 1rem;
+    border-radius: 1rem;
 
     .profile-DP {
       display: flex;
@@ -47,6 +50,7 @@
     .profile-bal {
       display: flex;
       flex-flow: column;
+      align-items: center;
       gap: 0.3rem;
 
       > h1 {
@@ -54,6 +58,10 @@
         display: flex;
         align-items: center;
         gap: 0.2rem;
+
+        > span {
+          color: var(--accent-color-dark);
+        }
       }
 
       .btn {
@@ -75,11 +83,11 @@
           }
         }
 
-        > :nth-child(1) {
+        > :nth-child(2) {
           background-color: var(--accent-color);
           color: var(--black);
         }
-        > :nth-child(2) {
+        > :nth-child(3) {
           background-color: var(--trans-black);
           color: var(--white);
         }
@@ -109,6 +117,14 @@
           align-items: center;
           justify-content: space-around;
           gap: 0.5rem;
+          border: 1px solid var(--trans-more-black);
+          width: 100%;
+          padding: 0.2rem;
+          border-radius: 1rem;
+
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+          }
 
           > :nth-child(1) {
             color: var(--accent-color-dark);

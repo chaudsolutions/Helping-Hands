@@ -58,6 +58,7 @@ export const AuthContainer = ({ userProp }) => {
 
 export const UserProfile = () => {
   const [loading, setLoading] = useState(false);
+  const profileLink = window.location.pathname === "/profile";
 
   const { userData, isUserDataLoading, refetchUserData } = useUserData();
 
@@ -117,10 +118,14 @@ export const UserProfile = () => {
             )}
           </label>
 
-          <Link to="/profile">
-            <span>{name}</span>
-            <IoIosArrowForward size={20} />
-          </Link>
+          {profileLink ? (
+            <strong>{name}</strong>
+          ) : (
+            <Link to="/profile">
+              <span>My Profile</span>
+              <IoIosArrowForward size={20} />
+            </Link>
+          )}
         </>
       )}
     </div>

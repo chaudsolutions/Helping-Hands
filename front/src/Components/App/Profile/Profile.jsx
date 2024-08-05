@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import ReadMoreArea from "@foxeian/react-read-more";
 import axios from "axios";
 import { serVer, token } from "../../Hooks/useVariable";
+import { BsBank } from "react-icons/bs";
 
 const Profile = () => {
   const [view, setView] = useState("requests");
@@ -31,14 +32,28 @@ const Profile = () => {
     useUserData();
 
   // extract data
-  const { active, balance, requests, _id } = userData || {};
+  const { active, balance, requests, withdrawals, _id } = userData || {};
 
   // sort requests
   const unpaidRequests = requests?.filter((request) => !request.paymentDetails);
   const paidRequests = requests?.filter((request) => request.paymentDetails);
+  // sort withdrawals
+  const pendingWithdrawals = withdrawals?.filter(
+    (withdrawal) => withdrawal.state === "Pending"
+  );
+  const successfulWithdrawals = withdrawals?.filter(
+    (withdrawal) => withdrawal.state === "Success"
+  );
+  const cancelledWithdrawals = withdrawals?.filter(
+    (withdrawal) => withdrawal.state === "Cancelled"
+  );
 
   // count requests
   const unpaidRequestsCount = unpaidRequests?.length || 0;
+  // count withdrawals requests
+  const pendingWithdrawalsCount = pendingWithdrawals?.length || 0;
+  const successfulWithdrawalsCount = successfulWithdrawals?.length || 0;
+  const cancelledWithdrawalsCount = cancelledWithdrawals?.length || 0;
 
   // Get filtered requests based on selected sub-view using if-else
   let filteredRequests = [];
@@ -46,6 +61,15 @@ const Profile = () => {
     filteredRequests = unpaidRequests;
   } else if (subView === "paid") {
     filteredRequests = paidRequests;
+  }
+  // Get filtered requests based on selected sub-view using if-else
+  let filteredWithdrawals = [];
+  if (subView === "pending-withdrawals") {
+    filteredWithdrawals = pendingWithdrawals;
+  } else if (subView === "successful-withdrawals") {
+    filteredWithdrawals = successfulWithdrawals;
+  } else if (subView === "cancelled-withdrawals") {
+    filteredWithdrawals = cancelledWithdrawals;
   }
 
   // map requests to list
@@ -111,6 +135,23 @@ const Profile = () => {
       );
     });
 
+  // map withdrawals to list
+  const withdrawalList = filteredWithdrawals
+    ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    ?.map((withdrawal) => {
+      return (
+        <li key={withdrawal._id}>
+          <span>${withdrawal.amountToWithdraw}:</span>
+          <span>{withdrawal.state}</span>
+          {subView === "pending-withdrawals" && (
+            <>
+              <button className="deleteBtn">Delete request</button>
+            </>
+          )}
+        </li>
+      );
+    });
+
   // navigate to dashboard if error
   if (isUserDataError || (userData && !active)) {
     return navigate("/dashboard");
@@ -121,8 +162,17 @@ const Profile = () => {
       <div className="profile-dash">
         <UserProfile />
         <div className="profile-bal">
-          <h1>Balance: {isUserDataLoading ? <ButtonLoad /> : `$${balance}`}</h1>
+          <h1>
+            Balance:{" "}
+            {isUserDataLoading ? <ButtonLoad /> : <span>${balance}</span>}
+          </h1>
           <div className="btn">
+            <button
+              onClick={() =>
+                setIsPopupOpen({ boolean: true, value: "UpdateBank" })
+              }>
+              Bank {isMobile ? <BsBank size={20} /> : "Info"}
+            </button>
             <button
               onClick={() =>
                 setIsPopupOpen({ boolean: true, value: "Request" })
@@ -180,7 +230,43 @@ const Profile = () => {
           </div>
         )}
 
-        {/* requests list */}
+        {view === "withdrawals" && (
+          <div className="requests">
+            <div className="switch-buttons">
+              <button
+                onClick={() => setSubView("pending-withdrawals")}
+                className={
+                  subView === "pending-withdrawals" ? "activeBtn" : ""
+                }>
+                Pending ({pendingWithdrawalsCount})
+              </button>
+              <button
+                onClick={() => setSubView("successful-withdrawals")}
+                className={
+                  subView === "successful-withdrawals" ? "activeBtn" : ""
+                }>
+                Success ({successfulWithdrawalsCount})
+              </button>
+              <button
+                onClick={() => setSubView("cancelled-withdrawals")}
+                className={
+                  subView === "cancelled-withdrawals" ? "activeBtn" : ""
+                }>
+                Cancelled ({cancelledWithdrawalsCount})
+              </button>
+            </div>
+
+            {/* requests lists */}
+            {userData && withdrawals && withdrawalList?.length > 0 ? (
+              <ul>{withdrawalList}</ul>
+            ) : (
+              <div className="null">
+                <div>No withdrawals here yet</div>
+                <Null />
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* pop up component */}

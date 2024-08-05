@@ -14,20 +14,24 @@ import ReadMoreArea from "@foxeian/react-read-more";
 const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
   const withdraw = context === "Withdraw";
   const request = context === "Request";
+  const updateBank = context === "UpdateBank";
 
   const [fundsLink, setFundsLink] = useState("");
   const [copiedText, setCopiedText] = useState("");
 
   // react form
+  // withdrawal
   const withdrawalForm = useForm();
   const {
     register: withdrawalRegister,
     handleSubmit: withdrawalHandleSubmit,
     formState: withdrawalFormState,
+    reset: withdrawalReset,
   } = withdrawalForm;
   const { errors: withdrawalErrors, isSubmitting: isWithdrawalSubmitting } =
     withdrawalFormState;
 
+  // funds request
   const requestForm = useForm();
   const {
     register: requestRegister,
@@ -38,8 +42,41 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
   const { errors: requestErrors, isSubmitting: isRequestSubmitting } =
     requestFormState;
 
+  const addBankForm = useForm();
+  const {
+    register: addBankRegister,
+    handleSubmit: addBankHandleSubmit,
+    formState: addBankFormState,
+    reset: addBankReset,
+  } = addBankForm;
+  const { errors: addBankErrors, isSubmitting: isAddBankSubmitting } =
+    addBankFormState;
+
   //  function to request withdrawals
-  const handleWithdraw = async (data) => {};
+  const handleWithdraw = async (data) => {
+    const { amountToWithdraw } = data;
+
+    const withdrawUrl = `${serVer}/funds/request-withdrawal/${amountToWithdraw}`;
+
+    try {
+      const res = await axios.put(
+        withdrawUrl,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      const { data } = res;
+
+      refetchUserData();
+
+      withdrawalReset();
+
+      onclose();
+
+      toast.success(data);
+    } catch (error) {
+      toast.error(error.response.data);
+    }
+  };
 
   const onWithdrawError = () => {
     toast.error("Failed to submit, check inputs and try again");
@@ -65,7 +102,7 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
 
       refetchUserData();
 
-      onClose;
+      onClose();
 
       toast.success("Link generated successfully");
     } catch (error) {
@@ -74,6 +111,37 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
   };
 
   const onRequestError = () => {
+    toast.error("Failed to submit, check inputs and try again");
+  };
+
+  //  function to add bank
+  const handleAddBank = async (data) => {
+    const { bankName, accountNumber, message } = data;
+
+    const addBankUrl = `${serVer}/funds/add-bank`;
+
+    try {
+      const res = await axios.put(
+        addBankUrl,
+        { bankName, accountNumber, message },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      const { data } = res;
+
+      refetchUserData();
+
+      addBankReset();
+
+      onClose();
+
+      toast.success(data);
+    } catch (error) {
+      toast.error(error.response.data);
+    }
+  };
+
+  const onAddBankError = () => {
     toast.error("Failed to submit, check inputs and try again");
   };
 
@@ -87,7 +155,8 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
       <div className="floating-Modal">
         <h3>
           {withdraw && `${context} your`}
-          {request && `${context} for`} Funds
+          {request && `${context} for`} {(withdraw || request) && "Funds"}
+          {updateBank && "Add Bank Details"}
         </h3>
         <p>
           {withdraw && (
@@ -105,6 +174,13 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
               pays. a 10% cut is attached
             </>
           )}
+
+          {updateBank && (
+            <>
+              Add your bank info or update your existing bank info for ease of
+              withdrawals
+            </>
+          )}
         </p>
 
         {withdraw && (
@@ -114,37 +190,14 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
             <div>
               <div className="inputBox">
                 <input
-                  placeholder="Bank Name"
-                  required
-                  type="text"
-                  {...withdrawalRegister("bankName", {
-                    required: "Bank Name is required",
-                  })}
-                />
-                <p>{withdrawalErrors.bankName?.message}</p>
-              </div>
-              <div className="inputBox">
-                <input
-                  placeholder="Acct No."
+                  placeholder="Withdrawal Amount"
                   required
                   type="number"
-                  {...withdrawalRegister("accountNumber", {
-                    required: "Account Number is required",
+                  {...withdrawalRegister("amountToWithdraw", {
+                    required: "Withdrawal Amount is required",
                   })}
                 />
-                <p>{withdrawalErrors.accountNumber?.message}</p>
-              </div>
-
-              <div className="inputBox">
-                <textarea
-                  placeholder="Notes: Routing if available or other reasons that should be noted"
-                  required
-                  type="text"
-                  {...withdrawalRegister("message", {
-                    required: "Your Message is required",
-                  })}
-                />
-                <p>{withdrawalErrors.message?.message}</p>
+                <p>{withdrawalErrors.amountToWithdraw?.message}</p>
               </div>
             </div>
 
@@ -197,6 +250,53 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
               </button>
             </form>
           </>
+        )}
+
+        {updateBank && (
+          <form
+            onSubmit={addBankHandleSubmit(handleAddBank, onAddBankError)}
+            noValidate>
+            <div>
+              <div className="inputBox">
+                <input
+                  placeholder="Bank Name"
+                  required
+                  type="text"
+                  {...addBankRegister("bankName", {
+                    required: "Bank Name is required",
+                  })}
+                />
+                <p>{addBankErrors.bankName?.message}</p>
+              </div>
+              <div className="inputBox">
+                <input
+                  placeholder="Acct No."
+                  required
+                  type="number"
+                  {...addBankRegister("accountNumber", {
+                    required: "Account Number is required",
+                  })}
+                />
+                <p>{addBankErrors.accountNumber?.message}</p>
+              </div>
+
+              <div className="inputBox">
+                <textarea
+                  placeholder="Notes: Routing if available or other reasons that should be noted"
+                  required
+                  type="text"
+                  {...addBankRegister("message", {
+                    required: "Your Message is required",
+                  })}
+                />
+                <p>{addBankErrors.message?.message}</p>
+              </div>
+            </div>
+
+            <button type="submit" disabled={isAddBankSubmitting}>
+              {isAddBankSubmitting ? <ButtonLoad /> : <>UPDATE BANK</>}
+            </button>
+          </form>
         )}
         <button className="close" onClick={onClose}>
           CLOSE
