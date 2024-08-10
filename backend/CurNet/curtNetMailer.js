@@ -1,12 +1,11 @@
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-  host: "sm1.cloudoon.com",
-  port: 465,
-  secure: true,
+  service: "gmail",
+  secure: false,
   auth: {
-    user: "admin@coinsafecrypto.com",
-    pass: "coinsafecrypto@ADMIN2000",
+    user: "helpinghandssource@gmail.com",
+    pass: "urad ifhe lbcs gvuf",
   },
 });
 
