@@ -60,13 +60,8 @@ const usePaystackPayment = () => {
               const amountPaid = data?.data?.amount / 100;
               const customerId = data?.data?.customer.id;
 
-              // check if user paid exact amount for order
-              if (amountPaid < convertedBalance) {
-                return toast.error("Incomplete payment");
-              }
-
               // NOTE: This is for donations
-              if (paymentType !== "OneToOnePayment") {
+              if (paymentType === "donation") {
                 // Save donate details to database
                 const donateData = {
                   email: donorEmail,

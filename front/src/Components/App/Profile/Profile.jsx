@@ -62,7 +62,7 @@ const Profile = () => {
   } else if (subView === "paid") {
     filteredRequests = paidRequests;
   }
-  // Get filtered requests based on selected sub-view using if-else
+  // Get filtered withdrawals based on selected sub-view using if-else
   let filteredWithdrawals = [];
   if (subView === "pending-withdrawals") {
     filteredWithdrawals = pendingWithdrawals;

@@ -148,6 +148,7 @@ const ViewCampaign = () => {
         }
 
         handlePayment({
+          paymentType: "donation",
           amountToDonate,
           convertedBalance,
           currency,
@@ -238,7 +239,10 @@ const ViewCampaign = () => {
             {campaignName}
           </h1>
 
-          <ProgressBar completed={progress.toFixed()} className="progressBar" />
+          <ProgressBar
+            completed={Math.round(progress)}
+            className="progressBar"
+          />
 
           <div className="campaign-details-b1">
             <p>
@@ -263,37 +267,41 @@ const ViewCampaign = () => {
           <p>
             This Campaign is: <strong>{condition}</strong>
           </p>
+          <p></p>
 
           <Share domain={[link, campaignName, image]} />
 
           {/* donate BTN */}
-          <div className="donate">
-            <input
-              type="number"
-              placeholder="Amount in USD"
-              onChange={(e) => setAmountToDonate(e.target.value)}
-            />
-            <select onChange={(e) => setCurrency(e.target.value)}>
-              {currencyArray.map((currency, i) => (
-                <option key={i} value={currency.currency}>
-                  {currency.name}
-                </option>
-              ))}
-            </select>
-            <button onClick={() => setPaymentOptions(!paymentOptions)}>
-              Donate Now
-            </button>
-          </div>
-
-          {paymentOptions && (
-            <div className="paymentOptions">
-              <input
-                type="email"
-                placeholder="Your Email"
-                onChange={(e) => setDonorEmail(e.target.value)}
-              />
-              {loading ? <ButtonLoad /> : <ul>{paymentOptionsList}</ul>}
-            </div>
+          {condition !== "completed" && (
+            <>
+              <div className="donate">
+                <input
+                  type="number"
+                  placeholder="Amount in USD"
+                  onChange={(e) => setAmountToDonate(e.target.value)}
+                />
+                <select onChange={(e) => setCurrency(e.target.value)}>
+                  {currencyArray.map((currency, i) => (
+                    <option key={i} value={currency.currency}>
+                      {currency.name}
+                    </option>
+                  ))}
+                </select>
+                <button onClick={() => setPaymentOptions(!paymentOptions)}>
+                  Donate Now
+                </button>
+              </div>
+              {paymentOptions && (
+                <div className="paymentOptions">
+                  <input
+                    type="email"
+                    placeholder="Your Email"
+                    onChange={(e) => setDonorEmail(e.target.value)}
+                  />
+                  {loading ? <ButtonLoad /> : <ul>{paymentOptionsList}</ul>}
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

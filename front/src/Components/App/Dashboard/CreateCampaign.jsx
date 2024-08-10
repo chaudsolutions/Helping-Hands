@@ -5,7 +5,7 @@ import SEOComponent from "../../SEO/SEO";
 import ButtonLoad from "../../Animations/ButtonLoad";
 import { FaDollarSign, FaImage } from "react-icons/fa6";
 import { useEffect, useState } from "react";
-import { categories, serVer } from "../../Hooks/useVariable";
+import { categories, serVer, token } from "../../Hooks/useVariable";
 
 const CreateCampaign = () => {
   // scroll up
@@ -24,8 +24,6 @@ const CreateCampaign = () => {
 
   // Function to register
   const onSubmit = async (data) => {
-    const token = localStorage.getItem("helpingHandsUser");
-
     try {
       const url = `${serVer}/user/new-campaign`;
       const formData = new FormData();
@@ -48,7 +46,7 @@ const CreateCampaign = () => {
       setImageFiles([]);
       setImagePreviews([]);
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "An error occurred";
+      const errorMessage = error.response?.data || "An error occurred";
       toast.error(errorMessage);
     }
   };
