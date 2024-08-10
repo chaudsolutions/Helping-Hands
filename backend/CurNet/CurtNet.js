@@ -13,7 +13,7 @@ router.post("/contact-message", async (req, res) => {
     const mailOptions = {
       from: user_email,
       replyTo: user_email,
-      to: "admin@coinsafecrypto.com",
+      to: "davidodion898@gmail.com",
       subject: `Curt Net Website - ${subject}`,
       html: `
         <h1>New Message from ${user_name}</h1>
