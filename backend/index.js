@@ -29,7 +29,6 @@ const userDocs = require("./Routes/UserDocs.js");
 const getItems = require("./Routes/GetItems.js");
 const verifyPayments = require("./Routes/VerifyPayments.js");
 const FundsRoute = require("./Routes/Funds.js");
-const CurtNetRoute = require("./CurNet/CurtNet.js");
 
 // Define a default route handler for the root URL ("/")
 app.get("/", (req, res) => {
@@ -54,9 +53,6 @@ app.use("/get", getItems);
 
 // Use payments verification route
 app.use("/verify-payment", verifyPayments);
-
-// Use curt net mail route
-app.use("/curtNet", CurtNetRoute);
 
 // Start http server
 app.listen(port, () => {
