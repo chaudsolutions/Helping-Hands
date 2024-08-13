@@ -221,6 +221,98 @@ router.put(
   }
 );
 
+// end point to add campaign image
+router.put(
+  "/campaign-image/:campaignId",
+  upload.single("campaignImage"),
+  async (req, res) => {
+    const userId = req.userId;
+    const { campaignId } = req.params;
+    const campaignImage = req.file;
+
+    try {
+      // find campaign in user campaigns doc
+      const userCampaignDoc = await CampaignModel.findOne({
+        creatorId: userId,
+      });
+      if (!userCampaignDoc) {
+        throw new Error("User Campaign Doc Not Found");
+      }
+
+      // find campaign in user campaigns doc
+      const campaign = userCampaignDoc.campaigns.id(campaignId);
+      if (!campaign) {
+        throw new Error("Campaign not found");
+      }
+
+      // Upload campaign image to Cloudinary
+      const uploadResult = await uploadToCloudinary(
+        campaignImage.buffer,
+        campaignImage.originalname
+      );
+      const imageUrl = uploadResult.secure_url;
+
+      campaign.image = imageUrl;
+
+      await userCampaignDoc.save();
+
+      res.status(200).json("Campaign image updated successfully");
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal server error.");
+    }
+  }
+);
+
+// route to cash out campaign earnings and add earnings to user balance
+router.put("/cash-out/:campaignId", async (req, res) => {
+  const userId = req.userId;
+  const { campaignId } = req.params;
+
+  try {
+    // find user
+    const user = await UsersModel.findById(userId);
+    if (!user) {
+      throw new Error("User not found.");
+    }
+
+    // find admin
+    const adminUser = await UsersModel.findOne({ role: "admin" });
+
+    // find user campaign doc
+    const userCampaignDoc = await CampaignModel.findOne({ creatorId: userId });
+    if (!userCampaignDoc) {
+      throw new Error("User Campaign Doc Not Found");
+    }
+
+    // find campaign in user campaign doc
+    const campaign = userCampaignDoc.campaigns.id(campaignId);
+    if (!campaign) {
+      throw new Error("Campaign not found");
+    }
+    // Ensure the campaign is completed
+    if (campaign.condition !== "completed") {
+      return res.status(400).json("Campaign not completed");
+    }
+
+    // add 20% to admin Earnings
+    adminUser.adminPercentage += campaign.amountRaised * 0.2;
+
+    // add 80% campaign earnings to user balance
+    user.balance += campaign.amountRaised * 0.8;
+
+    campaign.condition = "cashed";
+
+    await user.save();
+    await userCampaignDoc.save();
+
+    res.status(200).json("Success! Well-done");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Inter Server Error");
+  }
+});
+
 // route to delete campaign
 router.delete("/delete-campaign/:campaignId", async (req, res) => {
   const userId = req.userId;

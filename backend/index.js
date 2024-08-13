@@ -29,6 +29,7 @@ const userDocs = require("./Routes/UserDocs.js");
 const getItems = require("./Routes/GetItems.js");
 const verifyPayments = require("./Routes/VerifyPayments.js");
 const FundsRoute = require("./Routes/Funds.js");
+const ApiRoute = require("./Routes/Api.js");
 
 // Define a default route handler for the root URL ("/")
 app.get("/", (req, res) => {
@@ -53,6 +54,9 @@ app.use("/get", getItems);
 
 // Use payments verification route
 app.use("/verify-payment", verifyPayments);
+
+// use api route
+app.use("/api", ApiRoute);
 
 // Start http server
 app.listen(port, () => {

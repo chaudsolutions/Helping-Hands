@@ -59,10 +59,10 @@ button {
 }
 /* loader container */
 .loader-container {
+  height: 70vh;
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
 }
 .null {
   display: flex;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./viewCampaigns.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchSingleCampaign } from "../../Hooks/useFetch";
 import SEOComponent from "../../SEO/SEO";
@@ -34,6 +34,9 @@ import {
   serVer,
   token,
 } from "../../Hooks/useVariable";
+import { GiMoneyStack } from "react-icons/gi";
+import Null from "../../Animations/Null";
+import { CiCamera } from "react-icons/ci";
 
 const ViewCampaign = () => {
   const link = window.location.href;
@@ -49,6 +52,12 @@ const ViewCampaign = () => {
       Delete <MdDeleteForever />
     </>
   );
+  const [cashOutBtn, setCashOutBtn] = useState(
+    <>
+      CashOut <GiMoneyStack size={20} />
+    </>
+  );
+  const [imageLoading, setImageLoading] = useState(false);
 
   // fetch item from DB with params
   const params = useParams();
@@ -221,18 +230,113 @@ const ViewCampaign = () => {
     }
   };
 
+  // cash-out campaign
+  const cashOutCampaign = async () => {
+    const userConfirmed = confirm(
+      "Are you sure you want to cash out this campaign? This action is irreversible"
+    );
+    if (userConfirmed) {
+      setCashOutBtn(<ButtonLoad />);
+      const url = `${serVer}/user/cash-out/${campaignId}`;
+
+      try {
+        const res = await axios.put(
+          url,
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        const { data } = res;
+
+        refetch();
+
+        toast.success(data);
+      } catch (error) {
+        toast.error(error.response.data);
+      } finally {
+        setCashOutBtn(
+          <>
+            CashOut <GiMoneyStack size={20} />
+          </>
+        );
+      }
+    }
+  };
+
+  // function to update profile picture
+  const handleCampaignImage = async (e) => {
+    setImageLoading(true);
+    const files = Array.from(e.target.files);
+
+    const formData = new FormData();
+    formData.append("campaignImage", files[0]);
+
+    try {
+      const url = `${serVer}/user/campaign-image/${campaignId}`;
+      const response = await axios.put(url, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const { data } = response;
+
+      toast.success(data);
+      refetch();
+    } catch (error) {
+      console.error(error); // Log the error to see what went wrong
+      toast.error(error.response?.data || "An error occurred");
+    } finally {
+      setImageLoading(false);
+    }
+  };
+
+  if ((!creatorOfCampaign || !ifAdmin) && condition === "cashed") {
+    return (
+      <div className="cash-out-message">
+        <Null />
+        <h1>This campaign has been closed</h1>
+        <p>Thank you for your support.</p>
+
+        <Link to="/campaigns">Check Other Campaigns</Link>
+        <Link to="/">Home</Link>
+      </div>
+    );
+  }
+
+  if (isCampaignDataLoading) {
+    return (
+      <div className="loader-container">
+        <PageLoader />
+      </div>
+    );
+  }
+
   return (
     <div className="view-Campaign">
       <SEOComponent title={campaignName} description={story} image={image} />
 
-      {isCampaignDataLoading && (
-        <div className="loader-container">
-          <PageLoader />
-        </div>
-      )}
-
       <div className="campaign-details">
-        <img src={image} />
+        <div>
+          {image ? (
+            <img src={image} />
+          ) : (
+            <label htmlFor="campaignImage">
+              <>
+                <p>Click Here to add an image to your campaign</p>
+                {imageLoading ? <ButtonLoad /> : <CiCamera size={50} />}
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleCampaignImage}
+                  style={{ display: "none" }}
+                  id="campaignImage"
+                />
+              </>
+            </label>
+          )}
+        </div>
         <div>
           <h1>
             {ifAdmin && <HiBadgeCheck size={25} className="icon" />}{" "}
@@ -339,7 +443,7 @@ const ViewCampaign = () => {
 
       <div className="donors-div">
         <h3>Donors</h3>
-        {donors && donors.length ? (
+        {donors && donors.length > 0 ? (
           <ul>{donorsList}</ul>
         ) : (
           <p>
@@ -379,17 +483,43 @@ const ViewCampaign = () => {
         )}
       </div>
 
-      {((campaignData && creatorOfCampaign) || role === "admin") && (
-        <div className="delete">
-          <h3>Delete this Fundraiser Campaign ?</h3>
-          <p>
-            This action cannot be undone. Are you sure you want to delete this
-            campaign?
-          </p>
+      {/* cash-out campaign when completed */}
+      {campaignData &&
+        creatorOfCampaign &&
+        (condition === "completed" || condition === "cashed") && (
+          <div className="delete">
+            <h3>Cash Out</h3>
+            <p>
+              Your campaign has reached its goal and you have successfully
+              raised the required amount. You can now proceed to cash out your
+              donations.
+              <br />
+              <strong>NOTE:</strong> 20% will be deducted for contributions to
+              the platform growth
+            </p>
 
-          <button onClick={() => deleteCampaign()}>{deleteBtn}</button>
-        </div>
-      )}
+            {condition === "completed" && (
+              <button onClick={cashOutCampaign} className="cashOutBtn">
+                {cashOutBtn}
+              </button>
+            )}
+          </div>
+        )}
+
+      {((campaignData && creatorOfCampaign) || role === "admin") &&
+        donors.length < 1 && (
+          <div className="delete">
+            <h3>Delete this Fundraiser Campaign ?</h3>
+            <p>
+              This action cannot be undone. Are you sure you want to delete this
+              campaign?
+            </p>
+
+            <button onClick={() => deleteCampaign()} className="deleteBtn">
+              {deleteBtn}
+            </button>
+          </div>
+        )}
     </div>
   );
 };

@@ -2,9 +2,15 @@ import { IoIosArrowForward } from "react-icons/io";
 import useResponsive from "../../Hooks/useResponsive";
 import { NavLink } from "react-router-dom";
 import { useAuthContext } from "../../Context/AuthContext";
+import { useUserData } from "../../Hooks/useQueryFetch/useQueryData";
+import { CiSettings } from "react-icons/ci";
 
 const NavMenu = () => {
   const { user } = useAuthContext();
+
+  const { userData, isUserDataLoading } = useUserData();
+
+  const { role } = userData || {};
 
   // responsive hook
   const isMobile = useResponsive();
@@ -45,7 +51,20 @@ const NavMenu = () => {
     </li>
   ));
 
-  return <ul className="nav-menu-ul">{navMenuOutput}</ul>;
+  return (
+    <ul className="nav-menu-ul">
+      {navMenuOutput}
+
+      {!isUserDataLoading && role === "admin" && (
+        <li>
+          <NavLink activeclassname="active" to="/admin">
+            <strong>Admin</strong>
+            <CiSettings />
+          </NavLink>
+        </li>
+      )}
+    </ul>
+  );
 };
 
 export default NavMenu;

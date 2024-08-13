@@ -23,7 +23,7 @@ const SectionTwo = () => {
       </div>
 
       {isActiveCampaignDataLoading ? (
-        <div className="loader-container">
+        <div className="null">
           <PageLoader />
         </div>
       ) : (

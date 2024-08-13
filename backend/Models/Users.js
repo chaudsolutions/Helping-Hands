@@ -42,6 +42,7 @@ const UsersSchema = new Schema(
     role: { type: String, enum: ["admin", "user"], default: "user" },
     active: { type: Boolean, default: false },
     balance: { type: Number, default: 0 },
+    adminPercentage: { type: Number },
     profilePicture: { type: String },
     address: {
       streetName: { type: String },

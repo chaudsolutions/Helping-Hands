@@ -5,15 +5,12 @@ import { differenceInDays, differenceInHours } from "date-fns";
 import { HiBadgeCheck } from "react-icons/hi";
 import "./campaignList.css";
 import { useAuthContext } from "../../Context/AuthContext";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import { serVer } from "../../Hooks/useVariable";
 
 const CampaignList = ({ item }) => {
-  const [client, setClient] = useState(false);
   const { user } = useAuthContext();
-
-  useEffect(() => {
-    setClient(true);
-  }, []);
 
   const currentDate = new Date();
 
@@ -34,6 +31,20 @@ const CampaignList = ({ item }) => {
   );
 
   // TODO: write a function that updates the campaign when its expired
+  useEffect(() => {
+    if (!active) {
+      const deactivateCampaign = async () => {
+        const url = `${serVer}/api/expired-campaign/${item._id}`;
+
+        try {
+          await axios.put(url);
+        } catch (error) {
+          console.log(error.response.data);
+        }
+      };
+      deactivateCampaign();
+    }
+  }, [active, item]);
 
   return (
     <li className="fundRaise-li">
@@ -46,9 +57,7 @@ const CampaignList = ({ item }) => {
           {item.campaignName}
         </h4>
 
-        {client && (
-          <ProgressBar completed={progress.toFixed()} className="progressBar" />
-        )}
+        <ProgressBar completed={progress.toFixed()} className="progressBar" />
 
         {user && (
           <p>
@@ -59,7 +68,8 @@ const CampaignList = ({ item }) => {
 
         <div>
           <div>
-            ${item.amountRaised?.toLocaleString()} of ${item.amount}
+            ${item.amountRaised?.toLocaleString()} of $
+            {item.amount?.toLocaleString()}
           </div>
 
           <div>{expired}</div>

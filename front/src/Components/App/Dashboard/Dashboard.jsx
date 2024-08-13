@@ -20,7 +20,7 @@ const Dashboard = () => {
     window.scroll(0, 0);
   }, []);
 
-  const [view, setView] = useState("notFullySetCampaigns");
+  const [view, setView] = useState("activeCampaigns");
 
   const isMobile = useResponsive();
 
@@ -63,12 +63,22 @@ const Dashboard = () => {
     filteredCampaigns = activeCampaigns;
   } else if (view === "completedCampaigns") {
     filteredCampaigns = completedCampaigns;
+  } else if (view === "cashedCampaigns") {
+    filteredCampaigns = cashedCampaigns;
   }
 
   // map campaigns into DOM
   const campaignList = filteredCampaigns
     ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     ?.map((campaign) => <CampaignList key={campaign._id} item={campaign} />);
+
+  if (isUserDataLoading || isCampaignDataLoading) {
+    return (
+      <div className="loader-container">
+        <PageLoader />
+      </div>
+    );
+  }
 
   // display logout btn if fetch fail
   if (isUserDataError) {
@@ -95,13 +105,6 @@ const Dashboard = () => {
     <div className="dashboard">
       {/* SEO */}
       <SEOComponent />
-
-      {isUserDataLoading ||
-        (isCampaignDataLoading && (
-          <div className="loader-container">
-            <PageLoader />
-          </div>
-        ))}
 
       {/* main dashboard */}
       <div className="dashboard-greet">
