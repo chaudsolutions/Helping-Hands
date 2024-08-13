@@ -71,8 +71,7 @@ button {
 }
 /* style animation */
 .animation {
-  width: 50vw;
-  max-width: 30rem;
+  height: 12rem;
 }
 /* scroll to top BTN */
 .scrollToTopBtn {

@@ -254,6 +254,8 @@ router.put(
 
       campaign.image = imageUrl;
 
+      campaign.condition = "in-progress";
+
       await userCampaignDoc.save();
 
       res.status(200).json("Campaign image updated successfully");

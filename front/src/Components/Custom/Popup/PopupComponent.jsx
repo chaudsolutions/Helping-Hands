@@ -102,8 +102,6 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
 
       refetchUserData();
 
-      onClose();
-
       toast.success("Link generated successfully");
     } catch (error) {
       toast.error(error.response.data);

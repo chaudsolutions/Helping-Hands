@@ -59,7 +59,7 @@ const NavMenu = () => {
         <li>
           <NavLink activeclassname="active" to="/admin">
             <strong>Admin</strong>
-            <CiSettings />
+            <CiSettings size={20} />
           </NavLink>
         </li>
       )}
