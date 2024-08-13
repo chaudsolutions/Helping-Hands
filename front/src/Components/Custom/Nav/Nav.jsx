@@ -67,11 +67,8 @@ const Nav = () => {
 };
 
 export const Logo = ({ navigate }) => {
-  const { user } = useAuthContext();
-  const home = user ? "/dashboard" : "/";
-
   return (
-    <div className="logo-contain" onClick={() => navigate && navigate(home)}>
+    <div className="logo-contain" onClick={() => navigate && navigate("/")}>
       <img src={logo} alt="logo" />
       <h2>Helping Hands</h2>
     </div>
