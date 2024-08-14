@@ -1,0 +1,19 @@
+.head-page {
+  background-image: url("../../../assets/images/helping.jpg");
+  background-color: var(--trans-black);
+  background-blend-mode: overlay;
+  background-size: cover;
+  background-position: center;
+
+  width: 100%;
+  min-height: 40vh;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  padding: 1rem;
+
+  > h1 {
+    font-size: clamp(1.5rem, 2vw, 2.5rem);
+    color: var(--accent-color);
+  }
+}

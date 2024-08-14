@@ -1,8 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import "./notfound.css";
 import Null from "../../Animations/Null";
+import { useEffect } from "react";
 
 const NotFound = () => {
+  // scroll up
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
+
   const navigate = useNavigate();
 
   const goHome = () => {

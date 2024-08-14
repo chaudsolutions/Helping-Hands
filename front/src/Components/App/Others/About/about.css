@@ -1,19 +1,11 @@
 .about {
-  padding: 7rem var(--padding-clamp) 2rem;
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  gap: 3rem;
-  width: 100%;
-
-  .embla-slider {
-    img {
-      width: 100%;
-      object-fit: cover;
-      max-height: 25rem;
-      border-radius: 1rem;
-      object-position: top;
-    }
+  > :nth-child(2) {
+    padding: 2rem var(--padding-clamp) 1rem;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    gap: 3rem;
+    width: 100%;
   }
 
   .about-intro {

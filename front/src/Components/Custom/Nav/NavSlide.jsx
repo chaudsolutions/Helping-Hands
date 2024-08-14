@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { IoClose } from "react-icons/io5";
 import NavMenu from "./NavMenu";
 import Logout from "../Buttons/Logout";
 import PageLoader from "../../Animations/PageLoader";
@@ -21,16 +20,12 @@ const NavSlide = ({ navFunc }) => {
 
   return (
     <div className={`navSlide ${isNavActive ? "activeNav" : ""}`}>
-      <IoClose size={35} />
-
-      <>
-        {user && (
-          <div className="profile-link">
-            <UserProfile />
-          </div>
-        )}
-        <NavMenu />
-      </>
+      {user && (
+        <div className="profile-link">
+          <UserProfile />
+        </div>
+      )}
+      <NavMenu />
 
       <AuthContainer userProp={[user]} />
     </div>

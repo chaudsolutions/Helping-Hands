@@ -3,6 +3,7 @@ import {
   fetchActiveCampaigns,
   fetchUser,
   fetchUserCampaignDoc,
+  fetchUsers,
 } from "../useFetch";
 import { useAuthContext } from "../../Context/AuthContext";
 
@@ -43,4 +44,27 @@ export const useUserData = () => {
   });
 
   return { userData, isUserDataLoading, isUserDataError, refetchUserData };
+};
+
+// fetch all users details
+export const useAllUsersData = () => {
+  const { user } = useAuthContext();
+
+  const {
+    data: allUsersData,
+    isLoading: isAllUsersDataLoading,
+    isError: isAllUsersDataError,
+    refetch: refetchAllUsersData,
+  } = useQuery({
+    queryKey: ["allUsers"], // Use the new object-based syntax
+    queryFn: fetchUsers,
+    enabled: !!user,
+  });
+
+  return {
+    allUsersData,
+    isAllUsersDataLoading,
+    isAllUsersDataError,
+    refetchAllUsersData,
+  };
 };

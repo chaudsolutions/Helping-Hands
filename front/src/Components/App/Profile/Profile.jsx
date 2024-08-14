@@ -164,7 +164,11 @@ const Profile = () => {
         <div className="profile-bal">
           <h1>
             Balance:{" "}
-            {isUserDataLoading ? <ButtonLoad /> : <span>${balance}</span>}
+            {isUserDataLoading ? (
+              <ButtonLoad />
+            ) : (
+              <span>${balance?.toLocaleString()}</span>
+            )}
           </h1>
           <div className="btn">
             <button

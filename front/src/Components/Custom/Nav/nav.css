@@ -117,6 +117,7 @@
   flex-flow: column;
   gap: 1.5rem;
   z-index: 1000;
+  padding: 1rem 0;
 
   > :nth-child(1) {
     color: var(--trans-black);

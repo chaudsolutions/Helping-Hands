@@ -298,7 +298,7 @@ router.put("/cash-out/:campaignId", async (req, res) => {
     }
 
     // add 20% to admin Earnings
-    adminUser.adminPercentage += campaign.amountRaised * 0.2;
+    adminUser.adminCampaignPercentage += campaign.amountRaised * 0.2;
 
     // add 80% campaign earnings to user balance
     user.balance += campaign.amountRaised * 0.8;
@@ -307,6 +307,7 @@ router.put("/cash-out/:campaignId", async (req, res) => {
 
     await user.save();
     await userCampaignDoc.save();
+    await adminUser.save();
 
     res.status(200).json("Success! Well-done");
   } catch (error) {

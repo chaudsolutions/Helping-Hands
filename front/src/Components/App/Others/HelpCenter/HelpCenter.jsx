@@ -2,19 +2,13 @@ import { Link } from "react-router-dom";
 import QAComponent from "../../../Custom/Q&A/QAComponent";
 import SEOComponent from "../../../SEO/SEO";
 import "./help.css";
-import Slider from "../../../Custom/Slider/Slider";
-
-import imageOne from "../../../../assets/images/slider/five.png";
-import imageTwo from "../../../../assets/images/slider/six.png";
-import imageThree from "../../../../assets/images/slider/seven.png";
 import { useEffect } from "react";
+import HeaderPage from "../../../Custom/HeaderPage/HeaderPage";
 
 const HelpCenter = () => {
   useEffect(() => {
     window.scroll(0, 0);
   }, []);
-
-  const imageArray = [imageOne, imageTwo, imageThree];
 
   const helps = [
     {
@@ -70,29 +64,31 @@ const HelpCenter = () => {
   ];
 
   return (
-    <div className="help-center">
+    <div className="about">
       {/* SEO */}
       <SEOComponent title="Helping Hands | Help Center" />
 
-      <Slider itemData={[imageArray]} />
+      <HeaderPage page="Help Center" />
 
-      <div className="help">
-        <h1>Help Center</h1>
-        <QAComponent itemArray={[helps]} />
-      </div>
-
-      <div className="help-contact">
-        <div>
-          <h2>We got you</h2>
-          <p>
-            Need to reach out to us? Click on the Contact Us below and find
-            different ways to reach us
-          </p>
-
-          <Link to="/contact-us">Contact Us</Link>
+      <div>
+        <div className="help">
+          <h1>Help Center</h1>
+          <QAComponent itemArray={[helps]} />
         </div>
 
-        <div className="c-bg"></div>
+        <div className="help-contact">
+          <div>
+            <h2>We got you</h2>
+            <p>
+              Need to reach out to us? Click on the Contact Us below and find
+              different ways to reach us
+            </p>
+
+            <Link to="/contact-us">Contact Us</Link>
+          </div>
+
+          <div className="c-bg"></div>
+        </div>
       </div>
     </div>
   );

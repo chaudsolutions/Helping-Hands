@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 //emailJs
 import emailjs from "@emailjs/browser";
 import ButtonLoad from "../../../Animations/ButtonLoad";
-
 import "./contact.css";
 import { IoIosSend } from "react-icons/io";
 import { MdEmail, MdLocationPin } from "react-icons/md";

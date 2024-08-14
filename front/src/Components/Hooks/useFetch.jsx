@@ -18,6 +18,23 @@ export const fetchUser = async () => {
   return response.data;
 };
 
+// fetch users from DB for admin
+export const fetchUsers = async () => {
+  const token = localStorage.getItem("helpingHandsUser");
+
+  const response = await axios.get(`${serVer}/admin/all-users`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (response.status !== 200) {
+    throw new Error("Network response was not ok");
+  }
+
+  return response.data;
+};
+
 // fetch user campaign doc data from DB
 export const fetchUserCampaignDoc = async () => {
   const token = localStorage.getItem("helpingHandsUser");

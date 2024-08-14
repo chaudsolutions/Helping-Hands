@@ -22,6 +22,7 @@ import HelpCenter from "./Components/App/Others/HelpCenter/HelpCenter";
 import Privacy from "./Components/App/Others/Privacy/Privacy";
 import Profile from "./Components/App/Profile/Profile";
 import FundsRequestPayment from "./Components/App/Funds/FundsRequestPayment";
+import Admin from "./Components/App/Admin/Admin";
 
 function App() {
   const { user } = useAuthContext();
@@ -74,6 +75,9 @@ function App() {
             path="/request-funds/:requestUserId/:requestFundsId"
             element={<FundsRequestPayment />}
           />
+
+          {/* ADMIN */}
+          <Route path="/admin" element={<Admin />} />
 
           {/* OTHERS */}
           <Route

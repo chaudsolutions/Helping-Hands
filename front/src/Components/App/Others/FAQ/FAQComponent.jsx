@@ -1,8 +1,7 @@
 import { useEffect } from "react";
-import "./faq.css";
 import SEOComponent from "../../../SEO/SEO";
 import QAComponent from "../../../Custom/Q&A/QAComponent";
-import FAQAnim from "../../../Animations/FAQAnim";
+import HeaderPage from "../../../Custom/HeaderPage/HeaderPage";
 
 const FAQComponent = () => {
   useEffect(() => {
@@ -73,14 +72,16 @@ const FAQComponent = () => {
   ];
 
   return (
-    <section className="faq">
+    <section className="about faq">
       <SEOComponent />
 
-      <FAQAnim />
+      <HeaderPage page="Frequently Asked Questions" />
 
-      <h3>Frequently Asked Questions</h3>
+      <div>
+        <h3>Frequently Asked Questions</h3>
 
-      <QAComponent itemArray={[faqs]} />
+        <QAComponent itemArray={[faqs]} />
+      </div>
     </section>
   );
 };
