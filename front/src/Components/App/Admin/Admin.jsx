@@ -21,7 +21,7 @@ const Admin = () => {
 
   const [view, setView] = useState("Inventory");
   const [subView, setSubView] = useState("");
-  const [approveWithdrawalBtn, setApproveWithdrawalBtn] = useState("Pay");
+  const [approveWithdrawalBtn, setApproveWithdrawalBtn] = useState({});
 
   const navigate = useNavigate();
 
@@ -96,7 +96,9 @@ const Admin = () => {
         );
 
         if (confirmWithdrawal) {
-          setApproveWithdrawalBtn(<ButtonLoad />);
+          setApproveWithdrawalBtn(
+            approveWithdrawalBtn === withdrawal._id ? null : withdrawal._id
+          );
 
           const url = `${serVer}/admin/approve-withdrawal/${item._id}/${withdrawal._id}`;
           try {
@@ -113,8 +115,6 @@ const Admin = () => {
             toast.success(data);
           } catch (error) {
             toast.error(error.response.data);
-          } finally {
-            setApproveWithdrawalBtn("Pay");
           }
         }
       };
@@ -129,7 +129,13 @@ const Admin = () => {
           <div>Withdrawal Message: {item.bank?.message}</div>
 
           {subView === "pending" && (
-            <button onClick={approveWithdrawal}>{approveWithdrawalBtn}</button>
+            <button onClick={approveWithdrawal}>
+              {approveWithdrawalBtn === withdrawal._id ? (
+                <ButtonLoad />
+              ) : (
+                <>Pay</>
+              )}
+            </button>
           )}
         </li>
       );

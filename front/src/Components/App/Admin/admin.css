@@ -47,14 +47,16 @@
       gap: 0.5rem;
 
       > button {
-        background-color: var(--accent-color);
+        background-color: var(--accent-color-dark);
         padding: 0.5rem;
         border-radius: 0.5rem;
         font-weight: 500;
         font-size: 1.2rem;
+        display: flex;
+        justify-content: center;
 
         &:hover {
-          background-color: var(--accent-color-dark);
+          background-color: var(--black);
           color: var(--white);
         }
       }
