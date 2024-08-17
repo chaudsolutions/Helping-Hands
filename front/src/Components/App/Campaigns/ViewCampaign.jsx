@@ -19,7 +19,7 @@ import ButtonLoad from "../../Animations/ButtonLoad";
 import ReadMoreArea from "@foxeian/react-read-more";
 import { FaUser } from "react-icons/fa6";
 import { BsFlagFill } from "react-icons/bs";
-import { MdDeleteForever, MdFeedback } from "react-icons/md";
+import { MdDeleteForever } from "react-icons/md";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import {
@@ -168,6 +168,7 @@ const ViewCampaign = () => {
       }
       if (paymentOption === "Flutterwave") {
         initiatePayment({
+          paymentType: "donation",
           amountToDonate,
           convertedBalance,
           currency,
@@ -350,7 +351,8 @@ const ViewCampaign = () => {
 
           <div className="campaign-details-b1">
             <p>
-              ${amountRaised} of ${amount} goal
+              ${amountRaised.toLocaleString()} of ${amount.toLocaleString()}{" "}
+              goal
             </p>
             <p>{expired}</p>
           </div>
@@ -454,10 +456,6 @@ const ViewCampaign = () => {
       </div>
 
       <div className="feedback">
-        <button>
-          <MdFeedback />
-          <span>Submit Review or Feedback</span>
-        </button>
         <button>
           <BsFlagFill />
           <span>Report Campaign</span>

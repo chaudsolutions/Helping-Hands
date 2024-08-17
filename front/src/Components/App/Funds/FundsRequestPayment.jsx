@@ -74,14 +74,16 @@ const FundsRequestPayment = () => {
         });
       }
       if (paymentOption === "Flutterwave") {
-        // initiatePayment({
-        //   amountToPay,
-        //   convertedBalance,
-        //   currency,
-        //   donorEmail,
-        //   refetch,
-        //   campaignId,
-        // });
+        initiatePayment({
+          paymentType: "OneToOnePayment",
+          amountToDonate: requestAmount,
+          convertedBalance,
+          currency,
+          donorEmail,
+          refetch,
+          requestUserId,
+          requestFundsId,
+        });
       }
     };
 

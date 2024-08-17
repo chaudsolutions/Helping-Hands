@@ -1,39 +1,37 @@
 import axios from "axios";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 import { serVer } from "./useVariable";
+import Logo from "/logo.png";
 
 const useFlutterWavePayment = () => {
   const token = localStorage.getItem("helpingHandsUser");
 
-  const navigate = useNavigate();
-
   const initiatePayment = ({
-    clearCart,
-    totalCartAmount,
+    paymentType,
+    amountToDonate,
+    convertedBalance,
     currency,
-    email,
-    phoneNumber,
-    firstName,
-    lastName,
-    cartItems,
-    referrerCoursePercentage,
+    donorEmail,
+    refetch,
+    campaignId,
+    requestUserId,
+    requestFundsId,
   }) => {
     const flutterwaveConfig = {
       public_key: "FLWPUBK_TEST-c5a5dcbad5ffc9107da775ce703e144f-X",
       tx_ref: Date.now().toString(),
-      amount: totalCartAmount,
+      amount: convertedBalance,
       currency,
       customer: {
-        email: email,
-        phone_number: phoneNumber,
-        name: `${firstName} ${lastName}`,
+        email: donorEmail,
+        phone_number: "",
+        name: `${donorEmail.split("@")[0]}`,
       },
       customizations: {
-        title: "Euro Learn Course(s)",
-        description: "Payment for items in cart",
-        logo: "../../assets/euroLearnLogo.jpeg",
+        title: "Helping Hands | CrowdFunding Platform",
+        description: "",
+        logo: Logo,
       },
     };
 
@@ -49,7 +47,7 @@ const useFlutterWavePayment = () => {
 
             const verifyResponse = await axios.post(url, {
               transactionId,
-              expectedAmount: totalCartAmount,
+              expectedAmount: convertedBalance,
               expectedCurrency: currency,
             });
 
@@ -59,45 +57,73 @@ const useFlutterWavePayment = () => {
 
               const amountReceivedViaPaymentMethod = response.charged_amount;
 
-              // Save order details to database
-              const orderData = {
-                customerPaymentId: response.flw_ref,
-                cartItems,
-                totalCartAmount,
-                paymentMethod: "FlutterWave",
-                amountReceivedViaPaymentMethod,
-                paymentId: transactionId,
-                currency,
-                referrerCoursePercentage,
-              };
+              // NOTE: This is for donations
+              if (paymentType === "donation") {
+                // Save donate details to database
+                const donateData = {
+                  email: donorEmail,
+                  name: donorEmail.split("@")[0],
+                  customerPaymentId: response.flw_ref,
+                  paymentMethod: "FlutterWave",
+                  amountReceivedViaPaymentMethod,
+                  paymentId: transactionId,
+                  currency,
+                  amountToDonate: parseInt(amountToDonate),
+                };
 
-              const purchaseUrl = `${serVer}/user/purchase-course`;
+                const donateUrl = `${serVer}/verify-payment/donate/${campaignId}`;
 
-              //   send items to user purchased courses
-              try {
-                const response = await axios.post(
-                  purchaseUrl,
-                  { orderData },
-                  {
-                    headers: {
-                      Authorization: `Bearer ${token}`,
-                    },
-                  }
-                );
+                //   send items to user purchased courses
+                try {
+                  const response = await axios.post(
+                    donateUrl,
+                    { donateData },
+                    {
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                      },
+                    }
+                  );
 
-                toast.success(response.data);
+                  toast.success(response.data);
 
-                // clear cart
-                clearCart();
+                  // refetch the campaign
+                  refetch();
+                } catch (error) {
+                  console.error(error);
+                  toast.error(error?.response?.data);
+                }
+              }
+              // NOTE: This is for one-to-one payments
+              if (paymentType === "OneToOnePayment") {
+                // Save payment details to database
+                const paymentRequestData = {
+                  email: donorEmail,
+                  name: donorEmail.split("@")[0],
+                  customerPaymentId: response.flw_ref,
+                  paymentMethod: "FlutterWave",
+                  amountReceivedViaPaymentMethod,
+                  paymentId: transactionId,
+                  currency,
+                  amountToDonate: parseInt(amountToDonate),
+                };
 
-                // redirect to course page
-                navigate(`/courses`);
-              } catch (error) {
-                console.error(error);
-                toast.error(error?.response?.data);
+                const paymentRequestUrl = `${serVer}/verify-payment/pay-request/${requestUserId}/${requestFundsId}`;
+
+                try {
+                  const response = await axios.put(paymentRequestUrl, {
+                    paymentRequestData,
+                  });
+
+                  toast.success(response.data);
+
+                  // refetch the campaign
+                  refetch();
+                } catch (error) {
+                  toast.error(error?.response?.data);
+                }
               }
               toast.success("Payment successful and verified!");
-              // Perform any further actions, e.g., save transaction details to the server
             } else {
               // Payment verification failed
               toast.error("Payment verification failed");
