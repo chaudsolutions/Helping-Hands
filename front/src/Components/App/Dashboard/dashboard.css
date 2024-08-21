@@ -90,12 +90,9 @@
 /* verify box */
 .verify {
   /* Glass */
-  background: rgba(247, 248, 247, 0.16);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(5.2px);
-  -webkit-backdrop-filter: blur(5.2px);
-  border: 1px solid rgba(247, 248, 247, 0.67);
+  background: white;
+  border: 0.15rem solid var(--accent-color-dark);
+  border-radius: 1rem;
 
   position: fixed;
   top: 50%;

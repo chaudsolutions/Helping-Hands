@@ -97,13 +97,8 @@ router.post("/register", async (req, res) => {
       `,
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error("Error sending email:", error);
-        return res.status(500).send("Error sending welcome email.");
-      }
-      console.log("Welcome email sent: %s", info.messageId);
-    });
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Welcome email sent: %s", info.messageId);
 
     // Send the token as a response
     res.status(200).json(token);
