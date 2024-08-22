@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 
 const RequestSchema = new Schema(
   {
-    link: { type: String, unique: true },
+    link: { type: String },
     requestAmount: { type: Number },
     paymentDetails: {
       email: { type: String },
