@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import ButtonLoad from "../../Animations/ButtonLoad";
 import axios from "axios";
-import { serVer, token } from "../../Hooks/useVariable";
+import { serVer } from "../../Hooks/useVariable";
 import { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import ReadMoreArea from "@foxeian/react-read-more";
@@ -18,6 +18,8 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
 
   const [fundsLink, setFundsLink] = useState("");
   const [copiedText, setCopiedText] = useState("");
+
+  const token = localStorage.getItem("helpingHandsUser");
 
   // react form
   // withdrawal

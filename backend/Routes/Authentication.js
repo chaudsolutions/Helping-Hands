@@ -70,7 +70,7 @@ router.post("/register", async (req, res) => {
       <br/>
       View all your campaigns here: <a href="${appUrl}/campaigns" style="color: #4CAF50;">My Campaigns</a>
       <br/>
-      Here is your verification code: <strong>${verificationCode}</strong>
+      Here is your verification code: <strong style="font-size: 14px;">${verificationCode}</strong>
       <br/>
       Visit our platform to get started: <a href="${appUrl}" style="color: #4CAF50;">${appUrl}</a>
     `;
@@ -81,17 +81,17 @@ router.post("/register", async (req, res) => {
       to: email, // the user's email
       subject: `Welcome to HelpingHands! Your account is ready`,
       html: `
-        <div style="background-color: #f2f4f7; padding: 20px; border: 1px solid #ddd; border-radius: 10px; font-family: Arial, sans-serif; color: #333;">
+        <div style="background-color: #000; padding: 20px; border: 1px solid rgb(188, 255, 107); border-radius: 10px; font-family: Arial, sans-serif; color: #333;">
           <h1 style="color: rgb(188, 255, 107); font-weight: bold; font-size: 24px; margin-bottom: 10px;">Welcome to HelpingHands</h1>
           <div style="margin-bottom: 20px;">
-            <h4 style="color: #555; font-size: 18px; margin-bottom: 10px;">Hi ${name},</h4>
-            <p style="color: #555; font-size: 16px; line-height: 1.5;">${message}</p>
+            <h4 style="color: #fff; font-size: 18px; margin-bottom: 10px;">Hi ${name},</h4>
+            <p style="color: #fff; font-size: 16px; line-height: 1.5;">${message}</p>
           </div>
           <div style="text-align: center; margin-top: 20px;">
             <a href="${appUrl}/profile" style="background-color: rgb(188, 255, 107); color: #fff; padding: 10px 20px; border: none; border-radius: 5px; text-decoration: none; font-size: 16px;">Get Started</a>
           </div>
           <div style="margin-top: 30px; text-align: center;">
-            <p style="color: #999; font-size: 14px;">Thank you for being a part of HelpingHands. Together, we can make a difference!</p>
+            <p style="color: #fff; font-size: 14px;">Thank you for being a part of HelpingHands. Together, we can make a difference!</p>
           </div>
         </div>
       `,
