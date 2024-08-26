@@ -12,7 +12,6 @@ import { HiBadgeCheck } from "react-icons/hi";
 import PageLoader from "../../Animations/PageLoader";
 import safeCheckoutLogo from "../../../assets/images/payments/guaranteed-safe-checkout.png";
 import toast from "react-hot-toast";
-import usePaystackPayment from "../../Hooks/usePaystack";
 import useFlutterWavePayment from "../../Hooks/useFlutterWave";
 import useCurrencyConversion from "../../Hooks/useCurrencyConversion";
 import ButtonLoad from "../../Animations/ButtonLoad";
@@ -28,12 +27,7 @@ import {
 } from "../../Hooks/useQueryFetch/useQueryData";
 import CampaignList from "../../Custom/ItemList/CampaignList";
 import axios from "axios";
-import {
-  currencyArray,
-  paymentOptionsArray,
-  serVer,
-  token,
-} from "../../Hooks/useVariable";
+import { currencyArray, serVer, token } from "../../Hooks/useVariable";
 import { GiMoneyStack } from "react-icons/gi";
 import Null from "../../Animations/Null";
 import { CiCamera } from "react-icons/ci";
@@ -72,8 +66,6 @@ const ViewCampaign = () => {
     window.scroll(0, 0);
   }, [campaignId]);
 
-  // paystack hook
-  const { handlePayment, loading } = usePaystackPayment();
   // use flutterWave hook
   const { initiatePayment } = useFlutterWavePayment();
   // amount conversation hook
@@ -137,54 +129,28 @@ const ViewCampaign = () => {
   const createdAgoDays = differenceInDays(currentDate, new Date(createdAt));
   const createdAgoHours = differenceInHours(currentDate, new Date(createdAt));
 
-  // map payment options into DOM
-  const paymentOptionsList = paymentOptionsArray.map((item, i) => {
-    // function to donate
-    const donateFunc = (paymentOption) => {
-      if (amountToDonate <= 0) {
-        return toast.error("Please provide amount");
-      }
-      if (!donorEmail) {
-        return toast.error("Please provide email");
-      }
-      if (isLoading) {
-        return toast.error("Please try again later");
-      }
+  // function to donate
+  const donateFunc = () => {
+    if (amountToDonate <= 0) {
+      return toast.error("Please provide amount");
+    }
+    if (!donorEmail) {
+      return toast.error("Please provide email");
+    }
+    if (isLoading) {
+      return toast.error("Please try again later");
+    }
 
-      if (paymentOption === "Paystack") {
-        if (currency !== "NGN") {
-          return toast.error("Only NGN is supported");
-        }
-
-        handlePayment({
-          paymentType: "donation",
-          amountToDonate,
-          convertedBalance,
-          currency,
-          donorEmail,
-          refetch,
-          campaignId,
-        });
-      }
-      if (paymentOption === "Flutterwave") {
-        initiatePayment({
-          paymentType: "donation",
-          amountToDonate,
-          convertedBalance,
-          currency,
-          donorEmail,
-          refetch,
-          campaignId,
-        });
-      }
-    };
-
-    return (
-      <li key={i} onClick={() => donateFunc(item.name)}>
-        <img src={item.image} alt={item.name} height="40" />
-      </li>
-    );
-  });
+    initiatePayment({
+      paymentType: "donation",
+      amountToDonate,
+      convertedBalance,
+      currency,
+      donorEmail,
+      refetch,
+      campaignId,
+    });
+  };
 
   // map donors into DOM
   const donorsList = donors
@@ -393,9 +359,11 @@ const ViewCampaign = () => {
                     </option>
                   ))}
                 </select>
-                <button onClick={() => setPaymentOptions(!paymentOptions)}>
-                  Donate Now
-                </button>
+                {!paymentOptions && (
+                  <button onClick={() => setPaymentOptions(!paymentOptions)}>
+                    Donate Now
+                  </button>
+                )}
               </div>
               {paymentOptions && (
                 <div className="paymentOptions">
@@ -404,7 +372,7 @@ const ViewCampaign = () => {
                     placeholder="Your Email"
                     onChange={(e) => setDonorEmail(e.target.value)}
                   />
-                  {loading ? <ButtonLoad /> : <ul>{paymentOptionsList}</ul>}
+                  <button onClick={() => donateFunc}>Donate Now</button>
                 </div>
               )}
             </>

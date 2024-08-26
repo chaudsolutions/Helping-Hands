@@ -5,14 +5,12 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchPaymentRequest } from "../../Hooks/useFetch";
 import PageLoader from "../../Animations/PageLoader";
 import Null from "../../Animations/Null";
-import { currencyArray, paymentOptionsArray } from "../../Hooks/useVariable";
+import { currencyArray } from "../../Hooks/useVariable";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import useCurrencyConversion from "../../Hooks/useCurrencyConversion";
 import SEOComponent from "../../SEO/SEO";
-import usePaystackPayment from "../../Hooks/usePaystack";
 import useFlutterWavePayment from "../../Hooks/useFlutterWave";
-import ButtonLoad from "../../Animations/ButtonLoad";
 
 const FundsRequestPayment = () => {
   const [donorEmail, setDonorEmail] = useState("");
@@ -36,8 +34,6 @@ const FundsRequestPayment = () => {
 
   const { requestAmount, paymentDetails } = paymentRequestData || {};
 
-  // paystack hook
-  const { handlePayment, loading } = usePaystackPayment();
   // use flutterWave hook
   const { initiatePayment } = useFlutterWavePayment();
   // amount conversation hook
@@ -46,53 +42,26 @@ const FundsRequestPayment = () => {
     currency,
   });
 
-  // map payment options into DOM
-  const paymentOptionsList = paymentOptionsArray.map((item, i) => {
-    // function to donate
-    const donateFunc = (paymentOption) => {
-      if (!donorEmail) {
-        return toast.error("Please provide email");
-      }
-      if (isLoading) {
-        return toast.error("Please try again later");
-      }
+  // function to donate
+  const donateFunc = () => {
+    if (!donorEmail) {
+      return toast.error("Please provide email");
+    }
+    if (isLoading) {
+      return toast.error("Please try again later");
+    }
 
-      if (paymentOption === "Paystack") {
-        if (currency !== "NGN") {
-          return toast.error("Only NGN is supported");
-        }
-
-        handlePayment({
-          paymentType: "OneToOnePayment",
-          amountToDonate: requestAmount,
-          convertedBalance,
-          currency,
-          donorEmail,
-          refetch,
-          requestUserId,
-          requestFundsId,
-        });
-      }
-      if (paymentOption === "Flutterwave") {
-        initiatePayment({
-          paymentType: "OneToOnePayment",
-          amountToDonate: requestAmount,
-          convertedBalance,
-          currency,
-          donorEmail,
-          refetch,
-          requestUserId,
-          requestFundsId,
-        });
-      }
-    };
-
-    return (
-      <li key={i} onClick={() => donateFunc(item.name)}>
-        <img src={item.image} alt={item.name} />
-      </li>
-    );
-  });
+    initiatePayment({
+      paymentType: "OneToOnePayment",
+      amountToDonate: requestAmount,
+      convertedBalance,
+      currency,
+      donorEmail,
+      refetch,
+      requestUserId,
+      requestFundsId,
+    });
+  };
 
   return (
     <div className="fundsRequestPayment">
@@ -129,10 +98,7 @@ const FundsRequestPayment = () => {
                 onChange={(e) => setDonorEmail(e.target.value)}
               />
 
-              <div>
-                <strong>Pay Now</strong>
-                {loading ? <ButtonLoad /> : <ul>{paymentOptionsList}</ul>}
-              </div>
+              <button onClick={() => donateFunc}>Pay Now</button>
             </div>
           )}
         </div>

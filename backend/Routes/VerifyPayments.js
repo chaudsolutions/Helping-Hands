@@ -1,5 +1,4 @@
 const express = require("express");
-const https = require("https");
 // flutterwave
 const Flutterwave = require("flutterwave-node-v3");
 const CampaignModel = require("../Models/Campaign.js");
@@ -7,8 +6,6 @@ const UsersModel = require("../Models/Users.js");
 
 const router = express.Router();
 
-// paystack env
-const paystackKey = process.env.PAYSTACK_SECRET_KEY;
 // flutterwave envs
 const flw = new Flutterwave(
   process.env.FLW_PUBLIC_KEY,
@@ -16,45 +13,6 @@ const flw = new Flutterwave(
 );
 
 // endpoint to verify payments
-// Verify Paystack payments
-router.post("/paystack", async (req, res) => {
-  try {
-    const { reference } = req.body; // Extracting reference from query params
-
-    const options = {
-      hostname: "api.paystack.co",
-      port: 443,
-      path: `/transaction/verify/${reference}`, // Correct path format
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${paystackKey}`, // Replace with your Paystack secret key
-      },
-    };
-
-    const paystackReq = https.request(options, (paystackRes) => {
-      let data = "";
-
-      paystackRes.on("data", (chunk) => {
-        data += chunk;
-      });
-
-      paystackRes.on("end", () => {
-        const responseData = JSON.parse(data);
-        res.send(responseData);
-      });
-    });
-
-    paystackReq.on("error", (error) => {
-      console.error(error);
-      res.status(500).send("Failed to verify payment");
-    });
-
-    paystackReq.end(); // Don't forget to end the request
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal server error");
-  }
-});
 
 // verify flutterWave payments
 router.post("/flutterwave", async (req, res) => {

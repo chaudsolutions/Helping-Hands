@@ -154,22 +154,16 @@
           }
         }
 
-        > ul {
-          display: flex;
-          align-items: center;
-          flex-flow: row wrap;
-          justify-content: space-around;
-          gap: 1rem;
+        > button {
+          font-weight: bold;
+          background-color: var(--accent-color-dark);
+          color: var(--white);
+          padding: 0.5rem;
+          border-radius: 1rem;
+          box-shadow: 0 0.3rem 0.5rem var(--trans-black);
 
-          > li {
-            box-shadow: 0 0.3rem 0.5rem var(--trans-more-black);
-            border-radius: 1rem;
-            cursor: pointer;
-            transition: 0.2s ease-in-out;
-
-            &:hover {
-              transform: scale(1.03);
-            }
+          &:hover {
+            background-color: var(--black);
           }
         }
       }
@@ -288,9 +282,6 @@
     }
 
     > :nth-child(1) {
-      background-color: var(--accent-color-dark);
-    }
-    > :nth-child(2) {
       background-color: red;
     }
   }

@@ -57,7 +57,7 @@ const CampaignList = ({ item }) => {
           {item.campaignName}
         </h4>
 
-        <ProgressBar completed={progress.toFixed()} className="progressBar" />
+        <ProgressBar completed={parseInt(progress)} className="progressBar" />
 
         {user && (
           <p>
