@@ -120,7 +120,9 @@ const Register = () => {
       )}
 
       <div className="form-container">
-        <Link to="/login">Sign In</Link>
+        <div>
+          <Link to="/login">Sign In</Link>
+        </div>
 
         <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
           {currentStep === 1 && (

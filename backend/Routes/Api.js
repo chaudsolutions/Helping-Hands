@@ -23,7 +23,7 @@ router.put("/expired-campaign/:campaignId", async (req, res) => {
         const currentDate = new Date();
         const campaignEndDate = new Date(campaign.endDate); // Assuming campaigns have an endDate field
 
-        if (currentDate > campaignEndDate) {
+        if (currentDate >= campaignEndDate) {
           // Update the campaign status to expired
           campaign.status = "expired";
 

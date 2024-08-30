@@ -32,7 +32,7 @@ const CampaignList = ({ item }) => {
 
   // TODO: write a function that updates the campaign when its expired
   useEffect(() => {
-    if (!active) {
+    if (new Date() >= new Date(item.endDate)) {
       const deactivateCampaign = async () => {
         const url = `${serVer}/api/expired-campaign/${item._id}`;
 
@@ -44,7 +44,7 @@ const CampaignList = ({ item }) => {
       };
       deactivateCampaign();
     }
-  }, [active, item]);
+  }, [item]);
 
   return (
     <li className="fundRaise-li">

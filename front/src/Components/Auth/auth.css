@@ -44,16 +44,30 @@
     -webkit-backdrop-filter: blur(5.2px);
     border: 1px solid rgba(247, 248, 247, 0.67);
 
-    > a {
-      background-color: var(--accent-color);
-      border-radius: 0.5rem;
-      width: fit-content;
-      padding: 0.5rem 1rem;
-      font-weight: bold;
-      color: var(--black);
+    > :nth-child(1) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-      &:hover {
-        background-color: var(--accent-color-dark);
+      > a {
+        background-color: var(--accent-color);
+        border-radius: 0.5rem;
+        width: fit-content;
+        padding: 0.5rem 1rem;
+        font-weight: bold;
+        color: var(--black);
+
+        &:hover {
+          background-color: var(--accent-color-dark);
+        }
+      }
+
+      > button {
+        background-color: var(--black);
+        border-radius: 1rem;
+        color: var(--white);
+        padding: 0.3rem;
+        font-size: 0.7rem;
       }
     }
 

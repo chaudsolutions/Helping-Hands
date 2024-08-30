@@ -126,4 +126,71 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// Forgot Password Route
+router.post("/recover-password/:email", async (req, res) => {
+  const { email } = req.params;
+
+  try {
+    // Find the user by email
+    const user = await UsersModel.findOne({ email });
+
+    if (!user) {
+      throw Error("User not found");
+    }
+
+    // Generate a token
+    const token = uuidv4().slice(0, 10).toString("hex");
+    user.resetPasswordToken = token;
+
+    await user.save();
+
+    // Send the email with the password
+    const mailOptions = {
+      from: "noreply@eurolearn.ng",
+      to: user.email,
+      subject: "Helping Hands Password Reset",
+      html: `<p>You are receiving this because you (or someone else) have requested the reset of the password for your account.
+        Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:
+        <br/>${appUrl}/reset-password/${token}
+        <br/>If you did not request this, please ignore this email and your password will remain unchanged.<p/>`,
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Welcome email sent: %s", info.messageId);
+
+    res.status(200).send("Email sent successfully");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+});
+
+// Password reset endpoint
+router.post("/reset-password/:token", async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+
+  try {
+    // Find the user by ID
+    const user = await UsersModel.findOne({ resetPasswordToken: token });
+
+    if (!user) {
+      throw Error("User not found");
+    }
+
+    // Hash the new password
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+
+    // Update the user's password
+    user.password = hash;
+    await user.save();
+
+    res.status(200).send("Password reset successful");
+  } catch (error) {
+    console.error(error);
+    res.status(400).send("Invalid or expired token");
+  }
+});
+
 module.exports = router;

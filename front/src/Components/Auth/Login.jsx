@@ -10,6 +10,7 @@ import ButtonLoad from "../Animations/ButtonLoad";
 import SEOComponent from "../SEO/SEO";
 import { useAuthContext } from "../Context/AuthContext";
 import { serVer } from "../Hooks/useVariable";
+import PopupComponent from "../Custom/Popup/PopupComponent";
 
 const Login = () => {
   useEffect(() => {
@@ -18,6 +19,7 @@ const Login = () => {
 
   const { login } = useAuthContext();
 
+  const [isPopupOpen, setIsPopupOpen] = useState({ boolean: false, value: "" });
   // Password visibility
   const [passwordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = () => {
@@ -71,7 +73,15 @@ const Login = () => {
       </div>
 
       <div className="form-container">
-        <Link to="/create/campaign">Create Account</Link>
+        <div>
+          <Link to="/create/campaign">Create Account</Link>
+          <button
+            onClick={() =>
+              setIsPopupOpen({ boolean: true, value: "ForgotPassword" })
+            }>
+            Forgot Password?
+          </button>
+        </div>
 
         <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
           <div className="inputContainer">
@@ -117,6 +127,15 @@ const Login = () => {
             )}
           </button>
         </form>
+      </div>
+      {/* pop up component */}
+      <div>
+        <PopupComponent
+          open={isPopupOpen.boolean}
+          onClose={() => setIsPopupOpen({ boolean: false, value: "" })}
+          context={isPopupOpen.value}
+        />
+        <div id="popup-root" />
       </div>
     </div>
   );

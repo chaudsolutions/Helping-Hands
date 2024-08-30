@@ -58,26 +58,19 @@
         transition: 0.3s ease-in-out;
       }
 
-      > div {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
+      > button {
+        background-color: var(--accent-color);
+        color: var(--black);
+        padding: 0.5rem;
+        font-size: 1.1rem;
+        font-weight: bold;
+        box-shadow: 0 0.3rem 0.5rem var(--trans-black);
+        transition: 0.3s ease-in-out;
+        border-radius: 1rem;
 
-        > ul {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-
-          > li {
-            box-shadow: 0 0.3rem 0.5rem var(--trans-black);
-            transition: 0.3s ease-in-out;
-            border-radius: 1rem;
-            cursor: pointer;
-
-            img {
-              height: 4rem;
-            }
-          }
+        &:hover {
+          background-color: var(--accent-color-dark);
+          color: var(--white);
         }
       }
     }

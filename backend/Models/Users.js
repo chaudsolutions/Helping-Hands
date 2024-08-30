@@ -58,6 +58,7 @@ const UsersSchema = new Schema(
       message: { type: String },
     },
     verificationCode: { type: String, required: true },
+    resetPasswordToken: { type: String },
     requests: [RequestSchema],
     withdrawals: [WithdrawalSchema],
   },

@@ -23,6 +23,7 @@ import Privacy from "./Components/App/Others/Privacy/Privacy";
 import Profile from "./Components/App/Profile/Profile";
 import FundsRequestPayment from "./Components/App/Funds/FundsRequestPayment";
 import Admin from "./Components/App/Admin/Admin";
+import PasswordReset from "./Components/Auth/PasswordReset";
 
 function App() {
   const { user } = useAuthContext();
@@ -50,6 +51,10 @@ function App() {
           <Route
             path="/login"
             element={!user ? <Login /> : <Navigate to="/dashboard" />}
+          />
+          <Route
+            path="/reset-password/:resetToken"
+            element={!user ? <PasswordReset /> : <Navigate to="/dashboard" />}
           />
 
           {/* account */}

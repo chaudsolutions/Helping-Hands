@@ -40,7 +40,6 @@ const ViewCampaign = () => {
   const [donorEmail, setDonorEmail] = useState("");
   const [currency, setCurrency] = useState("");
   const [amountToDonate, setAmountToDonate] = useState(0);
-  const [paymentOptions, setPaymentOptions] = useState(false);
   const [deleteBtn, setDeleteBtn] = useState(
     <>
       Delete <MdDeleteForever />
@@ -122,7 +121,7 @@ const ViewCampaign = () => {
 
   const progress = (amountRaised / amount) * 100;
   const daysLeft = differenceInDays(new Date(endDate), currentDate);
-  const active = daysLeft > 0;
+  const active = new Date(endDate) >= currentDate;
   const expired = active ? <>{daysLeft} days left</> : <>expired</>;
 
   // calculate created ago days and hours
@@ -359,22 +358,16 @@ const ViewCampaign = () => {
                     </option>
                   ))}
                 </select>
-                {!paymentOptions && (
-                  <button onClick={() => setPaymentOptions(!paymentOptions)}>
-                    Donate Now
-                  </button>
-                )}
               </div>
-              {paymentOptions && (
-                <div className="paymentOptions">
-                  <input
-                    type="email"
-                    placeholder="Your Email"
-                    onChange={(e) => setDonorEmail(e.target.value)}
-                  />
-                  <button onClick={() => donateFunc}>Donate Now</button>
-                </div>
-              )}
+
+              <div className="paymentOptions">
+                <input
+                  type="email"
+                  placeholder="Your Email"
+                  onChange={(e) => setDonorEmail(e.target.value)}
+                />
+                <button onClick={donateFunc}>Donate Now</button>
+              </div>
             </>
           )}
         </div>

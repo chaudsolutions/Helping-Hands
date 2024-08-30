@@ -15,6 +15,7 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
   const withdraw = context === "Withdraw";
   const request = context === "Request";
   const updateBank = context === "UpdateBank";
+  const forgotPassword = context === "ForgotPassword";
 
   const [fundsLink, setFundsLink] = useState("");
   const [copiedText, setCopiedText] = useState("");
@@ -53,6 +54,15 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
   } = addBankForm;
   const { errors: addBankErrors, isSubmitting: isAddBankSubmitting } =
     addBankFormState;
+
+  // forgot password form
+  const recoveryForm = useForm();
+  const {
+    register: recRegister,
+    handleSubmit: recHandleSubmit,
+    formState: recFormState,
+  } = recoveryForm;
+  const { errors: recErrors, isSubmitting: isRecSubmitting } = recFormState;
 
   //  function to request withdrawals
   const handleWithdraw = async (data) => {
@@ -145,6 +155,26 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
     toast.error("Failed to submit, check inputs and try again");
   };
 
+  const recoverPassword = async (data) => {
+    const { recoveryEmail } = data;
+
+    const url = `${serVer}/auth/recover-password/${recoveryEmail}`;
+
+    try {
+      const response = await axios.post(url);
+
+      toast.success(response.data);
+    } catch (error) {
+      console.log(error);
+      const { response } = error;
+      toast.error(response.data);
+    }
+  };
+
+  const onRecoverPassError = () => {
+    toast.error("Failed to submit, check inputs and try again");
+  };
+
   const handleCopy = () => {
     setCopiedText(!copiedText);
     toast.success(`Copied`);
@@ -157,6 +187,7 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
           {withdraw && `${context} your`}
           {request && `${context} for`} {(withdraw || request) && "Funds"}
           {updateBank && "Add Bank Details"}
+          {forgotPassword && `Forgot your password ?`}
         </h3>
         <p>
           {withdraw && (
@@ -179,6 +210,13 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
             <>
               Add your bank info or update your existing bank info for ease of
               withdrawals
+            </>
+          )}
+
+          {forgotPassword && (
+            <>
+              Enter your email attached to your account and your password will
+              be sent to your inbox
             </>
           )}
         </p>
@@ -298,6 +336,33 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
             </button>
           </form>
         )}
+
+        {/* forgot password form */}
+        {forgotPassword && (
+          <form
+            onSubmit={recHandleSubmit(recoverPassword, onRecoverPassError)}
+            noValidate>
+            <div>
+              <div className="inputBox">
+                <input
+                  placeholder="Email"
+                  required
+                  type="email"
+                  id="recoveryEmail"
+                  {...recRegister("recoveryEmail", {
+                    required: "Recovery Email is required",
+                  })}
+                />
+
+                <p>{recErrors.recoveryEmail?.message}</p>
+              </div>
+            </div>
+            <button type="submit" disabled={isRecSubmitting}>
+              {isRecSubmitting ? <ButtonLoad /> : <>SUBMIT</>}
+            </button>
+          </form>
+        )}
+
         <button className="close" onClick={onClose}>
           CLOSE
         </button>
