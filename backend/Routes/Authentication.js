@@ -1,6 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
+const bcrypt = require("bcrypt");
 
 const transporter = require("../Modules/nodemailer.js");
 const UsersModel = require("../Models/Users.js");
