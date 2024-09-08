@@ -12,7 +12,6 @@ import { HiBadgeCheck } from "react-icons/hi";
 import PageLoader from "../../Animations/PageLoader";
 import safeCheckoutLogo from "../../../assets/images/payments/guaranteed-safe-checkout.png";
 import toast from "react-hot-toast";
-import useFlutterWavePayment from "../../Hooks/useFlutterWave";
 import useCurrencyConversion from "../../Hooks/useCurrencyConversion";
 import ButtonLoad from "../../Animations/ButtonLoad";
 import ReadMoreArea from "@foxeian/react-read-more";
@@ -31,14 +30,18 @@ import { currencyArray, serVer, token } from "../../Hooks/useVariable";
 import { GiMoneyStack } from "react-icons/gi";
 import Null from "../../Animations/Null";
 import { CiCamera } from "react-icons/ci";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
 const ViewCampaign = () => {
   const link = window.location.href;
+  const url = window.location.origin;
 
   const [emblaRef] = useEmblaCarousel({ loop: false }, [Autoplay()]);
 
   const [donorEmail, setDonorEmail] = useState("");
-  const [currency, setCurrency] = useState("");
+  const [currency, setCurrency] = useState("USD");
   const [amountToDonate, setAmountToDonate] = useState(0);
   const [deleteBtn, setDeleteBtn] = useState(
     <>
@@ -65,8 +68,6 @@ const ViewCampaign = () => {
     window.scroll(0, 0);
   }, [campaignId]);
 
-  // use flutterWave hook
-  const { initiatePayment } = useFlutterWavePayment();
   // amount conversation hook
   const { convertedBalance, isLoading } = useCurrencyConversion({
     amountToDonate,
@@ -129,7 +130,7 @@ const ViewCampaign = () => {
   const createdAgoHours = differenceInHours(currentDate, new Date(createdAt));
 
   // function to donate
-  const donateFunc = () => {
+  const donateFunc = async () => {
     if (amountToDonate <= 0) {
       return toast.error("Please provide amount");
     }
@@ -140,17 +141,35 @@ const ViewCampaign = () => {
       return toast.error("Please try again later");
     }
 
-    initiatePayment({
-      paymentType: "donation",
-      amountToDonate,
-      convertedBalance,
-      currency,
-      donorEmail,
-      refetch,
-      campaignId,
-    });
-  };
+    try {
+      // Create checkout session via your backend
+      const { data } = await axios.post(
+        `${serVer}/verify-payment/stripe/create-checkout-session`,
+        {
+          amount: convertedBalance,
+          currency: currency.toLowerCase(),
+          email: donorEmail,
+          paymentType: "Donation",
+          url,
+          id: campaignId,
+        }
+      );
 
+      const stripe = await stripePromise;
+
+      // Redirect to Stripe Checkout
+      const { error } = await stripe.redirectToCheckout({
+        sessionId: data.id,
+      });
+
+      if (error) {
+        console.error(error);
+        toast.error("Stripe Checkout error");
+      }
+    } catch (error) {
+      toast.error(error.response?.data || "An error occurred");
+    }
+  };
   // map donors into DOM
   const donorsList = donors
     ?.sort((a, b) => new Date(b.date) - new Date(a.date))

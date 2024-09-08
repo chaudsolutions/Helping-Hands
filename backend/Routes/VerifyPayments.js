@@ -1,40 +1,53 @@
 const express = require("express");
-// flutterwave
-const Flutterwave = require("flutterwave-node-v3");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
 const CampaignModel = require("../Models/Campaign.js");
 const UsersModel = require("../Models/Users.js");
 
 const router = express.Router();
 
-// flutterwave envs
-const flw = new Flutterwave(
-  process.env.FLW_PUBLIC_KEY,
-  process.env.FLW_SECRET_KEY
-);
-
 // endpoint to verify payments
+router.post("/stripe/create-checkout-session", async (req, res) => {
+  const { amount, currency, email, paymentType, url, id } = req.body;
+  try {
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price_data: {
+            currency: currency,
+            product_data: {
+              name: paymentType,
+            },
+            unit_amount: amount * 100, // Stripe accepts the amount in cents
+          },
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      customer_email: email,
+      success_url: `${url}/success/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${url}/failed`,
+      metadata: { id },
+    });
 
-// verify flutterWave payments
-router.post("/flutterwave", async (req, res) => {
-  const { transactionId, expectedAmount, expectedCurrency } = req.body;
+    res.json({ id: session.id });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+    console.error(error);
+  }
+});
+
+// Route to verify payment session
+router.post("/verify-stripe", async (req, res) => {
+  const { sessionId } = req.body;
 
   try {
-    const response = await flw.Transaction.verify({ id: transactionId });
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-    if (
-      response.data.status === "successful" &&
-      response.data.amount === expectedAmount &&
-      response.data.currency === expectedCurrency
-    ) {
-      // Success! Confirm the customer's payment
-      res.status(200).send("Payment verified successfully");
-    } else {
-      // Inform the customer their payment was unsuccessful
-      res.status(400).send("Payment verification failed");
-    }
+    res.json(session);
   } catch (error) {
+    res.status(500).send({ error: error.message });
     console.error(error);
-    res.status(500).send("An error occurred while verifying the payment");
   }
 });
 

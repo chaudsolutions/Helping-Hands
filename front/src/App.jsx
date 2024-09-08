@@ -24,6 +24,8 @@ import Profile from "./Components/App/Profile/Profile";
 import FundsRequestPayment from "./Components/App/Funds/FundsRequestPayment";
 import Admin from "./Components/App/Admin/Admin";
 import PasswordReset from "./Components/Auth/PasswordReset";
+import { Failed, Success } from "./Components/App/Payment/Payment";
+import ErrorBoundary from "./Components/Error/ErrorBoundary";
 
 function App() {
   const { user } = useAuthContext();
@@ -34,86 +36,92 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <div className="app-div">
-        <Nav />
+    <ErrorBoundary>
+      <div className="App">
+        <div className="app-div">
+          <Nav />
 
-        {/* routing */}
-        <Routes>
-          {/* home */}
-          <Route path="/" exact element={<Home />} />
+          {/* routing */}
+          <Routes>
+            {/* home */}
+            <Route path="/" exact element={<Home />} />
 
-          {/* authentication */}
-          <Route
-            path="/create/campaign"
-            element={!user ? <Register /> : <Navigate to="/dashboard" />}
-          />
-          <Route
-            path="/login"
-            element={!user ? <Login /> : <Navigate to="/dashboard" />}
-          />
-          <Route
-            path="/reset-password/:resetToken"
-            element={!user ? <PasswordReset /> : <Navigate to="/dashboard" />}
-          />
+            {/* authentication */}
+            <Route
+              path="/create/campaign"
+              element={!user ? <Register /> : <Navigate to="/dashboard" />}
+            />
+            <Route
+              path="/login"
+              element={!user ? <Login /> : <Navigate to="/dashboard" />}
+            />
+            <Route
+              path="/reset-password/:resetToken"
+              element={!user ? <PasswordReset /> : <Navigate to="/dashboard" />}
+            />
 
-          {/* account */}
-          <Route
-            path="/dashboard"
-            element={user ? <Dashboard /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/new/campaign"
-            element={user ? <CreateCampaign /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/profile"
-            element={user ? <Profile /> : <Navigate to="/" />}
-          />
+            {/* account */}
+            <Route
+              path="/dashboard"
+              element={user ? <Dashboard /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/new/campaign"
+              element={user ? <CreateCampaign /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/profile"
+              element={user ? <Profile /> : <Navigate to="/" />}
+            />
 
-          {/* campaigns */}
-          <Route path="/campaigns" element={<Campaigns />} />
-          <Route path="/campaign/:campaignId" element={<ViewCampaign />} />
+            {/* campaigns */}
+            <Route path="/campaigns" element={<Campaigns />} />
+            <Route path="/campaign/:campaignId" element={<ViewCampaign />} />
 
-          {/* funds */}
-          <Route
-            path="/request-funds/:requestUserId/:requestFundsId"
-            element={<FundsRequestPayment />}
-          />
+            {/* funds */}
+            <Route
+              path="/request-funds/:requestUserId/:requestFundsId"
+              element={<FundsRequestPayment />}
+            />
 
-          {/* ADMIN */}
-          <Route path="/admin" element={<Admin />} />
+            {/* payment status page */}
+            <Route path="/success/success" element={<Success />} />
+            <Route path="/failed" element={<Failed />} />
 
-          {/* OTHERS */}
-          <Route
-            path="/frequently-asked-questions"
-            element={<FAQComponent />}
-          />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact-us" element={<Contact />} />
-          <Route path="/help-center" element={<HelpCenter />} />
-          <Route path="/privacy-policy" element={<Privacy />} />
+            {/* ADMIN */}
+            <Route path="/admin" element={<Admin />} />
 
-          {/* Catch-all Route */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            {/* OTHERS */}
+            <Route
+              path="/frequently-asked-questions"
+              element={<FAQComponent />}
+            />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact-us" element={<Contact />} />
+            <Route path="/help-center" element={<HelpCenter />} />
+            <Route path="/privacy-policy" element={<Privacy />} />
+
+            {/* Catch-all Route */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+
+        {/* scroll to top BTN */}
+        <ScrollToTop
+          color="black"
+          smooth
+          width="20"
+          height="20"
+          className="scrollToTopBtn"
+        />
+
+        {/* footer */}
+        <Footer />
+
+        {/* custom components */}
+        <Toaster />
       </div>
-
-      {/* scroll to top BTN */}
-      <ScrollToTop
-        color="black"
-        smooth
-        width="20"
-        height="20"
-        className="scrollToTopBtn"
-      />
-
-      {/* footer */}
-      <Footer />
-
-      {/* custom components */}
-      <Toaster />
-    </div>
+    </ErrorBoundary>
   );
 }
 

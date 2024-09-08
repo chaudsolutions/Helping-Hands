@@ -1,0 +1,51 @@
+.errorBoundary {
+  background-color: var(--background-color);
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.errorInfo {
+  padding: 1rem var(--padding-clamp);
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 1rem;
+  color: var(--default-black);
+
+  > h1 {
+    font-size: 1.7rem;
+  }
+
+  .errorInfoBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    > button {
+      background-color: var(--accent-color);
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      color: black;
+      font-weight: 600;
+      transition: 0.2s ease-in-out;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      &:nth-child(3) {
+        background-color: var(--accent-color-dark);
+      }
+    }
+  }
+
+  .errorReport {
+    margin-top: 2rem;
+    text-align: center;
+  }
+}
