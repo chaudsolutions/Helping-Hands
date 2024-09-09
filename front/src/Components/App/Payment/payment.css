@@ -1,7 +1,24 @@
 .payment {
+  padding: 7rem var(--padding-clamp) 0;
   display: flex;
   flex-flow: column;
-  height: 50vh;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
+
+  > :last-child {
+    margin-top: 2rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--accent-color);
+    border-radius: 1rem;
+    font-size: 1.1rem;
+    color: var(--black);
+    font-weight: bold;
+
+    &:hover {
+      background-color: var(--accent-color-dark);
+      color: var(--white);
+      box-shadow: 0 0.3rem 0.5rem var(--accent-color);
+    }
+  }
 }

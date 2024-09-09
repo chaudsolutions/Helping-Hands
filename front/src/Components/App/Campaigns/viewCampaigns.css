@@ -161,6 +161,8 @@
           padding: 0.5rem;
           border-radius: 1rem;
           box-shadow: 0 0.3rem 0.5rem var(--trans-black);
+          display: flex;
+          justify-content: center;
 
           &:hover {
             background-color: var(--black);

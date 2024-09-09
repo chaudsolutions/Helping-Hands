@@ -30,18 +30,14 @@ import { currencyArray, serVer, token } from "../../Hooks/useVariable";
 import { GiMoneyStack } from "react-icons/gi";
 import Null from "../../Animations/Null";
 import { CiCamera } from "react-icons/ci";
-import { loadStripe } from "@stripe/stripe-js";
-
-const stripePromise = loadStripe(
-  "pk_test_51PuQmI048oKJvEHnlwkwcng66wI1Of1pyKgdUO6z6EScxPo2AXyOJOS3IzXgoPQOV4unlY3GmauEp6pppwnHDce000c086qGSG"
-);
-// const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
+import useStripeCheckout from "../../Hooks/useStripe";
 
 const ViewCampaign = () => {
   const link = window.location.href;
   const url = window.location.origin;
 
   const [emblaRef] = useEmblaCarousel({ loop: false }, [Autoplay()]);
+  const { initiateCheckout, isStripeLoading } = useStripeCheckout();
 
   const [donorEmail, setDonorEmail] = useState("");
   const [currency, setCurrency] = useState("USD");
@@ -144,34 +140,14 @@ const ViewCampaign = () => {
       return toast.error("Please try again later");
     }
 
-    try {
-      // Create checkout session via your backend
-      const { data } = await axios.post(
-        `${serVer}/verify-payment/stripe/create-checkout-session`,
-        {
-          amount: convertedBalance,
-          currency: currency.toLowerCase(),
-          email: donorEmail,
-          paymentType: "Donation",
-          url,
-          id: campaignId,
-        }
-      );
-
-      const stripe = await stripePromise;
-
-      // Redirect to Stripe Checkout
-      const { error } = await stripe.redirectToCheckout({
-        sessionId: data.id,
-      });
-
-      if (error) {
-        console.error(error);
-        toast.error("Stripe Checkout error");
-      }
-    } catch (error) {
-      toast.error(error.response?.data || "An error occurred");
-    }
+    initiateCheckout({
+      paymentType: "Donation",
+      amount: convertedBalance,
+      currency,
+      donorEmail,
+      campaignId,
+      url,
+    });
   };
   // map donors into DOM
   const donorsList = donors
@@ -388,7 +364,11 @@ const ViewCampaign = () => {
                   placeholder="Your Email"
                   onChange={(e) => setDonorEmail(e.target.value)}
                 />
-                <button onClick={donateFunc}>Donate Now</button>
+                <button
+                  onClick={donateFunc}
+                  style={{ backgroundColor: isStripeLoading && "black" }}>
+                  {isStripeLoading ? <ButtonLoad /> : <>Donate Now</>}
+                </button>
               </div>
             </>
           )}

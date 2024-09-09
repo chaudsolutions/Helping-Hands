@@ -85,7 +85,7 @@ function App() {
             />
 
             {/* payment status page */}
-            <Route path="/success/success" element={<Success />} />
+            <Route path="/success/:paymentType" element={<Success />} />
             <Route path="/failed" element={<Failed />} />
 
             {/* ADMIN */}

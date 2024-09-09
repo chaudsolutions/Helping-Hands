@@ -19,8 +19,4 @@ export const currencyArray = [
     currency: "GBP",
     name: "GBP (Pound)",
   },
-  {
-    currency: "NGN",
-    name: "NGN (Naira)",
-  },
 ];

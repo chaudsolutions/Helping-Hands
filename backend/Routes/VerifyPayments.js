@@ -28,7 +28,7 @@ router.post("/stripe/create-checkout-session", async (req, res) => {
       ],
       mode: "payment",
       customer_email: email,
-      success_url: `${url}/success/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${url}/success/${paymentType}?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${url}/failed`,
       metadata: { id },
     });
