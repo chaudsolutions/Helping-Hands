@@ -32,7 +32,10 @@ import Null from "../../Animations/Null";
 import { CiCamera } from "react-icons/ci";
 import { loadStripe } from "@stripe/stripe-js";
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
+const stripePromise = loadStripe(
+  "pk_test_51PuQmI048oKJvEHnlwkwcng66wI1Of1pyKgdUO6z6EScxPo2AXyOJOS3IzXgoPQOV4unlY3GmauEp6pppwnHDce000c086qGSG"
+);
+// const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
 const ViewCampaign = () => {
   const link = window.location.href;
@@ -436,7 +439,7 @@ const ViewCampaign = () => {
       </div>
 
       <div className="feedback">
-        <button>
+        <button onClick={() => toast.error("Report Submitted")}>
           <BsFlagFill />
           <span>Report Campaign</span>
         </button>
