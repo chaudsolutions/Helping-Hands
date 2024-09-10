@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import "./payment.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { serVer } from "../../Hooks/useVariable";
@@ -11,15 +11,20 @@ export const Success = () => {
   const params = useParams();
   const navigate = useNavigate();
 
+  const [ran, setRan] = useState(false);
+
   const { paymentType } = params;
 
   const donation = paymentType === "Donation";
-  const oneToOnePayment = paymentType === "OneToOne";
+  const oneToOnePayment = paymentType === "OneToOnePayment";
 
   useEffect(() => {
+    let isMounted = true; // Track if component is mounted
+
     const sessionId = new URLSearchParams(location.search).get("session_id");
 
     const verifyPayment = async () => {
+      setRan(true);
       try {
         const { data } = await axios.post(
           `${serVer}/verify-payment/verify-stripe`,
@@ -28,6 +33,7 @@ export const Success = () => {
           }
         );
 
+        // function for donation payment
         if (donation) {
           const donateData = {
             amount: data.amount_total / 100,
@@ -43,19 +49,49 @@ export const Success = () => {
 
           try {
             // Save payment data to your database
-            await axios.put(
+            const res = await axios.put(
               `${serVer}/verify-payment/donate/${data.metadata.id}`,
               {
                 donateData,
               }
             );
 
-            toast.success("Donation successful!");
+            toast.success(res.data);
 
             // Navigate to the campaign page
             navigate(`/campaign/${data.metadata.id}`);
           } catch (e) {
-            toast.error("Error saving payment data to database.");
+            toast.error("Error saving payment data to the database.");
+          }
+        }
+
+        // function for one to one payment
+        if (oneToOnePayment) {
+          // Save payment details to database
+          const paymentRequestData = {
+            email: data.customer_email,
+            name: data.customer_email.split("@")[0],
+            customerPaymentId: sessionId,
+            paymentMethod: "Stripe",
+            amountReceivedViaPaymentMethod: data.amount_total / 100,
+            paymentId: sessionId,
+            currency: data.currency,
+            amountToDonate: parseInt(data.amount_total / 100),
+          };
+
+          const paymentRequestUrl = `${serVer}/verify-payment/pay-request/${data.metadata.id}`;
+
+          try {
+            const response = await axios.put(paymentRequestUrl, {
+              paymentRequestData,
+            });
+
+            toast.success(response.data);
+
+            // Navigate to the one to one payment page
+            navigate(`/request-funds/${data.metadata.id}`);
+          } catch (error) {
+            toast.error(error?.response?.data);
           }
         }
       } catch (error) {
@@ -63,10 +99,14 @@ export const Success = () => {
       }
     };
 
-    if (sessionId) {
+    if (sessionId && isMounted && !ran) {
       verifyPayment();
     }
-  }, [location, navigate, donation]);
+
+    return () => {
+      isMounted = false; // Cleanup function to set isMounted to false on unmount
+    };
+  }, [location, navigate, donation, oneToOnePayment, ran]);
 
   return (
     <div className="payment">
@@ -95,5 +135,10 @@ export const Success = () => {
 };
 
 export const Failed = () => {
-  return <div className="payment">Failed Payment</div>;
+  return (
+    <div className="payment">
+      <h1>Failed Payment</h1>
+      <Link to="/">Go Home</Link>
+    </div>
+  );
 };

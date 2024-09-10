@@ -10,22 +10,26 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import useCurrencyConversion from "../../Hooks/useCurrencyConversion";
 import SEOComponent from "../../SEO/SEO";
-import useFlutterWavePayment from "../../Hooks/useFlutterWave";
+import useStripeCheckout from "../../Hooks/useStripe";
+import ButtonLoad from "../../Animations/ButtonLoad";
 
 const FundsRequestPayment = () => {
+  const url = window.location.origin;
+
   const [donorEmail, setDonorEmail] = useState("");
-  const [currency, setCurrency] = useState("");
+  const [currency, setCurrency] = useState("USD");
 
   const params = useParams();
 
   const { requestFundsId, requestUserId } = params;
+
+  const { initiateCheckout, isStripeLoading } = useStripeCheckout();
 
   // fetch payment request from DB with requestFundsId and requestUserId
   const {
     data: paymentRequestData,
     isLoading: isPaymentRequestDataLoading,
     isError,
-    refetch,
   } = useQuery({
     queryFn: () => fetchPaymentRequest(requestUserId, requestFundsId),
     queryKey: ["paymentRequest", requestUserId, requestFundsId],
@@ -34,8 +38,6 @@ const FundsRequestPayment = () => {
 
   const { requestAmount, paymentDetails } = paymentRequestData || {};
 
-  // use flutterWave hook
-  const { initiatePayment } = useFlutterWavePayment();
   // amount conversation hook
   const { convertedBalance, isLoading } = useCurrencyConversion({
     amountToDonate: requestAmount,
@@ -51,15 +53,13 @@ const FundsRequestPayment = () => {
       return toast.error("Please try again later");
     }
 
-    initiatePayment({
+    initiateCheckout({
       paymentType: "OneToOnePayment",
-      amountToDonate: requestAmount,
-      convertedBalance,
+      amount: convertedBalance,
       currency,
       donorEmail,
-      refetch,
-      requestUserId,
-      requestFundsId,
+      campaignId: `${requestUserId}/${requestFundsId}`,
+      url,
     });
   };
 
@@ -98,7 +98,11 @@ const FundsRequestPayment = () => {
                 onChange={(e) => setDonorEmail(e.target.value)}
               />
 
-              <button onClick={() => donateFunc}>Pay Now</button>
+              <button
+                onClick={donateFunc}
+                style={{ backgroundColor: isStripeLoading && "black" }}>
+                {isStripeLoading ? <ButtonLoad /> : <>Pay Now</>}
+              </button>
             </div>
           )}
         </div>

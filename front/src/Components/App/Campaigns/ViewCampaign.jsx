@@ -149,6 +149,7 @@ const ViewCampaign = () => {
       url,
     });
   };
+
   // map donors into DOM
   const donorsList = donors
     ?.sort((a, b) => new Date(b.date) - new Date(a.date))

@@ -67,6 +67,8 @@
         box-shadow: 0 0.3rem 0.5rem var(--trans-black);
         transition: 0.3s ease-in-out;
         border-radius: 1rem;
+        display: flex;
+        justify-content: center;
 
         &:hover {
           background-color: var(--accent-color-dark);
