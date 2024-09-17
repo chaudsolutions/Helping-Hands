@@ -31,6 +31,7 @@ import { GiMoneyStack } from "react-icons/gi";
 import Null from "../../Animations/Null";
 import { CiCamera } from "react-icons/ci";
 import useStripeCheckout from "../../Hooks/useStripe";
+import usePaystackPayment from "../../Hooks/usePaystack";
 
 const ViewCampaign = () => {
   const link = window.location.href;
@@ -66,6 +67,9 @@ const ViewCampaign = () => {
   useEffect(() => {
     window.scroll(0, 0);
   }, [campaignId]);
+
+  // paystack hook
+  const { handlePayment, loading } = usePaystackPayment();
 
   // amount conversation hook
   const { convertedBalance, isLoading } = useCurrencyConversion({
@@ -140,14 +144,28 @@ const ViewCampaign = () => {
       return toast.error("Please try again later");
     }
 
-    initiateCheckout({
-      paymentType: "Donation",
-      amount: convertedBalance,
-      currency,
-      donorEmail,
-      campaignId,
-      url,
-    });
+    if (currency === "NGN") {
+      handlePayment({
+        paymentType: "Donation",
+        amountToDonate,
+        convertedBalance,
+        currency,
+        donorEmail,
+        refetch,
+        campaignId,
+      });
+    }
+
+    if (currency !== "NGN") {
+      initiateCheckout({
+        paymentType: "Donation",
+        amount: convertedBalance,
+        currency,
+        donorEmail,
+        campaignId,
+        url,
+      });
+    }
   };
 
   // map donors into DOM
@@ -368,7 +386,11 @@ const ViewCampaign = () => {
                 <button
                   onClick={donateFunc}
                   style={{ backgroundColor: isStripeLoading && "black" }}>
-                  {isStripeLoading ? <ButtonLoad /> : <>Donate Now</>}
+                  {isStripeLoading || loading ? (
+                    <ButtonLoad />
+                  ) : (
+                    <>Donate Now</>
+                  )}
                 </button>
               </div>
             </>

@@ -7,9 +7,12 @@ const stripe = require("stripe")(
 const CampaignModel = require("../Models/Campaign.js");
 const UsersModel = require("../Models/Users.js");
 
+// paystack env
+const paystackKey = process.env.PAYSTACK_SECRET_KEY;
+
 const router = express.Router();
 
-// endpoint to verify payments
+// endpoint to verify stripe payments
 router.post("/stripe/create-checkout-session", async (req, res) => {
   const { amount, currency, email, paymentType, url, id } = req.body;
   try {
@@ -40,7 +43,6 @@ router.post("/stripe/create-checkout-session", async (req, res) => {
   }
 });
 
-// Route to verify payment session
 router.post("/verify-stripe", async (req, res) => {
   const { sessionId } = req.body;
 
@@ -51,6 +53,46 @@ router.post("/verify-stripe", async (req, res) => {
   } catch (error) {
     res.status(500).send({ error: error.message });
     console.error(error);
+  }
+});
+
+// Verify Paystack payments
+router.post("/verify-paystack", async (req, res) => {
+  try {
+    const { reference } = req.body; // Extracting reference from query params
+
+    const options = {
+      hostname: "api.paystack.co",
+      port: 443,
+      path: `/transaction/verify/${reference}`, // Correct path format
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${paystackKey}`, // Replace with your Paystack secret key
+      },
+    };
+
+    const paystackReq = https.request(options, (paystackRes) => {
+      let data = "";
+
+      paystackRes.on("data", (chunk) => {
+        data += chunk;
+      });
+
+      paystackRes.on("end", () => {
+        const responseData = JSON.parse(data);
+        res.send(responseData);
+      });
+    });
+
+    paystackReq.on("error", (error) => {
+      console.error(error);
+      res.status(500).send("Failed to verify payment");
+    });
+
+    paystackReq.end(); // Don't forget to end the request
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal server error");
   }
 });
 

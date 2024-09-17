@@ -12,6 +12,7 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@foxeian/react-read-more": "^1.1.2",
+    "@paystack/inline-js": "^2.20.3",
     "@ramonak/react-progress-bar": "^5.2.0",
     "@stripe/react-stripe-js": "^2.8.0",
     "@stripe/stripe-js": "^4.4.0",
