@@ -144,6 +144,7 @@ const ViewCampaign = () => {
       return toast.error("Please try again later");
     }
 
+    // paystack
     if (currency === "NGN") {
       handlePayment({
         paymentType: "Donation",
@@ -156,6 +157,7 @@ const ViewCampaign = () => {
       });
     }
 
+    // stripe
     if (currency !== "NGN") {
       initiateCheckout({
         paymentType: "Donation",
