@@ -34,6 +34,7 @@ import useStripeCheckout from "../../Hooks/useStripe";
 import usePaystackPayment from "../../Hooks/usePaystack";
 
 const ViewCampaign = () => {
+  // get website url
   const link = window.location.href;
   const url = window.location.origin;
 
