@@ -40,7 +40,7 @@ const usePaystackPayment = () => {
 
         if (reference) {
           // Backend endpoint
-          const url = `${serVer}/verify-payment/verify-paystack`;
+          const url = `${serVer}/verify-payment/verify-paystack/reference`;
 
           try {
             const response = await axios.post(`${url}?reference=${reference}`, {

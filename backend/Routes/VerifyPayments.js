@@ -3,6 +3,7 @@ const express = require("express");
 const stripe = require("stripe")(
   "sk_test_51PuQmI048oKJvEHnpLSTer83YncIkvJFdV4uK9ZqYPkGfxAoSFQDwB0zr04wKq0Pz0F1o279wQYGdpbrRVXIWDgi003qnLIkSe"
 );
+const https = require("https");
 
 const CampaignModel = require("../Models/Campaign.js");
 const UsersModel = require("../Models/Users.js");
@@ -57,7 +58,7 @@ router.post("/verify-stripe", async (req, res) => {
 });
 
 // Verify Paystack payments
-router.post("/verify-paystack", async (req, res) => {
+router.post("/verify-paystack/reference", async (req, res) => {
   try {
     const { reference } = req.body; // Extracting reference from query params
 
