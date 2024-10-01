@@ -297,10 +297,10 @@ router.put("/cash-out/:campaignId", async (req, res) => {
       return res.status(400).json("Campaign not completed");
     }
 
-    // add 20% to admin Earnings
-    adminUser.adminCampaignPercentage += campaign.amountRaised * 0.2;
+    // add 10% to admin Earnings
+    adminUser.adminCampaignPercentage += campaign.amountRaised * 0.1;
 
-    // add 80% campaign earnings to user balance
+    // add 90% campaign earnings to user balance
     user.balance += campaign.amountRaised * 0.8;
 
     campaign.condition = "cashed";

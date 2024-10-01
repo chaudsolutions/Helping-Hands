@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import {
+  useActiveCampaignData,
   useAllUsersData,
   useUserData,
 } from "../../Hooks/useQueryFetch/useQueryData";
-import { useNavigate } from "react-router-dom";
 import "./admin.css";
 import HeaderPage from "../../Custom/HeaderPage/HeaderPage";
 import PageLoader from "../../Animations/PageLoader";
@@ -23,8 +23,6 @@ const Admin = () => {
   const [subView, setSubView] = useState("");
   const [approveWithdrawalBtn, setApproveWithdrawalBtn] = useState({});
 
-  const navigate = useNavigate();
-
   // fetch user data and campaign data
   const { userData, isUserDataLoading, isUserDataError } = useUserData();
 
@@ -32,24 +30,30 @@ const Admin = () => {
   const { allUsersData, isAllUsersDataLoading, refetchAllUsersData } =
     useAllUsersData();
 
-  // extract data
-  const { role, adminCampaignPercentage, adminOneToOnePaymentPercentage } =
-    userData || {};
+  // fetch active campaigns
+  const { activeCampaignData, isActiveCampaignDataLoading } =
+    useActiveCampaignData();
 
-  useEffect(() => {
-    if (!isUserDataLoading && role !== "admin") {
-      navigate("/");
-    }
-  }, [navigate, role, isUserDataLoading]);
+  // extract data
+  const { adminCampaignPercentage, adminOneToOnePaymentPercentage } =
+    userData || {};
 
   const earnings = [
     {
       title: "Total Earnings on Campaigns",
-      earnings: adminCampaignPercentage,
+      earnings: `$${adminCampaignPercentage}`,
     },
     {
       title: "Total Earnings on One To One Payment",
-      earnings: adminOneToOnePaymentPercentage,
+      earnings: `$${adminOneToOnePaymentPercentage}`,
+    },
+    {
+      title: "Total Users",
+      earnings: allUsersData?.length,
+    },
+    {
+      title: "Total Active Campaigns",
+      earnings: activeCampaignData?.length,
     },
   ];
 
@@ -142,7 +146,11 @@ const Admin = () => {
     });
   });
 
-  if (isUserDataLoading || isAllUsersDataLoading) {
+  if (
+    isUserDataLoading ||
+    isAllUsersDataLoading ||
+    isActiveCampaignDataLoading
+  ) {
     return (
       <div className="loader-container">
         <PageLoader />
@@ -165,6 +173,8 @@ const Admin = () => {
       </div>
     );
   }
+
+  console.log(userData);
 
   return (
     <div className="about">

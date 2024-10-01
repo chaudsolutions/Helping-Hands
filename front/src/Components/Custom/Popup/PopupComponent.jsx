@@ -202,14 +202,15 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
             <>
               Request for funds from anyone by generating a link and sending it
               to them, the Funds is added to your balance once the receiver
-              pays. a 10% cut is attached
+              pays. a 5% cut is attached
             </>
           )}
 
           {updateBank && (
             <>
               Add your bank info or update your existing bank info for ease of
-              withdrawals
+              withdrawals. Withdrawals will only be processed if account name
+              matches your HELPING HANDS account name.
             </>
           )}
 

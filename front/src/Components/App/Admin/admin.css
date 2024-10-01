@@ -2,7 +2,31 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
+  gap: 2rem;
   width: 100%;
+
+  > li {
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    box-shadow: 0.2rem 0.5rem 1rem var(--trans-black);
+
+    > * {
+      text-align: center;
+    }
+
+    > h4 {
+      font-size: 0.9rem;
+    }
+
+    > h5 {
+      font-size: 3rem;
+      color: var(--accent-color-dark);
+    }
+  }
 }
 
 .users {

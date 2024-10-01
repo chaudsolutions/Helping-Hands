@@ -63,36 +63,63 @@ router.post("/register", async (req, res) => {
     const token = createToken(user._id);
 
     // Compose a welcome message with campaign details
-    const message = `
-      Welcome <span style="font-weight: bold">${name}</span>. Thanks for joining HelpingHands! Your account has been created successfully. You can now start your fundraising campaigns, support others, and explore a variety of causes.
-      <br/>
-      Your first campaign, <span style="font-weight: bold">${campaignName}</span>, is live now! Check it out: 
-      <a href="${appUrl}/campaign/${campaign._id}" style="color: #4CAF50;">View Campaign</a>
-      <br/>
-      View all your campaigns here: <a href="${appUrl}/campaigns" style="color: #4CAF50;">My Campaigns</a>
-      <br/>
-      Here is your verification code: <strong style="font-size: 14px;">${verificationCode}</strong>
-      <br/>
-      Visit our platform to get started: <a href="${appUrl}" style="color: #4CAF50;">${appUrl}</a>
-    `;
-
     const mailOptions = {
       from: fromMail,
       replyTo: replyToMail,
       to: email, // the user's email
       subject: `Welcome to HelpingHands! Your account is ready`,
       html: `
-        <div style="background-color: #000; padding: 20px; border: 1px solid rgb(188, 255, 107); border-radius: 10px; font-family: Arial, sans-serif; color: #333;">
-          <h1 style="color: rgb(188, 255, 107); font-weight: bold; font-size: 24px; margin-bottom: 10px;">Welcome to HelpingHands</h1>
-          <div style="margin-bottom: 20px;">
-            <h4 style="color: #fff; font-size: 18px; margin-bottom: 10px;">Hi ${name},</h4>
-            <p style="color: #fff; font-size: 16px; line-height: 1.5;">${message}</p>
+        <div style="background-color: #f5f5f5; padding: 20px; font-family: 'Arial', sans-serif; color: #333;">
+          <!-- Header section with logo -->
+          <div style="background-color: #4CAF50; padding: 20px; text-align: center; border-radius: 10px 10px 0 0;">
+            <h1 style="color: #ffffff; font-weight: bold; font-size: 28px; margin: 0;">Welcome to HelpingHands</h1>
+            <p style="color: #e0f7e7; font-size: 16px; margin: 5px 0;">Together, we can make a difference!</p>
           </div>
-          <div style="text-align: center; margin-top: 20px;">
-            <a href="${appUrl}/profile" style="background-color: rgb(188, 255, 107); color: #fff; padding: 10px 20px; border: none; border-radius: 5px; text-decoration: none; font-size: 16px;">Get Started</a>
-          </div>
-          <div style="margin-top: 30px; text-align: center;">
-            <p style="color: #fff; font-size: 14px;">Thank you for being a part of HelpingHands. Together, we can make a difference!</p>
+    
+          <!-- Main content area -->
+          <div style="background-color: #ffffff; padding: 30px; border: 1px solid #dedede; border-radius: 0 0 10px 10px;">
+            <h2 style="color: #333333; font-size: 22px; font-weight: 600;">Hi ${name},</h2>
+            <p style="font-size: 16px; color: #555555; line-height: 1.7;">
+              Thank you for joining HelpingHands! Your account has been successfully created and you're ready to start making a positive impact.
+            </p>
+    
+            <!-- Campaign information -->
+            <div style="margin: 20px 0;">
+              <h3 style="color: #4CAF50; font-size: 20px; font-weight: 600;">Your First Campaign</h3>
+              <p style="font-size: 16px; color: #555555; line-height: 1.7;">
+                Your campaign, <strong style="color: #333;">${campaignName}</strong>, is live now! Get started by sharing your campaign with friends and family, and track your progress on our platform.
+              </p>
+              <a href="${appUrl}/campaign/${campaign._id}" style="background-color: #4CAF50; color: #ffffff; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-size: 16px; display: inline-block; margin-top: 15px;">View Campaign</a>
+            </div>
+    
+            <!-- Verification code section -->
+            <div style="margin: 20px 0;">
+              <h3 style="color: #4CAF50; font-size: 20px; font-weight: 600;">Verify Your Account</h3>
+              <p style="font-size: 16px; color: #555555; line-height: 1.7;">
+                Please use the verification code below to confirm your email and get full access to all features on HelpingHands.
+              </p>
+              <div style="background-color: #f0f4f0; padding: 10px 20px; border: 1px solid #4CAF50; border-radius: 5px; width: fit-content; margin-top: 10px;">
+                <strong style="font-size: 18px; color: #333;">${verificationCode}</strong>
+              </div>
+            </div>
+    
+            <!-- Additional links and CTA -->
+            <div style="margin-top: 30px;">
+              <p style="font-size: 16px; color: #555555; line-height: 1.7;">
+                You can view and manage all your campaigns by visiting your dashboard:
+              </p>
+              <a href="${appUrl}/campaigns" style="background-color: #4CAF50; color: #ffffff; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-size: 16px; display: inline-block; margin-top: 15px;">My Campaigns</a>
+            </div>
+    
+            <!-- Footer section -->
+            <div style="border-top: 1px solid #dedede; margin-top: 40px; padding-top: 20px; text-align: center;">
+              <p style="font-size: 14px; color: #888888;">
+                Need help? <a href="${appUrl}/support" style="color: #4CAF50;">Contact Support</a>
+              </p>
+              <p style="font-size: 14px; color: #888888;">
+                Thank you for being a part of HelpingHands. Together, we can create lasting change!
+              </p>
+            </div>
           </div>
         </div>
       `,

@@ -481,7 +481,7 @@ const ViewCampaign = () => {
               raised the required amount. You can now proceed to cash out your
               donations.
               <br />
-              <strong>NOTE:</strong> 20% will be deducted for contributions to
+              <strong>NOTE:</strong> 10% will be deducted for contributions to
               the platform growth
             </p>
 

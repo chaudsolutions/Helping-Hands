@@ -34,7 +34,7 @@ const HelpCenter = () => {
     {
       title: "Fee Structure and Charges",
       content:
-        "Helping Hands charges a 20% platform fee on all funds raised. Additionally, standard transaction fees may apply depending on the payment method used by donors. The total fee is deducted from each donation automatically.",
+        "Helping Hands charges a 10% platform fee on all funds raised. Additionally, standard transaction fees may apply depending on the payment method used by donors. The total fee is deducted from each donation automatically.",
     },
     {
       title: "Sharing Your Fundraiser",

@@ -113,7 +113,7 @@ const usePaystackPayment = () => {
 
                   toast.success(response.data);
 
-                  // refetch the campaign
+                  // refetch the one to one payment interface
                   refetch();
                 } catch (error) {
                   toast.error(error?.response?.data);

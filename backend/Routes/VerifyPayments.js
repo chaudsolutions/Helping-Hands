@@ -7,9 +7,14 @@ const https = require("https");
 
 const CampaignModel = require("../Models/Campaign.js");
 const UsersModel = require("../Models/Users.js");
+const transporter = require("../Modules/nodemailer.js");
 
 // paystack env
 const paystackKey = process.env.PAYSTACK_SECRET_KEY;
+
+const appUrl = "https://helpinghands.com";
+const fromMail = `HelpingHands <noreply@helpinghands.com>`;
+const replyToMail = `noreply@helpinghands.com`;
 
 const router = express.Router();
 
@@ -194,6 +199,8 @@ router.put(
       if (!user) {
         throw Error("User not found.");
       }
+      // find admin
+      const adminUser = await UsersModel.findOne({ role: "admin" });
 
       // find the payment request
       const paymentRequest = user.requests.find(
@@ -214,10 +221,87 @@ router.put(
         amountToDonate,
       };
 
+      // add 5% to admin Earnings
+      adminUser.adminOneToOnePaymentPercentage += amountToDonate * 0.1;
+
+      // add 90% campaign earnings to user balance
       // update user balance after successful payment
-      user.balance += amountToDonate;
+      user.balance += amountToDonate * 0.8;
+
+      // send a mail to Recipient
+      const mailOptions = {
+        from: fromMail,
+        replyTo: replyToMail,
+        to: user.email, // the user's email
+        subject: `You've Received a Payment! 🎉`,
+        html: `
+          <div style="background-color: #f5f5f5; padding: 20px; font-family: Arial, sans-serif; color: #333;">
+            <!-- Header section -->
+            <div style="background-color: #4CAF50; padding: 20px; text-align: center; border-radius: 10px 10px 0 0;">
+              <h1 style="color: #ffffff; font-weight: bold; font-size: 28px; margin: 0;">Payment Received</h1>
+              <p style="color: #e0f7e7; font-size: 16px; margin: 5px 0;">You've just received a payment via HelpingHands!</p>
+            </div>
+      
+            <!-- Main content area -->
+            <div style="background-color: #ffffff; padding: 30px; border: 1px solid #dedede; border-radius: 0 0 10px 10px;">
+              <h2 style="color: #333333; font-size: 22px; font-weight: 600;">Hi ${
+                user.name
+              },</h2>
+              <p style="font-size: 16px; color: #555555; line-height: 1.7;">
+                We are happy to inform you that you’ve received a one-to-one payment from your client, <strong>${name}</strong>.
+              </p>
+      
+              <!-- Payment details -->
+              <div style="margin: 20px 0;">
+                <h3 style="color: #4CAF50; font-size: 20px; font-weight: 600;">Payment Details</h3>
+                <ul style="font-size: 16px; color: #555555; list-style: none; padding-left: 0;">
+                  <li><strong>Payment Method:</strong> ${paymentMethod}</li>
+                  <li><strong>Amount Received:</strong> ${amountToDonate} USD</li>
+                  <li><strong>Payment ID:</strong> ${paymentId}</li>
+                </ul>
+              </div>
+      
+              <!-- Earnings breakdown -->
+              <div style="margin: 20px 0;">
+                <h3 style="color: #4CAF50; font-size: 20px; font-weight: 600;">Earnings Breakdown</h3>
+                <p style="font-size: 16px; color: #555555; line-height: 1.7;">
+                  The total amount received is <strong>${amountToDonate} USD</strong>. 
+                  HelpingHands has applied a platform fee of 5%.
+                </p>
+                <p style="font-size: 16px; color: #555555; line-height: 1.7;">
+                  After the platform fee deduction, your credited earnings are:
+                </p>
+                <ul style="font-size: 16px; color: #555555; list-style: none; padding-left: 0;">
+                  <li><strong>Net Earnings:</strong> ${(
+                    amountToDonate * 0.8
+                  ).toFixed(2)} USD</li>
+                </ul>
+              </div>
+      
+              <!-- Call to Action -->
+              <div style="margin-top: 30px; text-align: center;">
+                <a href="${appUrl}/profile" style="background-color: #4CAF50; color: #ffffff; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-size: 16px; display: inline-block;">View Transaction</a>
+              </div>
+      
+              <!-- Footer section -->
+              <div style="border-top: 1px solid #dedede; margin-top: 40px; padding-top: 20px; text-align: center;">
+                <p style="font-size: 14px; color: #888888;">
+                  Need help? <a href="${appUrl}/help-center" style="color: #4CAF50;">Contact Support</a>
+                </p>
+                <p style="font-size: 14px; color: #888888;">
+                  Thank you for using HelpingHands. Together, we can make a positive impact!
+                </p>
+              </div>
+            </div>
+          </div>
+        `,
+      };
+
+      const info = await transporter.sendMail(mailOptions);
+      console.log("Welcome email sent: %s", info.messageId);
 
       await user.save();
+      await adminUser.save();
 
       res.status(200).json("Recipient has been credited successfully");
     } catch (error) {

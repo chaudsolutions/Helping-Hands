@@ -12,6 +12,7 @@ import useCurrencyConversion from "../../Hooks/useCurrencyConversion";
 import SEOComponent from "../../SEO/SEO";
 import useStripeCheckout from "../../Hooks/useStripe";
 import ButtonLoad from "../../Animations/ButtonLoad";
+import usePaystackPayment from "../../Hooks/usePaystack";
 
 const FundsRequestPayment = () => {
   const url = window.location.origin;
@@ -23,13 +24,17 @@ const FundsRequestPayment = () => {
 
   const { requestFundsId, requestUserId } = params;
 
+  // stripe hook
   const { initiateCheckout, isStripeLoading } = useStripeCheckout();
+  // paystack hook
+  const { handlePayment, loading } = usePaystackPayment();
 
   // fetch payment request from DB with requestFundsId and requestUserId
   const {
     data: paymentRequestData,
     isLoading: isPaymentRequestDataLoading,
     isError,
+    refetch: refetchPaymentRequest,
   } = useQuery({
     queryFn: () => fetchPaymentRequest(requestUserId, requestFundsId),
     queryKey: ["paymentRequest", requestUserId, requestFundsId],
@@ -53,14 +58,31 @@ const FundsRequestPayment = () => {
       return toast.error("Please try again later");
     }
 
-    initiateCheckout({
-      paymentType: "OneToOnePayment",
-      amount: convertedBalance,
-      currency,
-      donorEmail,
-      campaignId: `${requestUserId}/${requestFundsId}`,
-      url,
-    });
+    // paystack
+    if (currency === "NGN") {
+      handlePayment({
+        paymentType: "OneToOnePayment",
+        amountToDonate: requestAmount,
+        convertedBalance,
+        currency,
+        donorEmail,
+        refetch: refetchPaymentRequest,
+        requestUserId,
+        requestFundsId,
+      });
+    }
+
+    // stripe
+    if (currency !== "NGN") {
+      initiateCheckout({
+        paymentType: "OneToOnePayment",
+        amount: convertedBalance,
+        currency,
+        donorEmail,
+        campaignId: `${requestUserId}/${requestFundsId}`,
+        url,
+      });
+    }
   };
 
   return (
@@ -72,7 +94,7 @@ const FundsRequestPayment = () => {
 
       <h1>One to One Helping Hands Payment</h1>
 
-      {isPaymentRequestDataLoading ? (
+      {isPaymentRequestDataLoading && !isError ? (
         <PageLoader />
       ) : (
         <div className="fundsRequestPayment-details">
@@ -101,7 +123,7 @@ const FundsRequestPayment = () => {
               <button
                 onClick={donateFunc}
                 style={{ backgroundColor: isStripeLoading && "black" }}>
-                {isStripeLoading ? <ButtonLoad /> : <>Pay Now</>}
+                {isStripeLoading || loading ? <ButtonLoad /> : <>Pay Now</>}
               </button>
             </div>
           )}
