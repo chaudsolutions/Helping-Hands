@@ -32,7 +32,7 @@ function App() {
   const { user } = useAuthContext();
 
   // fetch user data and campaign data
-  const { userData, isUserDataLoading, isUserDataError } = useUserData();
+  const { userData, isUserDataLoading } = useUserData();
 
   // extract data
   const { role } = userData || {};
@@ -42,7 +42,7 @@ function App() {
     window.scroll(0, 0);
   }, []);
 
-  if (isUserDataLoading && !isUserDataError) {
+  if (isUserDataLoading) {
     return;
   }
 

@@ -15,3 +15,8 @@
     }
   }
 }
+
+.marquee {
+  background-color: var(--accent-color-dark);
+  color: var(--white);
+}

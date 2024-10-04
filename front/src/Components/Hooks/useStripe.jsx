@@ -5,10 +5,7 @@ import { serVer } from "./useVariable";
 import toast from "react-hot-toast";
 
 // Initialize Stripe with your publishable key
-const stripePromise = loadStripe(
-  "pk_test_51PuQmI048oKJvEHnlwkwcng66wI1Of1pyKgdUO6z6EScxPo2AXyOJOS3IzXgoPQOV4unlY3GmauEp6pppwnHDce000c086qGSG"
-);
-// const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
 const useStripeCheckout = () => {
   const [isStripeLoading, setIsStripeLoading] = useState(false);

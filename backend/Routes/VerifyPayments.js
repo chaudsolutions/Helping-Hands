@@ -1,8 +1,8 @@
 const express = require("express");
-// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-const stripe = require("stripe")(
-  "sk_test_51PuQmI048oKJvEHnpLSTer83YncIkvJFdV4uK9ZqYPkGfxAoSFQDwB0zr04wKq0Pz0F1o279wQYGdpbrRVXIWDgi003qnLIkSe"
-);
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+// const stripe = require("stripe")(
+//   "sk_test_51PuQmI048oKJvEHnpLSTer83YncIkvJFdV4uK9ZqYPkGfxAoSFQDwB0zr04wKq0Pz0F1o279wQYGdpbrRVXIWDgi003qnLIkSe"
+// );
 const https = require("https");
 
 const CampaignModel = require("../Models/Campaign.js");

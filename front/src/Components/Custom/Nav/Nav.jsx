@@ -8,6 +8,7 @@ import NavMenu from "./NavMenu";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useAuthContext } from "../../Context/AuthContext";
+import MarqueeComponent from "../Slider/Marquee";
 
 const Nav = () => {
   const { user } = useAuthContext();
@@ -41,27 +42,31 @@ const Nav = () => {
   return (
     <>
       <div className="nav">
-        <div>
-          <Logo navigate={navigate} />
-          {!isMobile && <NavMenu />}
+        <MarqueeComponent />
+
+        <div className="nav-container">
+          <div>
+            <Logo navigate={navigate} />
+            {!isMobile && <NavMenu />}
+          </div>
+
+          {isMobile ? (
+            <RxHamburgerMenu
+              size={30}
+              onClick={() => setIsNavActive(!isNavActive)}
+              className="navBtn"
+            />
+          ) : (
+            <>
+              <AuthContainer userProp={[user]} />
+              {user && <UserProfile />}
+            </>
+          )}
+
+          {/* nav slider */}
+          {isMobile && <NavSlide navFunc={[{ isNavActive }]} />}
         </div>
-
-        {isMobile ? (
-          <RxHamburgerMenu
-            size={30}
-            onClick={() => setIsNavActive(!isNavActive)}
-            className="navBtn"
-          />
-        ) : (
-          <>
-            <AuthContainer userProp={[user]} />
-            {user && <UserProfile />}
-          </>
-        )}
       </div>
-
-      {/* nav slider */}
-      {isMobile && <NavSlide navFunc={[{ isNavActive }]} />}
     </>
   );
 };
