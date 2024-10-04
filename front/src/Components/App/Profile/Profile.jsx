@@ -5,7 +5,7 @@ import "./profile.css";
 import useResponsive from "../../Hooks/useResponsive";
 import { FaPlus } from "react-icons/fa6";
 import { BiMoneyWithdraw } from "react-icons/bi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PopupComponent from "../../Custom/Popup/PopupComponent";
 import ButtonLoad from "../../Animations/ButtonLoad";
 import CopyToClipboard from "react-copy-to-clipboard";
@@ -17,6 +17,10 @@ import { serVer, token } from "../../Hooks/useVariable";
 import { BsBank } from "react-icons/bs";
 
 const Profile = () => {
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
+
   const [view, setView] = useState("requests");
   const [subView, setSubView] = useState("unpaid");
   const [copiedText, setCopiedText] = useState("");

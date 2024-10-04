@@ -7,6 +7,10 @@ import { serVer } from "../../Hooks/useVariable";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 export const Success = () => {
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
+
   const location = useLocation();
   const params = useParams();
   const navigate = useNavigate();
@@ -135,6 +139,10 @@ export const Success = () => {
 };
 
 export const Failed = () => {
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
+
   return (
     <div className="payment">
       <h1>Failed Payment</h1>

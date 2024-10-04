@@ -7,7 +7,7 @@ import PageLoader from "../../Animations/PageLoader";
 import Null from "../../Animations/Null";
 import { currencyArray } from "../../Hooks/useVariable";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useCurrencyConversion from "../../Hooks/useCurrencyConversion";
 import SEOComponent from "../../SEO/SEO";
 import useStripeCheckout from "../../Hooks/useStripe";
@@ -15,6 +15,10 @@ import ButtonLoad from "../../Animations/ButtonLoad";
 import usePaystackPayment from "../../Hooks/usePaystack";
 
 const FundsRequestPayment = () => {
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
+
   const url = window.location.origin;
 
   const [donorEmail, setDonorEmail] = useState("");

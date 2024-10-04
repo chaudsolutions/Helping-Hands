@@ -2,13 +2,17 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEye, FaRegEyeSlash } from "react-icons/fa";
 import { serVer } from "../Hooks/useVariable";
 import SEOComponent from "../SEO/SEO";
 import ButtonLoad from "../Animations/ButtonLoad";
 
 const PasswordReset = () => {
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
+
   const { resetToken } = useParams();
   const navigate = useNavigate();
 

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAuthContext } from "./Components/Context/AuthContext";
 import ScrollToTop from "react-scroll-to-top";
@@ -31,8 +31,10 @@ import ErrorBoundary from "./Components/Error/ErrorBoundary";
 function App() {
   const { user } = useAuthContext();
 
+  const navigate = useNavigate();
+
   // fetch user data and campaign data
-  const { userData, isUserDataLoading } = useUserData();
+  const { userData, isUserDataLoading, isUserDataError } = useUserData();
 
   // extract data
   const { role } = userData || {};
@@ -42,9 +44,9 @@ function App() {
     window.scroll(0, 0);
   }, []);
 
-  if (isUserDataLoading) {
-    return;
-  }
+  useEffect(() => {
+    if (isUserDataError) return navigate("/dashboard");
+  }, [isUserDataError, navigate]);
 
   const adminRole = role === "admin";
 
@@ -104,7 +106,13 @@ function App() {
             {/* ADMIN */}
             <Route
               path="/admin"
-              element={user && adminRole ? <Admin /> : <Navigate to="/" />}
+              element={
+                user && !isUserDataLoading && userData && adminRole ? (
+                  <Admin />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
             />
 
             {/* OTHERS */}
