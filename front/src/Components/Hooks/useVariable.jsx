@@ -8,7 +8,17 @@ export const supportedCountries = [
   "United Kingdom",
   "United States",
 ];
-export const categories = ["Animals", "Business", "Family", "Wishes"];
+export const categories = [
+  "Animals",
+  "Business",
+  "Family",
+  "Wishes",
+  "Education",
+  "Humanitarian",
+  "Scholarship",
+  "Religion",
+  "Research Funding",
+];
 
 export const token = localStorage.getItem("helpingHandsUser");
 
