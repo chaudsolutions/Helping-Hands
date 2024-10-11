@@ -27,7 +27,7 @@ import {
 import CampaignList from "../../Custom/ItemList/CampaignList";
 import axios from "axios";
 import { currencyArray, serVer, token } from "../../Hooks/useVariable";
-import { GiMoneyStack } from "react-icons/gi";
+import { GiMoneyStack, GiSherlockHolmes } from "react-icons/gi";
 import Null from "../../Animations/Null";
 import { CiCamera } from "react-icons/ci";
 import useStripeCheckout from "../../Hooks/useStripe";
@@ -178,7 +178,11 @@ const ViewCampaign = () => {
     ?.sort((a, b) => new Date(b.date) - new Date(a.date))
     ?.map((donor) => (
       <li key={donor._id} className="donor">
-        <FaUser size={20} />
+        {donor.anonymous ? (
+          <GiSherlockHolmes size={20} />
+        ) : (
+          <FaUser size={20} />
+        )}
         <div>
           <p>{donor.anonymous ? "Anonymous" : donor.name}</p>
           <p>${donor.amountUSD}</p>
