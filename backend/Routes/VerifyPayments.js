@@ -111,6 +111,7 @@ router.put("/donate/:campaignId", async (req, res) => {
     email,
     name,
     customerPaymentId,
+    anonymous,
     paymentMethod,
     amountReceivedViaPaymentMethod,
     paymentId,
@@ -149,6 +150,7 @@ router.put("/donate/:campaignId", async (req, res) => {
         campaign.donors.push({
           email,
           name,
+          anonymous,
           customerPaymentId,
           amountReceivedViaPaymentMethod,
           amountUSD: amountToDonate,

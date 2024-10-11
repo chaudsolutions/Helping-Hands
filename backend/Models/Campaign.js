@@ -14,6 +14,7 @@ const DonorSchema = new Schema(
   {
     email: { type: String },
     name: { type: String, default: "Anonymous" },
+    anonymous: { type: Boolean },
     customerPaymentId: { type: String },
     amountReceivedViaPaymentMethod: { type: Number },
     amountUSD: { type: Number },

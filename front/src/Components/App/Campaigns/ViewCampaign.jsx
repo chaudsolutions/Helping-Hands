@@ -42,6 +42,7 @@ const ViewCampaign = () => {
   const { initiateCheckout, isStripeLoading } = useStripeCheckout();
 
   const [donorEmail, setDonorEmail] = useState("");
+  const [anonymousDonor, setAnonymousDonor] = useState(false);
   const [currency, setCurrency] = useState("USD");
   const [amountToDonate, setAmountToDonate] = useState(0);
   const [deleteBtn, setDeleteBtn] = useState(
@@ -153,6 +154,7 @@ const ViewCampaign = () => {
         convertedBalance,
         currency,
         donorEmail,
+        anonymousDonor,
         refetch,
         campaignId,
       });
@@ -178,7 +180,7 @@ const ViewCampaign = () => {
       <li key={donor._id} className="donor">
         <FaUser size={20} />
         <div>
-          <p>{donor.name}</p>
+          <p>{donor.anonymous ? "Anonymous" : donor.name}</p>
           <p>${donor.amountUSD}</p>
         </div>
       </li>
@@ -386,15 +388,25 @@ const ViewCampaign = () => {
                   placeholder="Your Email"
                   onChange={(e) => setDonorEmail(e.target.value)}
                 />
-                <button
-                  onClick={donateFunc}
-                  style={{ backgroundColor: isStripeLoading && "black" }}>
-                  {isStripeLoading || loading ? (
-                    <ButtonLoad />
-                  ) : (
-                    <>Donate Now</>
-                  )}
-                </button>
+                <div>
+                  <label htmlFor="checkbox">
+                    <span>Anonymous</span>
+                    <input
+                      type="checkbox"
+                      id="checkbox"
+                      onChange={() => setAnonymousDonor(!anonymousDonor)}
+                    />
+                  </label>
+                  <button
+                    onClick={donateFunc}
+                    style={{ backgroundColor: isStripeLoading && "black" }}>
+                    {isStripeLoading || loading ? (
+                      <ButtonLoad />
+                    ) : (
+                      <>Donate Now</>
+                    )}
+                  </button>
+                </div>
               </div>
             </>
           )}
