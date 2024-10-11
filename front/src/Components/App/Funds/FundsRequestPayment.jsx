@@ -96,7 +96,7 @@ const FundsRequestPayment = () => {
 
       <PayRequestAnim />
 
-      <h1>One to One Helping Hands Payment</h1>
+      <h1>One to One HelpWithFund Payment</h1>
 
       {isPaymentRequestDataLoading && !isError ? (
         <PageLoader />

@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import { serVer } from "../../../Hooks/useVariable";
 
 const Verify = ({ verifyProps }) => {
-  const token = localStorage.getItem("helpingHandsUser");
+  const token = localStorage.getItem("HelpWithFundUser");
 
   const { refetchUserData } = verifyProps[0];
 

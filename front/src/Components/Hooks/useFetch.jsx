@@ -3,7 +3,7 @@ import { serVer } from "./useVariable";
 
 // fetch user data from DB
 export const fetchUser = async () => {
-  const token = localStorage.getItem("helpingHandsUser");
+  const token = localStorage.getItem("HelpWithFundUser");
 
   const response = await axios.get(`${serVer}/user/userObj`, {
     headers: {
@@ -20,7 +20,7 @@ export const fetchUser = async () => {
 
 // fetch users from DB for admin
 export const fetchUsers = async () => {
-  const token = localStorage.getItem("helpingHandsUser");
+  const token = localStorage.getItem("HelpWithFundUser");
 
   const response = await axios.get(`${serVer}/admin/all-users`, {
     headers: {
@@ -37,7 +37,7 @@ export const fetchUsers = async () => {
 
 // fetch user campaign doc data from DB
 export const fetchUserCampaignDoc = async () => {
-  const token = localStorage.getItem("helpingHandsUser");
+  const token = localStorage.getItem("HelpWithFundUser");
 
   const response = await axios.get(`${serVer}/user/campaigns`, {
     headers: {

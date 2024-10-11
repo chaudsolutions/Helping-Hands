@@ -116,7 +116,7 @@ const Dashboard = () => {
           <h1>Welcome to Your Dashboard</h1>
         </div>
         <Link to="/new/campaign">
-          {!isMobile && <span>Ask for Helping Hands</span>}
+          {!isMobile && <span>Join HelpWithFund</span>}
           <IoIosAddCircleOutline size={30} />
         </Link>
       </div>

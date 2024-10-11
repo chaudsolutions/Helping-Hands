@@ -20,7 +20,7 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
   const [fundsLink, setFundsLink] = useState("");
   const [copiedText, setCopiedText] = useState("");
 
-  const token = localStorage.getItem("helpingHandsUser");
+  const token = localStorage.getItem("HelpWithFundUser");
 
   // react form
   // withdrawal
@@ -202,7 +202,7 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
             <>
               Request for funds from anyone by generating a link and sending it
               to them, the Funds is added to your balance once the receiver
-              pays. a 5% cut is attached
+              pays. a 5% cut is attached.
             </>
           )}
 
@@ -210,7 +210,7 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
             <>
               Add your bank info or update your existing bank info for ease of
               withdrawals. Withdrawals will only be processed if account name
-              matches your HELPING HANDS account name.
+              matches your HelpWithFund account name.
             </>
           )}
 

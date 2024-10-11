@@ -15,9 +15,9 @@ const createToken = (_id) => {
   return jwt.sign({ _id }, secretKey, { expiresIn: "7d" });
 };
 
-const appUrl = "https://helpinghands.com";
-const fromMail = `HelpingHands <noreply@helpinghands.com>`;
-const replyToMail = `noreply@helpinghands.com`;
+const appUrl = "https://helpwithfund.com";
+const fromMail = `HelpWithFund <noreply@helpwithfund.com>`;
+const replyToMail = `noreply@helpwithfund.com`;
 
 // server sign up handle signUp
 router.post("/register", async (req, res) => {
@@ -67,12 +67,12 @@ router.post("/register", async (req, res) => {
       from: fromMail,
       replyTo: replyToMail,
       to: email, // the user's email
-      subject: `Welcome to HelpingHands! Your account is ready`,
+      subject: `Welcome to HelpWithFund! Your account is ready`,
       html: `
         <div style="background-color: #f5f5f5; padding: 20px; font-family: 'Arial', sans-serif; color: #333;">
           <!-- Header section with logo -->
           <div style="background-color: #4CAF50; padding: 20px; text-align: center; border-radius: 10px 10px 0 0;">
-            <h1 style="color: #ffffff; font-weight: bold; font-size: 28px; margin: 0;">Welcome to HelpingHands</h1>
+            <h1 style="color: #ffffff; font-weight: bold; font-size: 28px; margin: 0;">Welcome to HelpWithFund</h1>
             <p style="color: #e0f7e7; font-size: 16px; margin: 5px 0;">Together, we can make a difference!</p>
           </div>
     
@@ -80,7 +80,7 @@ router.post("/register", async (req, res) => {
           <div style="background-color: #ffffff; padding: 30px; border: 1px solid #dedede; border-radius: 0 0 10px 10px;">
             <h2 style="color: #333333; font-size: 22px; font-weight: 600;">Hi ${name},</h2>
             <p style="font-size: 16px; color: #555555; line-height: 1.7;">
-              Thank you for joining HelpingHands! Your account has been successfully created and you're ready to start making a positive impact.
+              Thank you for joining HelpWithFund! Your account has been successfully created and you're ready to start making a positive impact.
             </p>
     
             <!-- Campaign information -->
@@ -96,7 +96,7 @@ router.post("/register", async (req, res) => {
             <div style="margin: 20px 0;">
               <h3 style="color: #4CAF50; font-size: 20px; font-weight: 600;">Verify Your Account</h3>
               <p style="font-size: 16px; color: #555555; line-height: 1.7;">
-                Please use the verification code below to confirm your email and get full access to all features on HelpingHands.
+                Please use the verification code below to confirm your email and get full access to all features on HelpWithFund.
               </p>
               <div style="background-color: #f0f4f0; padding: 10px 20px; border: 1px solid #4CAF50; border-radius: 5px; width: fit-content; margin-top: 10px;">
                 <strong style="font-size: 18px; color: #333;">${verificationCode}</strong>
@@ -117,7 +117,7 @@ router.post("/register", async (req, res) => {
                 Need help? <a href="${appUrl}/support" style="color: #4CAF50;">Contact Support</a>
               </p>
               <p style="font-size: 14px; color: #888888;">
-                Thank you for being a part of HelpingHands. Together, we can create lasting change!
+                Thank you for being a part of HelpWithFund. Together, we can create lasting change!
               </p>
             </div>
           </div>
@@ -176,7 +176,7 @@ router.post("/recover-password/:email", async (req, res) => {
     const mailOptions = {
       from: "noreply@eurolearn.ng",
       to: user.email,
-      subject: "Helping Hands Password Reset",
+      subject: "HelpWithFund Password Reset",
       html: `<p>You are receiving this because you (or someone else) have requested the reset of the password for your account.
         Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:
         <br/>${appUrl}/reset-password/${token}

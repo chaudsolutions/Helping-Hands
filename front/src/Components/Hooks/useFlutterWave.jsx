@@ -5,7 +5,7 @@ import { serVer } from "./useVariable";
 import Logo from "/logo.png";
 
 const useFlutterWavePayment = () => {
-  const token = localStorage.getItem("helpingHandsUser");
+  const token = localStorage.getItem("HelpWithFundUser");
 
   const initiatePayment = ({
     paymentType,
@@ -29,7 +29,7 @@ const useFlutterWavePayment = () => {
         name: `${donorEmail.split("@")[0]}`,
       },
       customizations: {
-        title: "Helping Hands | CrowdFunding Platform",
+        title: "HelpWithFund | CrowdFunding Platform",
         description: "",
         logo: Logo,
       },

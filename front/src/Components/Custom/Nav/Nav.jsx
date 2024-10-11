@@ -75,7 +75,7 @@ export const Logo = ({ navigate }) => {
   return (
     <div className="logo-contain" onClick={() => navigate && navigate("/")}>
       <img src={logo} alt="logo" />
-      <h2>Helping Hands</h2>
+      <h2>HelpWithFund</h2>
     </div>
   );
 };

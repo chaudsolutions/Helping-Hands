@@ -66,11 +66,11 @@ const Register = () => {
 
       if (response.status === 200) {
         // Save the user to local storage
-        localStorage.setItem("helpingHandsUser", JSON.stringify(response.data));
+        localStorage.setItem("HelpWithFundUser", JSON.stringify(response.data));
 
         // Update the auth Context
         login(response.data);
-        toast.success("Welcome to Helping Hands");
+        toast.success("Welcome to HelpWithFund");
       } else {
         toast.error(response.data);
       }
@@ -109,7 +109,7 @@ const Register = () => {
       {currentStep === 1 && (
         <div>
           <h1>Follow the next steps</h1>
-          <p>Let your Helping Hands Journey Begin</p>
+          <p>Let your HelpWithFund Journey Begin</p>
         </div>
       )}
       {currentStep === 2 && (

@@ -48,7 +48,7 @@ const Contact = () => {
 
   return (
     <div className="contact-us">
-      <SEOComponent title="Helping Hands | Contact Us" />
+      <SEOComponent title="HelpWithFund | Contact Us" />
 
       <div className="contact-bg"></div>
 
@@ -128,7 +128,7 @@ const Contact = () => {
           </li>
           <li>
             <MdEmail size={30} />
-            <a href="mailto:">helpinghandssource@example.com</a>
+            <a href="mailto:">HelpWithFundsource@example.com</a>
           </li>
           <li>
             <IoCall size={30} /> <a href="tel:">(123) 456-7890</a>

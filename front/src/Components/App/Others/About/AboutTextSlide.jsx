@@ -50,8 +50,8 @@ const AboutTextSlide = () => {
   return (
     <section className="about-one">
       <div>
-        <h2>Why Helping Hands?</h2>
-        <p>These are key reasons why Helping Hands is a unique platform</p>
+        <h2>Why HelpWithFund?</h2>
+        <p>These are key reasons why HelpWithFund is a unique platform</p>
       </div>
 
       {/* desktop view */}

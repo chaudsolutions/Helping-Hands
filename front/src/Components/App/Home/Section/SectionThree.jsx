@@ -32,7 +32,7 @@ const SectionThree = () => {
         </div>
 
         <Link to={user ? "/dashboard" : "/create/campaign"}>
-          {user ? "Continue Contributing!" : "Join HelpingHands Now!"}
+          {user ? "Continue Contributing!" : "Join HelpWithFund Now!"}
         </Link>
       </div>
       <ul>

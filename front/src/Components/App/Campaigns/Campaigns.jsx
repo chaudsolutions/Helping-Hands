@@ -50,7 +50,7 @@ const Campaigns = () => {
   return (
     <div className="campaigns">
       {/* SEO */}
-      <SEOComponent title="Helping Hands | Discover Campaigns to donate to" />
+      <SEOComponent title="HelpWithFund | Discover Campaigns to donate to" />
 
       <div>
         <h1>Discover Amazing Campaigns to Donate to</h1>

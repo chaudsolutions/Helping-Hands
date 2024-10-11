@@ -9,13 +9,13 @@ export const AuthContextProvider = ({ children }) => {
     children: PropTypes.node.isRequired,
   };
 
-  const [user, setUser] = useState(localStorage.getItem("helpingHandsUser"));
+  const [user, setUser] = useState(localStorage.getItem("HelpWithFundUser"));
 
   // Function to log in a user
   const login = (userData) => {
     setUser(userData);
 
-    localStorage.setItem("helpingHandsUser", JSON.stringify(userData));
+    localStorage.setItem("HelpWithFundUser", JSON.stringify(userData));
   };
 
   // Function to log out a user
@@ -23,7 +23,7 @@ export const AuthContextProvider = ({ children }) => {
     setUser(null);
     // Clear user data from local storage
 
-    localStorage.removeItem("helpingHandsUser");
+    localStorage.removeItem("HelpWithFundUser");
   };
 
   return (

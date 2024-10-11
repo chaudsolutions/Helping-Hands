@@ -64,7 +64,7 @@ const Footer = () => {
 
       <div>
         <h6>
-          HelpingHandsInc.2023
+          HelpWithFundInc.2023
           <br />
           All rights reserved
         </h6>

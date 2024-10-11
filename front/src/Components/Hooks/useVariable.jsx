@@ -20,13 +20,13 @@ export const categories = [
   "Research Funding",
 ];
 
-export const token = localStorage.getItem("helpingHandsUser");
+export const token = localStorage.getItem("HelpWithFundUser");
 
 export const useToken = () => {
-  const [token, setToken] = useState(localStorage.getItem("helpingHandsUser"));
+  const [token, setToken] = useState(localStorage.getItem("HelpWithFundUser"));
 
   useEffect(() => {
-    const token = localStorage.getItem("helpingHandsUser");
+    const token = localStorage.getItem("HelpWithFundUser");
 
     setToken(token);
   }, []);

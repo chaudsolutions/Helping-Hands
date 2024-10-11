@@ -42,7 +42,7 @@ export const AuthContainer = ({ userProp }) => {
           <Logout />
         ) : (
           <>
-            <Link to="/create/campaign">Ask for Helping Hands</Link>
+            <Link to="/create/campaign">Ask for HelpWithFund</Link>
             <Link to="/login">Sign in</Link>
           </>
         )}
@@ -68,7 +68,7 @@ export const UserProfile = () => {
     formData.append("profilePicture", files[0]);
 
     try {
-      const token = localStorage.getItem("helpingHandsUser");
+      const token = localStorage.getItem("HelpWithFundUser");
 
       const url = `${serVer}/user/profile-picture`;
       const response = await axios.put(url, formData, {

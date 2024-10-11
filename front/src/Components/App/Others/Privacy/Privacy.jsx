@@ -28,7 +28,7 @@ const Privacy = () => {
     {
       title: "No User Tracking",
       content:
-        "Helping Hands respects your privacy by not tracking your online activities across different websites. We do not use tracking technologies or third-party services to monitor your behavior on the internet.",
+        "HelpWithFund respects your privacy by not tracking your online activities across different websites. We do not use tracking technologies or third-party services to monitor your behavior on the internet.",
     },
     {
       title: "Data Security",
@@ -53,7 +53,7 @@ const Privacy = () => {
     {
       title: "Contact Us",
       content:
-        "If you have any questions or concerns about our Privacy Policy or the handling of your personal information, please contact us at support@helpinghands.com.",
+        "If you have any questions or concerns about our Privacy Policy or the handling of your personal information, please contact us at support@HelpWithFund.com.",
     },
   ];
 

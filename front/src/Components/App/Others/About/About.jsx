@@ -18,7 +18,7 @@ const About = () => {
 
   return (
     <div className="about">
-      <SEOComponent title="Helping Hands | About" />
+      <SEOComponent title="HelpWithFund | About" />
 
       <HeaderPage page="About" />
 
@@ -32,15 +32,15 @@ const About = () => {
 
         <div className="about-paragraphs">
           <p>
-            Welcome to Helping Hands, your trusted partner in crowdfunding,
+            Welcome to HelpWithFund, your trusted partner in crowdfunding,
             launched in 2023. Our mission is to empower individuals and
             communities by providing a platform where dreams and causes can come
             to life through the collective power of giving.
           </p>
 
           <p>
-            At Helping Hands, we believe in the potential of every person to
-            make a difference. Whether you&apos;re looking to fund a personal
+            At HelpwithFund, we believe in the potential of every person to make
+            a difference. Whether you&apos;re looking to fund a personal
             project, support a charitable cause, or help a friend in need, our
             platform is designed to connect you with a global network of
             compassionate supporters. We make it easy for you to share your
@@ -62,7 +62,7 @@ const About = () => {
             need it most.
           </p>
 
-          <p>Thank you for being a part of the Helping Hands community.</p>
+          <p>Thank you for being a part of the HelpWithFund community.</p>
         </div>
 
         <AboutTextSlide />

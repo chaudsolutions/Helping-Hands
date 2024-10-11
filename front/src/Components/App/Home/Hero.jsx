@@ -8,7 +8,7 @@ const Hero = () => {
   return (
     <header className="hero">
       <div>
-        <h1>Helping Hands</h1>
+        <h1>HelpWithFund</h1>
         <p>
           Get help,
           <br /> Help Others

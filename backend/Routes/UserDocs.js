@@ -31,7 +31,7 @@ const uploadToCloudinary = (buffer, originalName) => {
     const uniqueName = `${uuidv4()}-${originalName}`;
     const stream = cloudinary.uploader.upload_stream(
       {
-        folder: "Helping-Hands",
+        folder: "HelpWithFund",
         public_id: uniqueName,
         format: "png", // Convert to PNG format
         transformation: [

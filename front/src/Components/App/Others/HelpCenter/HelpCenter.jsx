@@ -14,7 +14,7 @@ const HelpCenter = () => {
     {
       title: "Creating a Fundraiser",
       content:
-        "To create a fundraiser, log into your Helping Hands account and click on 'Start a Fundraiser'. Choose a catchy title and set a realistic goal amount. Write a compelling story to explain why you're raising money and add images or videos to make your fundraiser more engaging. Once done, click 'Create' to launch your campaign.",
+        "To create a fundraiser, log into your HelpWithFund account and click on 'Start a Fundraiser'. Choose a catchy title and set a realistic goal amount. Write a compelling story to explain why you're raising money and add images or videos to make your fundraiser more engaging. Once done, click 'Create' to launch your campaign.",
     },
     {
       title: "Managing Your Fundraiser",
@@ -34,7 +34,7 @@ const HelpCenter = () => {
     {
       title: "Fee Structure and Charges",
       content:
-        "Helping Hands charges a 10% platform fee on all funds raised. Additionally, standard transaction fees may apply depending on the payment method used by donors. The total fee is deducted from each donation automatically.",
+        "HelpWithFund charges a 10% platform fee on all funds raised. This fee is used to maintain the platform and also take care of payment method charges. The total fee is deducted from each donation automatically.",
     },
     {
       title: "Sharing Your Fundraiser",
@@ -66,7 +66,7 @@ const HelpCenter = () => {
   return (
     <div className="about">
       {/* SEO */}
-      <SEOComponent title="Helping Hands | Help Center" />
+      <SEOComponent title="HelpWithFund | Help Center" />
 
       <HeaderPage page="Help Center" />
 

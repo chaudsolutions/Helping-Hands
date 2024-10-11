@@ -34,7 +34,7 @@ const AdminRoute = require("./Routes/AdminRoute.js");
 
 // Define a default route handler for the root URL ("/")
 app.get("/", (req, res) => {
-  res.send("Hello, World! This is the root route for HELPING HANDS SERVERS.");
+  res.send("Hello, World! This is the root route for HELP WITH FUNDS SERVERS.");
 });
 
 // Use Authentication route

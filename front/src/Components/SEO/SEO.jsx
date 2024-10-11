@@ -3,8 +3,8 @@ import { Helmet } from "react-helmet-async";
 import logo from "/logo.png";
 
 const SEOComponent = ({
-  title = "Helping Hands | The number one platform for lending a financial hand and getting financial help",
-  description = "Seek financial helping hands in minutes with tools to help you succeed. Helping Hands is the global leader in crowdfunding, trusted by hundreds of people.",
+  title = "HelpWithFund | The number one platform for lending a financial hand and getting financial help",
+  description = "Seek financial helping hands in minutes with tools to help you succeed. HelpWithFund is the global leader in crowdfunding, trusted by hundreds of people.",
   keywords = "",
   image = logo,
 }) => {

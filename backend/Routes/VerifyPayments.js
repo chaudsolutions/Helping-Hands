@@ -12,9 +12,9 @@ const transporter = require("../Modules/nodemailer.js");
 // paystack env
 const paystackKey = process.env.PAYSTACK_SECRET_KEY;
 
-const appUrl = "https://helpinghands.com";
-const fromMail = `HelpingHands <noreply@helpinghands.com>`;
-const replyToMail = `noreply@helpinghands.com`;
+const appUrl = "https://HelpWithFund.com";
+const fromMail = `HelpWithFund <noreply@HelpWithFund.com>`;
+const replyToMail = `noreply@HelpWithFund.com`;
 
 const router = express.Router();
 
@@ -239,7 +239,7 @@ router.put(
             <!-- Header section -->
             <div style="background-color: #4CAF50; padding: 20px; text-align: center; border-radius: 10px 10px 0 0;">
               <h1 style="color: #ffffff; font-weight: bold; font-size: 28px; margin: 0;">Payment Received</h1>
-              <p style="color: #e0f7e7; font-size: 16px; margin: 5px 0;">You've just received a payment via HelpingHands!</p>
+              <p style="color: #e0f7e7; font-size: 16px; margin: 5px 0;">You've just received a payment via HelpWithFund!</p>
             </div>
       
             <!-- Main content area -->
@@ -266,7 +266,7 @@ router.put(
                 <h3 style="color: #4CAF50; font-size: 20px; font-weight: 600;">Earnings Breakdown</h3>
                 <p style="font-size: 16px; color: #555555; line-height: 1.7;">
                   The total amount received is <strong>${amountToDonate} USD</strong>. 
-                  HelpingHands has applied a platform fee of 5%.
+                  HelpWithFund has applied a platform fee of 5%.
                 </p>
                 <p style="font-size: 16px; color: #555555; line-height: 1.7;">
                   After the platform fee deduction, your credited earnings are:
@@ -289,7 +289,7 @@ router.put(
                   Need help? <a href="${appUrl}/help-center" style="color: #4CAF50;">Contact Support</a>
                 </p>
                 <p style="font-size: 14px; color: #888888;">
-                  Thank you for using HelpingHands. Together, we can make a positive impact!
+                  Thank you for using HelpWithFund. Together, we can make a positive impact!
                 </p>
               </div>
             </div>
