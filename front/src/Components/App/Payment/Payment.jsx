@@ -44,6 +44,7 @@ export const Success = () => {
             email: data.customer_email,
             name: data.customer_email.split("@")[0],
             customerPaymentId: sessionId,
+            anonymous: data.metadata.anonymous,
             paymentMethod: "stripe",
             amountReceivedViaPaymentMethod: data.amount_total / 100,
             paymentId: sessionId,

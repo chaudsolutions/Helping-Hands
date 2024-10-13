@@ -59,9 +59,8 @@
   }
 
   > :nth-child(3) {
-    > h6 {
-      font-size: clamp(0.9rem, 1vw, 1rem);
-      font-style: italic;
+    > p {
+      font-size: 0.8rem;
     }
   }
 }

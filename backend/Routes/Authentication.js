@@ -174,7 +174,7 @@ router.post("/recover-password/:email", async (req, res) => {
 
     // Send the email with the password
     const mailOptions = {
-      from: "noreply@eurolearn.ng",
+      from: fromMail,
       to: user.email,
       subject: "HelpWithFund Password Reset",
       html: `<p>You are receiving this because you (or someone else) have requested the reset of the password for your account.

@@ -1,8 +1,5 @@
 const express = require("express");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-// const stripe = require("stripe")(
-//   "sk_test_51PuQmI048oKJvEHnpLSTer83YncIkvJFdV4uK9ZqYPkGfxAoSFQDwB0zr04wKq0Pz0F1o279wQYGdpbrRVXIWDgi003qnLIkSe"
-// );
 const https = require("https");
 
 const CampaignModel = require("../Models/Campaign.js");
@@ -20,7 +17,9 @@ const router = express.Router();
 
 // endpoint to verify stripe payments
 router.post("/stripe/create-checkout-session", async (req, res) => {
-  const { amount, currency, email, paymentType, url, id } = req.body;
+  const { amount, currency, email, paymentType, url, id, anonymousDonor } =
+    req.body;
+
   try {
     const session = await stripe.checkout.sessions.create({
       line_items: [
@@ -39,7 +38,7 @@ router.post("/stripe/create-checkout-session", async (req, res) => {
       customer_email: email,
       success_url: `${url}/success/${paymentType}?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${url}/failed`,
-      metadata: { id },
+      metadata: { id, anonymous: anonymousDonor },
     });
 
     res.json({ id: session.id });
@@ -161,8 +160,64 @@ router.put("/donate/:campaignId", async (req, res) => {
 
         // Save the updated user document
         await user.save();
-
         campaignFound = true;
+
+        // send mail
+        const mailOptions = {
+          from: fromMail,
+          to: email,
+          subject: "Donation Received Successfully",
+          html: `
+            <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; background-color: #f9f9f9; padding: 20px;">
+              <div style="max-width: 600px; margin: 0 auto; background-color: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+                
+                <!-- Hero Section with Campaign Image -->
+                <div style="width: 100%; height: 200px; background-image: url('${
+                  campaign.image
+                }'); background-size: cover; background-position: center;"></div>
+        
+                <!-- Content Section -->
+                <div style="padding: 20px;">
+                  <h2 style="color: rgb(103, 141, 57);">Thank You for Your Donation!</h2>
+                  <p>Dear ${anonymous ? "Valued Donor" : name},</p>
+                  <p>We are deeply grateful for your generous donation of <strong>$${amountToDonate}</strong> to our campaign <strong>"${
+            campaign.campaignName
+          }"</strong>.</p>
+                  
+                  <p>Your contribution helps us get closer to our goal of <strong>$${
+                    campaign.amount
+                  }</strong>. So far, we've raised <strong>$${
+            campaign.amountRaised
+          }</strong>, and your support means the world to us.</p>
+        
+                  <h3 style="color: rgb(103, 141, 57);">Donation Details:</h3>
+                  <ul style="list-style-type: none; padding: 0;">
+                    <li><strong>Donation Amount:</strong> $${amountToDonate}</li>
+                    <li><strong>Payment Method:</strong> ${paymentMethod}</li>
+                    <li><strong>Transaction ID:</strong> ${paymentId}</li>
+                  </ul>
+        
+                  <p style="margin-top: 20px;">If you have any questions or need a receipt for your records, please feel free to reach out to us.</p>
+                  
+                  <p>Thank you once again for your kindness and support!</p>
+        
+                  <p style="font-weight: bold;">Warm regards,<br/>
+                  The HelpWithFund Team</p>
+                </div>
+        
+                <!-- Footer Section -->
+                <div style="background-color: rgb(103, 141, 57); color: white; text-align: center; padding: 10px; border-radius: 0 0 8px 8px;">
+                  <p style="margin: 0;">HelpWithFund &copy; ${new Date().getFullYear()}</p>
+                  <p style="margin: 0;">We appreciate your support!</p>
+                </div>
+              </div>
+            </div>
+          `,
+        };
+
+        const info = await transporter.sendMail(mailOptions);
+        console.log("Welcome email sent: %s", info.messageId);
+
         res.status(200).json("Donation added successfully");
         break;
       }

@@ -63,11 +63,11 @@ const Footer = () => {
       <div className="line"></div>
 
       <div>
-        <h6>
+        <p>
           HelpWithFundInc.2023
           <br />
           All rights reserved
-        </h6>
+        </p>
 
         <Socials />
       </div>

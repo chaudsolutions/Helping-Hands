@@ -15,6 +15,7 @@ const useStripeCheckout = () => {
     amount,
     currency,
     donorEmail,
+    anonymousDonor,
     campaignId,
     url,
   }) => {
@@ -28,6 +29,7 @@ const useStripeCheckout = () => {
           amount,
           currency: currency.toLowerCase(),
           email: donorEmail,
+          anonymousDonor,
           paymentType,
           url,
           id: campaignId,

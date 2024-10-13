@@ -167,6 +167,7 @@ const ViewCampaign = () => {
         amount: convertedBalance,
         currency,
         donorEmail,
+        anonymousDonor,
         campaignId,
         url,
       });
