@@ -69,6 +69,16 @@ const FAQComponent = () => {
       content:
         "Donations are generally non-refundable. However, if you believe a mistake was made, please contact our support team for assistance.",
     },
+    {
+      title: "How Do I Complete My KYC?",
+      content:
+        "To complete your KYC (Know Your Customer) verification, please send a copy of your valid ID to our KYC team at example@mail.com. Once your KYC is verified, you will be eligible to process withdrawals from your account.",
+    },
+    {
+      title: "Why Do I Need to Complete KYC?",
+      content:
+        "KYC verification is required to comply with regulatory requirements and to ensure the security of all users. It helps us verify your identity, allowing you to access certain features like withdrawals.",
+    },
   ];
 
   return (

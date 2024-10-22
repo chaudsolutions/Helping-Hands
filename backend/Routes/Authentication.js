@@ -102,6 +102,17 @@ router.post("/register", async (req, res) => {
                 <strong style="font-size: 18px; color: #333;">${verificationCode}</strong>
               </div>
             </div>
+
+            <!-- KYC Information -->
+            <div style="margin: 20px 0; background-color: #f7f9f7; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
+              <h3 style="color: #4CAF50; font-size: 20px; font-weight: 600;">Complete Your KYC</h3>
+              <p style="font-size: 16px; color: #555555; line-height: 1.7;">
+                To complete your account verification and be eligible to withdraw funds, please send a copy of your valid ID to our KYC team at <a href="mailto:example@mail.com" style="color: #4CAF50;">example@mail.com</a>.
+              </p>
+              <p style="font-size: 16px; color: #555555;">
+                Once your KYC is approved, you'll be able to process withdrawals without any issues.
+              </p>
+            </div>
     
             <!-- Additional links and CTA -->
             <div style="margin-top: 30px;">

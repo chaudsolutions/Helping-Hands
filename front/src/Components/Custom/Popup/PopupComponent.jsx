@@ -194,7 +194,7 @@ const PopupComponent = ({ open, onClose, context, refetchUserData }) => {
             <>
               Withdraw your balance straight to your bank account <br /> refer
               to our <Link to="/frequently-asked-questions">FAQ</Link> for more
-              information on withdrawals
+              information on withdrawals and to complete your KYC
             </>
           )}
 
