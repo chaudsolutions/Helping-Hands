@@ -71,4 +71,32 @@ router.put(
   }
 );
 
+// endpoint to toggle user KYC
+router.put("/updateKYC/:KYCUserId", async (req, res) => {
+  const { KYCUserId } = req.params;
+  const userId = req.userId;
+
+  try {
+    // find user
+    const admin = await UsersModel.findById(userId);
+    const user = await UsersModel.findById(KYCUserId);
+    if (!admin || !user) {
+      throw new Error("User not found");
+    }
+    if (admin.role !== "admin") {
+      return res.status(404).json("Unauthorized");
+    }
+
+    // toggle KYC status
+    user.KYC = !user.KYC;
+
+    await user.save();
+
+    res.status(200).json("KYC status updated successfully");
+  } catch (error) {
+    res.status(500).json("Internal Server Error");
+    console.error(error);
+  }
+});
+
 module.exports = router;

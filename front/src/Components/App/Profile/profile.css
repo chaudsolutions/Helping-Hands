@@ -2,7 +2,7 @@
   padding: 7rem var(--padding-clamp) 1rem;
   display: flex;
   flex-flow: column;
-  gap: 8rem;
+  gap: 2rem;
 
   .profile-dash {
     display: flex;
@@ -95,6 +95,26 @@
           background-color: var(--trans-black);
           color: var(--white);
         }
+      }
+    }
+  }
+
+  .profile-verification {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1rem;
+    align-items: center;
+
+    > li {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      border: 1px solid var(--trans-more-black);
+      padding: 0.3rem;
+      font-size: 0.8rem;
+
+      > :nth-child(2) {
+        color: var(--accent-color-dark);
       }
     }
   }

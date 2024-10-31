@@ -10,9 +10,10 @@ import PageLoader from "../../Animations/PageLoader";
 import Null from "../../Animations/Null";
 import Logout from "../../Custom/Buttons/Logout";
 import toast from "react-hot-toast";
-import { serVer, token } from "../../Hooks/useVariable";
+import { serVer, useToken } from "../../Hooks/useVariable";
 import axios from "axios";
 import ButtonLoad from "../../Animations/ButtonLoad";
+import { MdCheckBox, MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 
 const Admin = () => {
   useEffect(() => {
@@ -22,6 +23,9 @@ const Admin = () => {
   const [view, setView] = useState("Inventory");
   const [subView, setSubView] = useState("");
   const [approveWithdrawalBtn, setApproveWithdrawalBtn] = useState({});
+  const [KYCBtn, setKYCBtn] = useState(false);
+
+  const { token } = useToken();
 
   // fetch user data and campaign data
   const { userData, isUserDataLoading, isUserDataError } = useUserData();
@@ -66,11 +70,39 @@ const Admin = () => {
 
   // map all users into dom
   const usersList = allUsersData?.map((item) => {
+    const toggleKYC = async () => {
+      setKYCBtn(true);
+      try {
+        const url = `${serVer}/admin/updateKYC/${item._id}`;
+        const res = await axios.put(
+          url,
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        const { data } = res;
+
+        await refetchAllUsersData();
+
+        toast.success(data);
+      } catch (error) {
+        toast.error(error.response.data);
+      } finally {
+        setKYCBtn(false);
+      }
+    };
+
     return (
       <li key={item._id}>
         <strong>Name: {item.name}</strong>
         <h5>Email: {item.email}</h5>
         <h5>Balance: ${item.balance}</h5>
+        <h5>
+          KYC {item?.KYC ? <MdCheckBox /> : <MdOutlineCheckBoxOutlineBlank />}
+        </h5>
+        <button onClick={toggleKYC} disabled={KYCBtn}>
+          {KYCBtn ? `...` : `${item?.KYC ? `Uncheck` : `Check`} KYC`}
+        </button>
       </li>
     );
   });
@@ -114,7 +146,7 @@ const Admin = () => {
 
             const { data } = res;
 
-            refetchAllUsersData();
+            await refetchAllUsersData();
 
             toast.success(data);
           } catch (error) {

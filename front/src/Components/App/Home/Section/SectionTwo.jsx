@@ -8,6 +8,7 @@ const SectionTwo = () => {
 
   const fundRaiseOutput = Array.isArray(activeCampaignData)
     ? activeCampaignData
+        ?.filter((item) => item.condition === "in-progress")
         ?.slice(0, 2)
         ?.map((item) => <CampaignList item={item} key={item._id} />)
     : [];

@@ -7,23 +7,14 @@ const router = express.Router();
 // Endpoint to get active campaigns
 router.get("/active-campaigns", async (req, res) => {
   try {
-    // Get the current date
-    const currentDate = new Date();
-
     // Find users with campaigns that are in-progress and not expired
-    const usersCampaignDoc = await CampaignModel.find({
-      "campaigns.condition": "in-progress",
-      "campaigns.endDate": { $gte: currentDate },
-    });
+    const usersCampaignDoc = await CampaignModel.find();
 
     // Extract active campaigns from usersCampaignDoc
     const activeCampaigns = [];
     usersCampaignDoc.forEach((user) => {
       user.campaigns.forEach((campaign) => {
-        if (
-          campaign.condition === "in-progress" &&
-          new Date(campaign.endDate) >= currentDate
-        ) {
+        if (campaign.condition !== "incomplete") {
           activeCampaigns.push({
             creator: user.creator,
             creatorRole: user.creatorRole,

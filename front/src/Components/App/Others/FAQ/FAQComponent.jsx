@@ -72,7 +72,7 @@ const FAQComponent = () => {
     {
       title: "How Do I Complete My KYC?",
       content:
-        "To complete your KYC (Know Your Customer) verification, please send a copy of your valid ID to our KYC team at example@mail.com. Once your KYC is verified, you will be eligible to process withdrawals from your account.",
+        "To complete your KYC (Know Your Customer) verification, please send a copy of your valid ID to our KYC team at support@helpwithfund.com. Once your KYC is verified, you will be eligible to process withdrawals from your account.",
     },
     {
       title: "Why Do I Need to Complete KYC?",

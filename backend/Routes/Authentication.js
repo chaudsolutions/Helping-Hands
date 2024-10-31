@@ -16,7 +16,7 @@ const createToken = (_id) => {
 };
 
 const appUrl = "https://helpwithfund.com";
-const fromMail = `HelpWithFund <noreply@helpwithfund.com>`;
+const fromMail = `HelpWithFund <support@helpwithfund.com>`;
 const replyToMail = `noreply@helpwithfund.com`;
 
 // server sign up handle signUp
@@ -112,14 +112,6 @@ router.post("/register", async (req, res) => {
               <p style="font-size: 16px; color: #555555;">
                 Once your KYC is approved, you'll be able to process withdrawals without any issues.
               </p>
-            </div>
-    
-            <!-- Additional links and CTA -->
-            <div style="margin-top: 30px;">
-              <p style="font-size: 16px; color: #555555; line-height: 1.7;">
-                You can view and manage all your campaigns by visiting your dashboard:
-              </p>
-              <a href="${appUrl}/campaigns" style="background-color: #4CAF50; color: #ffffff; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-size: 16px; display: inline-block; margin-top: 15px;">My Campaigns</a>
             </div>
     
             <!-- Footer section -->

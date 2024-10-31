@@ -31,7 +31,7 @@ export const useToken = () => {
     setToken(token);
   }, []);
 
-  return token;
+  return { token };
 };
 
 export const currencyArray = [
@@ -43,8 +43,8 @@ export const currencyArray = [
     currency: "GBP",
     name: "GBP (Pound)",
   },
-  {
-    currency: "NGN",
-    name: "NGN (Naira)",
-  },
+  // {
+  //   currency: "NGN",
+  //   name: "NGN (Naira)",
+  // },
 ];

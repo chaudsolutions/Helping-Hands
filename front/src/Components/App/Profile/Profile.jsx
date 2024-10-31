@@ -15,6 +15,7 @@ import ReadMoreArea from "@foxeian/react-read-more";
 import axios from "axios";
 import { serVer, token } from "../../Hooks/useVariable";
 import { BsBank } from "react-icons/bs";
+import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 
 const Profile = () => {
   useEffect(() => {
@@ -36,7 +37,8 @@ const Profile = () => {
     useUserData();
 
   // extract data
-  const { active, balance, requests, withdrawals, _id } = userData || {};
+  const { active, balance, requests, withdrawals, _id, bank, KYC } =
+    userData || {};
 
   // sort requests
   const unpaidRequests = requests?.filter((request) => !request.paymentDetails);
@@ -196,6 +198,21 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
+      <ul className="profile-verification">
+        <li>
+          <strong>Bank</strong>
+          {bank && bank?.accountNumber ? (
+            <MdCheckBox />
+          ) : (
+            <MdCheckBoxOutlineBlank />
+          )}
+        </li>
+        <li>
+          <strong>KYC</strong>
+          {KYC ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
+        </li>
+      </ul>
 
       <div className="profile-transactions">
         <div className="switch-buttons">

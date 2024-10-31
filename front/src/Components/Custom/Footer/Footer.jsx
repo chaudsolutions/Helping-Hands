@@ -10,11 +10,14 @@ const Footer = () => {
     useActiveCampaignData();
 
   const campaignsOutput = Array.isArray(activeCampaignData)
-    ? activeCampaignData?.slice(0, 3).map((item) => (
-        <li key={item._id}>
-          <Link to={`/campaign/${item._id}`}>{item.campaignName}</Link>
-        </li>
-      ))
+    ? activeCampaignData
+        ?.filter((item) => item.condition === "in-progress")
+        ?.slice(0, 3)
+        .map((item) => (
+          <li key={item._id}>
+            <Link to={`/campaign/${item._id}`}>{item.campaignName}</Link>
+          </li>
+        ))
     : [];
 
   return (

@@ -57,6 +57,7 @@ const UsersSchema = new Schema(
       accountNumber: { type: Number },
       message: { type: String },
     },
+    KYC: { type: Boolean, default: false },
     verificationCode: { type: String, required: true },
     resetPasswordToken: { type: String },
     requests: [RequestSchema],

@@ -43,6 +43,25 @@
     box-shadow: 0 0.3rem 0.5rem var(--trans-black);
     padding: 1rem;
     border-radius: 0.5rem;
+
+    > h5 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    > button {
+      margin-top: 0.5rem;
+      background-color: var(--accent-color-dark);
+      color: var(--white);
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.5rem;
+
+      &:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0.3rem 0.5rem var(--trans-more-black);
+      }
+    }
   }
 }
 

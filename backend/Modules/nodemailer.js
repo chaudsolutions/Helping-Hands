@@ -1,13 +1,13 @@
 const nodemailer = require("nodemailer");
 
 // mailer
-
 const transporter = nodemailer.createTransport({
-  service: "gmail",
-  secure: false,
+  host: "smtp.zoho.eu",
+  port: 465,
+  secure: true,
   auth: {
-    user: "helpinghandssource@gmail.com",
-    pass: "urad ifhe lbcs gvuf",
+    user: process.env.SECRET_USER,
+    pass: process.env.SECRET_PASSWORD,
   },
 });
 

@@ -10,7 +10,7 @@ const transporter = require("../Modules/nodemailer.js");
 const paystackKey = process.env.PAYSTACK_SECRET_KEY;
 
 const appUrl = "https://HelpWithFund.com";
-const fromMail = `HelpWithFund <noreply@HelpWithFund.com>`;
+const fromMail = `HelpWithFund <support@helpwithfund.com>`;
 const replyToMail = `noreply@HelpWithFund.com`;
 
 const router = express.Router();
